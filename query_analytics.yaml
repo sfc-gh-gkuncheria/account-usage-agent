@@ -1,0 +1,1246 @@
+name: AU_QUERY_ANALYTICS
+tables:
+  - name: ACCESS_HISTORY_FLATTENED
+    synonyms: []
+    description: This view is used to query the access history of Snowflake objects (e.g. table, view, column) within the last 365 days (1 year).
+    base_table:
+      database: SNOWFLAKE_INTELLIGENCE
+      schema: AGENT_RESOURCES
+      table: ACCESS_HISTORY_FLATTENED
+    dimensions:
+      - name: BASE_COLUMN_ID
+        synonyms:
+          - Base Column ID
+          - Underlying Column ID
+        description: ID of the column accessed in the base object.
+        expr: BASE_COLUMN_ID
+        data_type: NUMBER
+        sample_values:
+          - '12345'
+          - '67890'
+          - '11111'
+      - name: BASE_COLUMN_NAME
+        synonyms:
+          - Base Column Name
+          - Underlying Column
+        description: Name of the column accessed in the base object.
+        expr: BASE_COLUMN_NAME
+        data_type: VARCHAR
+        sample_values:
+          - CUSTOMER_ID
+          - ORDER_DATE
+          - PRODUCT_NAME
+      - name: BASE_OBJECT_DOMAIN
+        synonyms:
+          - Base Object Domain
+          - Underlying Object Type
+        description: Domain type of the base object accessed.
+        expr: BASE_OBJECT_DOMAIN
+        data_type: VARCHAR
+        sample_values:
+          - Table
+          - View
+          - Stage
+          - Function
+          - Sequence
+      - name: BASE_OBJECT_ID
+        synonyms:
+          - Base Object ID
+          - Underlying Object ID
+        description: Unique identifier of the base object accessed.
+        expr: BASE_OBJECT_ID
+        data_type: NUMBER
+        sample_values:
+          - '22222'
+          - '33333'
+          - '44444'
+          - '55555'
+          - '66666'
+      - name: BASE_OBJECT_NAME
+        synonyms:
+          - Base Object Name
+          - Underlying Object Name
+        description: Name of the base object accessed by the query.
+        expr: BASE_OBJECT_NAME
+        data_type: VARCHAR
+        sample_values:
+          - RAW_SALES
+          - CUSTOMER_BASE
+          - RAW_DATA
+          - SOURCE_ORDERS
+          - BASE_PRODUCTS
+      - name: DDL_OBJECT_DOMAIN
+        synonyms:
+          - DDL Object Domain
+          - DDL Object Type
+        description: Domain type of the object modified by DDL operations.
+        expr: DDL_OBJECT_DOMAIN
+        data_type: VARCHAR
+        sample_values:
+          - Table
+          - View
+          - Function
+          - Procedure
+          - Stream
+      - name: DDL_OBJECT_ID
+        synonyms:
+          - DDL Object ID
+        description: Unique identifier of the object modified by DDL operations.
+        expr: DDL_OBJECT_ID
+        data_type: NUMBER
+        sample_values:
+          - '333333'
+          - '444444'
+          - '555555'
+          - '666666'
+          - '777777'
+      - name: DDL_OBJECT_NAME
+        synonyms:
+          - DDL Object
+          - DDL Object Name
+          - Schema Object
+        description: Name of the object modified by DDL operations.
+        expr: DDL_OBJECT_NAME
+        data_type: VARCHAR
+        sample_values:
+          - NEW_TABLE
+          - MODIFIED_VIEW
+          - UPDATED_FUNCTION
+          - RENAMED_TABLE
+          - DROPPED_INDEX
+      - name: DDL_OPERATION
+        synonyms:
+          - DDL Operation
+          - Schema Change Type
+          - DDL Command
+        description: Type of DDL operation performed (CREATE, ALTER, DROP, etc.).
+        expr: DDL_OPERATION
+        data_type: VARCHAR
+        sample_values:
+          - CREATE
+          - ALTER
+          - DROP
+          - RENAME
+          - TRUNCATE
+      - name: DIRECT_COLUMN_ID
+        synonyms:
+          - Column ID
+          - Direct Column ID
+        description: ID of the column accessed in the direct object.
+        expr: DIRECT_COLUMN_ID
+        data_type: NUMBER
+        sample_values:
+          - '12345'
+          - '67890'
+          - '11111'
+      - name: DIRECT_COLUMN_NAME
+        synonyms:
+          - Column Name
+          - Direct Column
+        description: Name of the column accessed in the direct object.
+        expr: DIRECT_COLUMN_NAME
+        data_type: VARCHAR
+        sample_values:
+          - CUSTOMER_ID
+          - ORDER_DATE
+          - PRODUCT_NAME
+      - name: DIRECT_OBJECT_ARGUMENT_SIGNATURE
+        synonyms:
+          - Argument Signature
+          - Function Arguments
+        description: Argument signature for functions accessed directly.
+        expr: DIRECT_OBJECT_ARGUMENT_SIGNATURE
+        data_type: VARCHAR
+        sample_values:
+          - VARCHAR, NUMBER
+          - STRING, INTEGER
+          - 'NULL'
+      - name: DIRECT_OBJECT_DATA_TYPE
+        synonyms:
+          - Data Type
+          - Object Data Type
+        description: Data type of the object directly accessed.
+        expr: DIRECT_OBJECT_DATA_TYPE
+        data_type: VARCHAR
+        sample_values:
+          - TABLE
+          - VIEW
+          - FUNCTION
+      - name: DIRECT_OBJECT_DOMAIN
+        synonyms:
+          - Object Domain
+          - Object Type
+          - Table Type
+        description: Domain type of the object directly accessed (Table, View, Stage, etc.).
+        expr: DIRECT_OBJECT_DOMAIN
+        data_type: VARCHAR
+        sample_values:
+          - Table
+          - View
+          - Stage
+          - Function
+          - Sequence
+      - name: DIRECT_OBJECT_ID
+        synonyms:
+          - Object ID
+          - Table ID
+        description: Unique identifier of the object directly accessed.
+        expr: DIRECT_OBJECT_ID
+        data_type: NUMBER
+        sample_values:
+          - '185355'
+          - '185346'
+          - '12345'
+          - '67890'
+          - '11111'
+      - name: DIRECT_OBJECT_NAME
+        synonyms:
+          - Object Name
+          - Table Name
+          - Object Accessed
+        description: Name of the object directly accessed by the query.
+        expr: DIRECT_OBJECT_NAME
+        data_type: VARCHAR
+        sample_values:
+          - ADMIN_DB.PUBLIC.V_DDL_TASK_MONITORING
+          - ADMIN_DB.PUBLIC.DDL_LOG_QUEUE
+          - CUSTOMERS
+          - SALES_SUMMARY
+          - HKIM
+      - name: HAS_BASE_OBJECT
+        synonyms:
+          - Has Base Object
+          - Base Object Flag
+        description: Flag indicating if this row has base object access data.
+        expr: HAS_BASE_OBJECT
+        data_type: BOOLEAN
+        sample_values:
+          - 'TRUE'
+          - 'FALSE'
+      - name: HAS_DDL_OBJECT
+        synonyms:
+          - Has DDL Object
+          - DDL Object Flag
+        description: Flag indicating if this row has DDL object data.
+        expr: HAS_DDL_OBJECT
+        data_type: BOOLEAN
+        sample_values:
+          - 'TRUE'
+          - 'FALSE'
+      - name: HAS_DIRECT_OBJECT
+        synonyms:
+          - Has Direct Object
+          - Direct Object Flag
+        description: Flag indicating if this row has direct object access data.
+        expr: HAS_DIRECT_OBJECT
+        data_type: BOOLEAN
+        sample_values:
+          - 'TRUE'
+          - 'FALSE'
+      - name: HAS_MODIFIED_OBJECT
+        synonyms:
+          - Has Modified Object
+          - Modified Object Flag
+        description: Flag indicating if this row has modified object data.
+        expr: HAS_MODIFIED_OBJECT
+        data_type: BOOLEAN
+        sample_values:
+          - 'TRUE'
+          - 'FALSE'
+      - name: HAS_POLICY_REFERENCE
+        synonyms:
+          - Has Policy Reference
+          - Policy Reference Flag
+        description: Flag indicating if this row has policy reference data.
+        expr: HAS_POLICY_REFERENCE
+        data_type: BOOLEAN
+        sample_values:
+          - 'TRUE'
+          - 'FALSE'
+      - name: MODIFIED_COLUMN_ID
+        synonyms:
+          - Modified Column ID
+          - Changed Column ID
+        description: ID of the column modified in the object.
+        expr: MODIFIED_COLUMN_ID
+        data_type: NUMBER
+        sample_values:
+          - '12345'
+          - '67890'
+          - '11111'
+      - name: MODIFIED_COLUMN_NAME
+        synonyms:
+          - Modified Column Name
+          - Changed Column
+        description: Name of the column modified in the object.
+        expr: MODIFIED_COLUMN_NAME
+        data_type: VARCHAR
+        sample_values:
+          - CUSTOMER_ID
+          - ORDER_DATE
+          - PRODUCT_NAME
+      - name: MODIFIED_OBJECT_DOMAIN
+        synonyms:
+          - Modified Object Domain
+          - Changed Object Type
+        description: Domain type of the object modified by the query.
+        expr: MODIFIED_OBJECT_DOMAIN
+        data_type: VARCHAR
+        sample_values:
+          - Table
+          - View
+          - Function
+          - Procedure
+          - Stream
+      - name: MODIFIED_OBJECT_ID
+        synonyms:
+          - Modified Object ID
+          - Changed Object ID
+        description: Unique identifier of the object modified.
+        expr: MODIFIED_OBJECT_ID
+        data_type: NUMBER
+        sample_values:
+          - '77777'
+          - '88888'
+          - '99999'
+          - '111111'
+          - '222222'
+      - name: MODIFIED_OBJECT_NAME
+        synonyms:
+          - Modified Object Name
+          - Changed Object Name
+        description: Name of the object modified by the query.
+        expr: MODIFIED_OBJECT_NAME
+        data_type: VARCHAR
+        sample_values:
+          - TEMP_TABLE
+          - STAGING_DATA
+          - TARGET_TABLE
+          - OUTPUT_VIEW
+          - RESULT_TABLE
+      - name: PARENT_QUERY_ID
+        synonyms:
+          - '  '
+        description: List of parent query IDs that have accessed the database. The query ID of the parent job or NULL if the job does not have a parent.
+        expr: PARENT_QUERY_ID
+        data_type: VARCHAR
+        sample_values:
+          - 01b70f8d-0a0b-79f4-0000-43297c6759ca
+          - 01b70e66-0a0b-79e9-0000-43297c6516de
+          - 01b6aa7d-0a0b-17ac-0000-43297b85593e
+          - 01b791e2-080c-cbc4-0000-43297ddf2b2e
+          - 01b79205-080c-cca3-0000-43297ddf87be
+      - name: POLICY_ID
+        synonyms:
+          - Policy ID
+          - Security Policy ID
+        description: ID of the security policy referenced.
+        expr: POLICY_ID
+        data_type: NUMBER
+        sample_values:
+          - '12345'
+          - '67890'
+          - '11111'
+      - name: POLICY_NAME
+        synonyms:
+          - Policy Name
+          - Security Policy Name
+        description: Name of the security policy referenced during query execution.
+        expr: POLICY_NAME
+        data_type: VARCHAR
+        sample_values:
+          - CUSTOMER_MASKING_POLICY
+          - ROW_ACCESS_POLICY
+          - PII_PROTECTION
+          - DEPARTMENT_ACCESS
+          - DATA_CLASSIFICATION
+      - name: POLICY_TYPE
+        synonyms:
+          - Policy Type
+          - Security Policy Type
+        description: Type of the security policy referenced (MASKING, ROW_ACCESS, etc.).
+        expr: POLICY_TYPE
+        data_type: VARCHAR
+        sample_values:
+          - MASKING
+          - ROW_ACCESS
+          - COLUMN_MASKING
+          - DATA_CLASSIFICATION
+          - ENCRYPTION
+      - name: QUERY_ID
+        synonyms:
+          - QID
+        description: Unique identifiers for queries in the access history. An internal, system-generated identifier for the SQL statement. This value is also mentioned in the QUERY_HISTORY view.
+        expr: QUERY_ID
+        data_type: VARCHAR
+        sample_values:
+          - 01b85651-0a0e-11f0-0000-43297fed023e
+          - 01b856d1-0a0e-11f0-0000-43297fee37d2
+          - 01b9d914-080e-ac42-0000-43298453ac0e
+          - 01b9d94e-080e-b3d6-0000-43298454529e
+          - 01b9d925-080e-b3d6-0000-43298453f9a6
+      - name: ROOT_QUERY_ID
+        synonyms:
+          - '  '
+        description: List of root query IDs for access history. The query ID of the top most job in the chain or NULL if the job does not have a parent.
+        expr: ROOT_QUERY_ID
+        data_type: VARCHAR
+        sample_values:
+          - 01b5fa12-0a0a-e21e-0000-43297a030fae
+          - 01b720a4-0a0b-79e9-0000-43297c914f9a
+          - 01b6a8e5-0a0b-1793-0000-43297b824dc6
+          - 01b6e1ac-090b-70d4-0000-43297bff4032
+          - 01b6d24d-090b-6714-0000-43297bd99b32
+      - name: USER_NAME
+        synonyms:
+          - User
+          - User Name
+          - Service Account
+        description: User Names of Individuals Who Have Accessed the System. The user who issued the query or Logged in.
+        expr: USER_NAME
+        data_type: VARCHAR
+        sample_values:
+          - AAABBBAAA
+          - BSMITH
+          - BFRANKENSTEIN
+          - JSCHMO
+          - GWASHINGTON
+    time_dimensions:
+      - name: QUERY_START_TIME
+        synonyms:
+          - '  '
+        description: Timestamp of when a query started execution. The statement start time (UTC time zone).
+        expr: QUERY_START_TIME
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-08-31 06:24:10.392000+00:00'
+          - '2024-10-10 05:54:26.670000+00:00'
+          - '2024-11-13 07:42:17.887000+00:00'
+          - '2024-09-07 18:05:16.642000+00:00'
+          - '2024-09-07 13:34:14.314000+00:00'
+    primary_key:
+      columns:
+        - QUERY_ID
+  - name: QUERY_ATTRIBUTION_HISTORY
+    synonyms: []
+    description: This Account Usage view can be used to determine the compute cost of a given query run on warehouses in your account in the last 365 days (1 year).
+    base_table:
+      database: SNOWFLAKE
+      schema: ACCOUNT_USAGE
+      table: QUERY_ATTRIBUTION_HISTORY
+    dimensions:
+      - name: PARENT_QUERY_ID
+        synonyms:
+          - '  '
+        description: Query ID of the parent query or NULL if the query does not have a parent.
+        expr: PARENT_QUERY_ID
+        data_type: VARCHAR
+        sample_values:
+          - 01b70f8d-0a0b-79f4-0000-43297c6759ca
+          - 01b70e66-0a0b-79e9-0000-43297c6516de
+          - 01b6aa7d-0a0b-17ac-0000-43297b85593e
+          - 01b791e2-080c-cbc4-0000-43297ddf2b2e
+          - 01b79205-080c-cca3-0000-43297ddf87be
+      - name: QUERY_HASH
+        synonyms:
+          - '  '
+        description: The hash value computed based on the canonicalized SQL text.
+        expr: QUERY_HASH
+        data_type: VARCHAR
+        sample_values:
+          - a1b2c3d4e5f6
+          - f6e5d4c3b2a1
+          - 1a2b3c4d5e6f
+          - 6f5e4d3c2b1a
+          - b1a2c3d4e5f6
+      - name: QUERY_ID
+        synonyms:
+          - QID
+        description: Unique identifiers for queries in the access history. An internal, system-generated identifier for the SQL statement.
+        expr: QUERY_ID
+        data_type: VARCHAR
+        sample_values:
+          - 01b85651-0a0e-11f0-0000-43297fed023e
+          - 01b856d1-0a0e-11f0-0000-43297fee37d2
+          - 01b9d914-080e-ac42-0000-43298453ac0e
+          - 01b9d94e-080e-b3d6-0000-43298454529e
+          - 01b9d925-080e-b3d6-0000-43298453f9a6
+      - name: QUERY_PARAMETERIZED_HASH
+        synonyms:
+          - '  '
+        description: The hash value computed based on the parameterized query.
+        expr: QUERY_PARAMETERIZED_HASH
+        data_type: VARCHAR
+        sample_values:
+          - p1a2b3c4d5e6
+          - p6e5d4c3b2a1
+          - p1a2b3c4d5e6
+          - p6f5e4d3c2b1
+          - pb1a2c3d4e5f
+      - name: QUERY_TAG
+        synonyms:
+          - '  '
+        description: Query tag set for this statement through the QUERY_TAG session parameter.
+        expr: QUERY_TAG
+        data_type: VARCHAR
+        sample_values:
+          - ETL_DAILY
+          - REPORTING
+          - DATA_QUALITY
+          - ANALYTICS
+          - MAINTENANCE
+      - name: ROOT_QUERY_ID
+        synonyms:
+          - '  '
+        description: Query ID of the topmost query in the chain or NULL if the query does not have a parent.
+        expr: ROOT_QUERY_ID
+        data_type: VARCHAR
+        sample_values:
+          - 01b5fa12-0a0a-e21e-0000-43297a030fae
+          - 01b720a4-0a0b-79e9-0000-43297c914f9a
+          - 01b6a8e5-0a0b-1793-0000-43297b824dc6
+          - 01b6e1ac-090b-70d4-0000-43297bff4032
+          - 01b6d24d-090b-6714-0000-43297bd99b32
+      - name: USER_NAME
+        synonyms:
+          - User
+        description: User who issued the query.
+        expr: USER_NAME
+        data_type: VARCHAR
+        sample_values:
+          - AAABBBAAA
+          - BSMITH
+          - BFRANKENSTEIN
+          - JSCHMO
+          - GWASHINGTON
+      - name: WAREHOUSE_NAME
+        synonyms:
+          - Warehouse
+        description: Name of the warehouse that the query executed on.
+        expr: WAREHOUSE_NAME
+        data_type: VARCHAR
+        sample_values:
+          - COMPUTE_WH
+          - ANALYTICS_WH
+          - ETL_WH
+          - REPORTING_WH
+          - SMALL_WH
+    time_dimensions:
+      - name: END_TIME
+        synonyms:
+          - '  '
+        description: Time when query execution ended (in the local time zone).
+        expr: END_TIME
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-08-31 06:24:15.392000+00:00'
+          - '2024-10-10 05:54:30.670000+00:00'
+          - '2024-11-13 07:42:25.887000+00:00'
+          - '2024-09-07 18:05:20.642000+00:00'
+          - '2024-09-07 13:34:18.314000+00:00'
+      - name: START_TIME
+        synonyms:
+          - '  '
+        description: Time when query execution started (in the local time zone).
+        expr: START_TIME
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-08-31 06:24:10.392000+00:00'
+          - '2024-10-10 05:54:26.670000+00:00'
+          - '2024-11-13 07:42:17.887000+00:00'
+          - '2024-09-07 18:05:16.642000+00:00'
+          - '2024-09-07 13:34:14.314000+00:00'
+    facts:
+      - name: CREDITS_ATTRIBUTED_COMPUTE
+        synonyms:
+          - '  '
+        description: Number of credits attributed to this query. Includes only the credit usage for the query execution and doesn't include any warehouse idle time.
+        expr: CREDITS_ATTRIBUTED_COMPUTE
+        data_type: NUMBER
+        sample_values:
+          - '0.123456789'
+          - '0.987654321'
+          - '0.555555555'
+          - '0.111111111'
+          - '0.777777777'
+      - name: CREDITS_USED_QUERY_ACCELERATION
+        synonyms:
+          - '  '
+        description: Number of credits consumed by the Query Acceleration Service to accelerate the query. NULL if the query is not accelerated.
+        expr: CREDITS_USED_QUERY_ACCELERATION
+        data_type: NUMBER
+        sample_values:
+          - '0.012345678'
+          - '0.098765432'
+          - '0.055555555'
+          - '0.011111111'
+          - '0.077777777'
+    primary_key:
+      columns:
+        - QUERY_ID
+  - name: QUERY_HISTORY
+    description: This Account Usage view can be used to query Snowflake query history by various dimensions (time range, session, user, warehouse, etc.) within the last 365 days (1 year).
+    base_table:
+      database: SNOWFLAKE
+      schema: ACCOUNT_USAGE
+      table: QUERY_HISTORY
+    dimensions:
+      - name: DATABASE_NAME
+        synonyms:
+          - Database
+        description: The database that was specified in the context of the query at compilation, usually set in the session.
+        expr: DATABASE_NAME
+        data_type: VARCHAR
+        sample_values:
+          - PROD_REPORTING_DB
+          - LANDING_DB
+          - PERSONS_TEST_DATABASE
+          - PERSONS_SCRATCH
+          - POC_QUICKSTART_DB
+      - name: ERROR_CODE
+        synonyms:
+          - '  '
+        description: Error code, if the query returned an error
+        expr: ERROR_CODE
+        data_type: VARCHAR
+        sample_values:
+          - '002020'
+          - '090230'
+          - '000904'
+          - '001131'
+          - '002129'
+      - name: ERROR_MESSAGE
+        synonyms:
+          - '  '
+        description: Error message, if the query returned an error
+        expr: ERROR_MESSAGE
+        data_type: VARCHAR
+        sample_values:
+          - SQL compilation error
+          - Warehouse is suspended
+          - Compilation of SQL UDF failed
+          - SQL compilation error
+          - Invalid identifier
+      - name: EXECUTION_STATUS
+        synonyms:
+          - Status
+        description: Execution status for the query. Valid values are success, fail, incident.
+        expr: EXECUTION_STATUS
+        data_type: VARCHAR
+        sample_values:
+          - SUCCESS
+          - FAIL
+          - INCIDENT
+          - RUNNING
+          - QUEUED
+      - name: QUERY_HASH
+        synonyms:
+          - '  '
+        description: The hash value computed based on the canonicalized SQL text.
+        expr: QUERY_HASH
+        data_type: VARCHAR
+        sample_values:
+          - a1b2c3d4e5f6
+          - f6e5d4c3b2a1
+          - 1a2b3c4d5e6f
+          - 6f5e4d3c2b1a
+          - b1a2c3d4e5f6
+      - name: QUERY_ID
+        synonyms:
+          - QID
+        description: Unique identifiers for queries. An internal, system-generated identifier for the SQL statement.
+        expr: QUERY_ID
+        data_type: VARCHAR
+        sample_values:
+          - 01b85651-0a0e-11f0-0000-43297fed023e
+          - 01b856d1-0a0e-11f0-0000-43297fee37d2
+          - 01b9d914-080e-ac42-0000-43298453ac0e
+          - 01b9d94e-080e-b3d6-0000-43298454529e
+          - 01b9d925-080e-b3d6-0000-43298453f9a6
+      - name: QUERY_PARAMETERIZED_HASH
+        synonyms:
+          - '  '
+        description: The hash value computed based on the parameterized query.
+        expr: QUERY_PARAMETERIZED_HASH
+        data_type: VARCHAR
+        sample_values:
+          - p1a2b3c4d5e6
+          - p6e5d4c3b2a1
+          - p1a2b3c4d5e6
+          - p6f5e4d3c2b1
+          - pb1a2c3d4e5f
+      - name: QUERY_TEXT
+        synonyms:
+          - SQL
+        description: Text of the SQL statement
+        expr: QUERY_TEXT
+        data_type: VARCHAR
+        sample_values:
+          - SELECT * FROM customers
+          - INSERT INTO orders VALUES
+          - UPDATE products SET price
+          - DELETE FROM temp_table
+          - CREATE TABLE new_table
+      - name: QUERY_TYPE
+        synonyms:
+          - Type
+        description: DML, query, etc. If the query failed, then the query type may be UNKNOWN.
+        expr: QUERY_TYPE
+        data_type: VARCHAR
+        sample_values:
+          - SELECT
+          - INSERT
+          - UPDATE
+          - DELETE
+          - CREATE_TABLE
+      - name: ROLE_NAME
+        synonyms:
+          - role
+        description: Role used by the query
+        expr: ROLE_NAME
+        data_type: VARCHAR(16777216)
+      - name: SCHEMA_NAME
+        synonyms:
+          - Schema
+        description: Schema that was specified in the context of the query at compilation.
+        expr: SCHEMA_NAME
+        data_type: VARCHAR
+        sample_values:
+          - PUBLIC
+          - RAW
+          - STAGING
+          - MART
+          - ANALYTICS
+      - name: USER_NAME
+        synonyms:
+          - User
+        description: User who issued the query.
+        expr: USER_NAME
+        data_type: VARCHAR
+        sample_values:
+          - AAABBBAAA
+          - BSMITH
+          - BFRANKENSTEIN
+          - JSCHMO
+          - GWASHINGTON
+      - name: WAREHOUSE_NAME
+        synonyms:
+          - Warehouse
+        description: Warehouse that the query executed on, if any.
+        expr: WAREHOUSE_NAME
+        data_type: VARCHAR
+        sample_values:
+          - COMPUTE_WH
+          - ANALYTICS_WH
+          - ETL_WH
+          - REPORTING_WH
+          - SMALL_WH
+      - name: WAREHOUSE_SIZE
+        synonyms:
+          - '  '
+        description: Size of the warehouse when this statement executed.
+        expr: WAREHOUSE_SIZE
+        data_type: VARCHAR
+        sample_values:
+          - X-SMALL
+          - SMALL
+          - MEDIUM
+          - LARGE
+          - X-LARGE
+      - name: WAREHOUSE_TYPE
+        synonyms:
+          - '  '
+        description: Type of the warehouse when this statement executed.
+        expr: WAREHOUSE_TYPE
+        data_type: VARCHAR
+        sample_values:
+          - STANDARD
+          - SNOWPARK-OPTIMIZED
+    time_dimensions:
+      - name: END_TIME
+        synonyms:
+          - '  '
+        description: Statement end time (in the local time zone).
+        expr: END_TIME
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-08-31 06:24:15.392000+00:00'
+          - '2024-10-10 05:54:30.670000+00:00'
+          - '2024-11-13 07:42:25.887000+00:00'
+          - '2024-09-07 18:05:20.642000+00:00'
+          - '2024-09-07 13:34:18.314000+00:00'
+      - name: START_TIME
+        synonyms:
+          - '  '
+        description: Statement start time (in the local time zone).
+        expr: START_TIME
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-08-31 06:24:10.392000+00:00'
+          - '2024-10-10 05:54:26.670000+00:00'
+          - '2024-11-13 07:42:17.887000+00:00'
+          - '2024-09-07 18:05:16.642000+00:00'
+          - '2024-09-07 13:34:14.314000+00:00'
+    facts:
+      - name: BYTES_READ_FROM_RESULT
+        synonyms:
+          - '  '
+        description: Number of bytes read from the result.
+        expr: BYTES_READ_FROM_RESULT
+        data_type: NUMBER
+        sample_values:
+          - '1024'
+          - '2048'
+          - '512'
+          - '4096'
+          - '1536'
+      - name: BYTES_SCANNED
+        synonyms:
+          - '  '
+        description: Number of bytes scanned by this statement.
+        expr: BYTES_SCANNED
+        data_type: NUMBER
+        sample_values:
+          - '1048576'
+          - '2097152'
+          - '524288'
+          - '3145728'
+          - '1572864'
+      - name: BYTES_WRITTEN
+        synonyms:
+          - '  '
+        description: Number of bytes written (e.g. when loading into a table).
+        expr: BYTES_WRITTEN
+        data_type: NUMBER
+        sample_values:
+          - '524288'
+          - '1048576'
+          - '262144'
+          - '2097152'
+          - '786432'
+      - name: BYTES_WRITTEN_TO_RESULT
+        synonyms:
+          - '  '
+        description: Number of bytes written to the result.
+        expr: BYTES_WRITTEN_TO_RESULT
+        data_type: NUMBER
+        sample_values:
+          - '1024'
+          - '2048'
+          - '512'
+          - '4096'
+          - '1536'
+      - name: COMPILATION_TIME
+        synonyms:
+          - '  '
+        description: Compilation time (in milliseconds).
+        expr: COMPILATION_TIME
+        data_type: NUMBER
+        sample_values:
+          - '150'
+          - '300'
+          - '75'
+          - '600'
+          - '225'
+      - name: CREDITS_USED_CLOUD_SERVICES
+        synonyms:
+          - '  '
+        description: Number of credits used by cloud services.
+        expr: CREDITS_USED_CLOUD_SERVICES
+        data_type: NUMBER
+        sample_values:
+          - '0.001234567'
+          - '0.009876543'
+          - '0.000555555'
+          - '0.001111111'
+          - '0.007777777'
+      - name: EXECUTION_TIME
+        synonyms:
+          - '  '
+        description: Execution time (in milliseconds).
+        expr: EXECUTION_TIME
+        data_type: NUMBER
+        sample_values:
+          - '1350'
+          - '2700'
+          - '675'
+          - '11400'
+          - '2025'
+      - name: PERCENTAGE_SCANNED_FROM_CACHE
+        synonyms:
+          - '  '
+        description: Percentage of data scanned from the local disk cache.
+        expr: PERCENTAGE_SCANNED_FROM_CACHE
+        data_type: NUMBER
+        sample_values:
+          - '0.85'
+          - '0.92'
+          - '0.15'
+          - '0.67'
+          - '0.33'
+      - name: QUEUED_OVERLOAD_TIME
+        synonyms:
+          - '  '
+        description: Time spent queued due to overload (in milliseconds).
+        expr: QUEUED_OVERLOAD_TIME
+        data_type: NUMBER
+        sample_values:
+          - '0'
+          - '750'
+          - '0'
+          - '3000'
+          - '375'
+      - name: QUEUED_PROVISIONING_TIME
+        synonyms:
+          - '  '
+        description: Time spent queued for provisioning (in milliseconds).
+        expr: QUEUED_PROVISIONING_TIME
+        data_type: NUMBER
+        sample_values:
+          - '0'
+          - '500'
+          - '0'
+          - '2000'
+          - '250'
+      - name: QUEUED_REPAIR_TIME
+        synonyms:
+          - '  '
+        description: Time spent queued for repair (in milliseconds).
+        expr: QUEUED_REPAIR_TIME
+        data_type: NUMBER
+        sample_values:
+          - '0'
+          - '100'
+          - '0'
+          - '500'
+          - '50'
+      - name: ROWS_DELETED
+        synonyms:
+          - '  '
+        description: Number of rows deleted by this statement.
+        expr: ROWS_DELETED
+        data_type: NUMBER
+        sample_values:
+          - '25'
+          - '100'
+          - '5'
+          - '250'
+          - '50'
+      - name: ROWS_INSERTED
+        synonyms:
+          - '  '
+        description: Number of rows inserted by this statement.
+        expr: ROWS_INSERTED
+        data_type: NUMBER
+        sample_values:
+          - '100'
+          - '500'
+          - '25'
+          - '1000'
+          - '200'
+      - name: ROWS_PRODUCED
+        synonyms:
+          - '  '
+        description: Number of rows produced by this statement.
+        expr: ROWS_PRODUCED
+        data_type: NUMBER
+        sample_values:
+          - '100'
+          - '250'
+          - '50'
+          - '1000'
+          - '75'
+      - name: ROWS_UPDATED
+        synonyms:
+          - '  '
+        description: Number of rows updated by this statement.
+        expr: ROWS_UPDATED
+        data_type: NUMBER
+        sample_values:
+          - '50'
+          - '200'
+          - '10'
+          - '500'
+          - '100'
+      - name: TOTAL_ELAPSED_TIME
+        synonyms:
+          - '  '
+        description: Elapsed time (in milliseconds).
+        expr: TOTAL_ELAPSED_TIME
+        data_type: NUMBER
+        sample_values:
+          - '1500'
+          - '3000'
+          - '750'
+          - '12000'
+          - '2250'
+      - name: TRANSACTION_BLOCKED_TIME
+        synonyms:
+          - '  '
+        description: Time spent blocked by transactions (in milliseconds).
+        expr: TRANSACTION_BLOCKED_TIME
+        data_type: NUMBER
+        sample_values:
+          - '0'
+          - '200'
+          - '0'
+          - '1000'
+          - '100'
+  - name: WAREHOUSE_LOAD_HISTORY
+    description: This Account Usage view displays the load history for warehouses, which can be used to understand warehouse utilization patterns.
+    base_table:
+      database: SNOWFLAKE
+      schema: ACCOUNT_USAGE
+      table: WAREHOUSE_LOAD_HISTORY
+    dimensions:
+      - name: WAREHOUSE_NAME
+        synonyms:
+          - Warehouse
+        description: Name of the warehouse.
+        expr: WAREHOUSE_NAME
+        data_type: VARCHAR
+        sample_values:
+          - COMPUTE_WH
+          - ANALYTICS_WH
+          - ETL_WH
+          - REPORTING_WH
+          - SMALL_WH
+    time_dimensions:
+      - name: END_TIME
+        synonyms:
+          - '  '
+        description: End of the time slice.
+        expr: END_TIME
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-08-31 06:00:00.000000+00:00'
+          - '2024-10-10 07:00:00.000000+00:00'
+          - '2024-11-13 08:00:00.000000+00:00'
+          - '2024-09-07 18:00:00.000000+00:00'
+          - '2024-09-07 13:00:00.000000+00:00'
+      - name: START_TIME
+        synonyms:
+          - '  '
+        description: Start of the time slice.
+        expr: START_TIME
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-08-31 05:00:00.000000+00:00'
+          - '2024-10-10 06:00:00.000000+00:00'
+          - '2024-11-13 07:00:00.000000+00:00'
+          - '2024-09-07 17:00:00.000000+00:00'
+          - '2024-09-07 12:00:00.000000+00:00'
+    facts:
+      - name: AVG_BLOCKED
+        synonyms:
+          - '  '
+        description: Average number of queries blocked during the time slice.
+        expr: AVG_BLOCKED
+        data_type: NUMBER
+        sample_values:
+          - '0.2'
+          - '1.0'
+          - '0.0'
+          - '2.5'
+          - '0.1'
+      - name: AVG_QUEUED_LOAD
+        synonyms:
+          - '  '
+        description: Average number of queries queued due to warehouse load during the time slice.
+        expr: AVG_QUEUED_LOAD
+        data_type: NUMBER
+        sample_values:
+          - '0.5'
+          - '2.0'
+          - '0.0'
+          - '3.2'
+          - '0.1'
+      - name: AVG_QUEUED_PROVISIONING
+        synonyms:
+          - '  '
+        description: Average number of queries queued for warehouse provisioning during the time slice.
+        expr: AVG_QUEUED_PROVISIONING
+        data_type: NUMBER
+        sample_values:
+          - '0.1'
+          - '0.5'
+          - '0.0'
+          - '1.0'
+          - '0.0'
+      - name: AVG_RUNNING
+        synonyms:
+          - '  '
+        description: Average number of queries running during the time slice.
+        expr: AVG_RUNNING
+        data_type: NUMBER
+        sample_values:
+          - '2.5'
+          - '5.0'
+          - '1.2'
+          - '8.7'
+          - '0.8'
+  - name: WAREHOUSE_METERING_HISTORY
+    synonyms: []
+    description: This Account Usage view displays the warehouse metering history, which can be used to return the credit usage for warehouses in your account.
+    base_table:
+      database: SNOWFLAKE
+      schema: ACCOUNT_USAGE
+      table: WAREHOUSE_METERING_HISTORY
+    dimensions:
+      - name: WAREHOUSE_NAME
+        synonyms:
+          - Warehouse
+        description: Name of the warehouse.
+        expr: WAREHOUSE_NAME
+        data_type: VARCHAR
+        sample_values:
+          - COMPUTE_WH
+          - ANALYTICS_WH
+          - ETL_WH
+          - REPORTING_WH
+          - SMALL_WH
+    time_dimensions:
+      - name: END_TIME
+        synonyms:
+          - '  '
+        description: End of the time slice.
+        expr: END_TIME
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-08-31 06:00:00.000000+00:00'
+          - '2024-10-10 07:00:00.000000+00:00'
+          - '2024-11-13 08:00:00.000000+00:00'
+          - '2024-09-07 18:00:00.000000+00:00'
+          - '2024-09-07 13:00:00.000000+00:00'
+      - name: START_TIME
+        synonyms:
+          - '  '
+        description: Start of the time slice.
+        expr: START_TIME
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-08-31 05:00:00.000000+00:00'
+          - '2024-10-10 06:00:00.000000+00:00'
+          - '2024-11-13 07:00:00.000000+00:00'
+          - '2024-09-07 17:00:00.000000+00:00'
+          - '2024-09-07 12:00:00.000000+00:00'
+    facts:
+      - name: CREDITS_USED
+        synonyms:
+          - Credits
+        description: Number of credits used by the warehouse during the time slice.
+        expr: CREDITS_USED
+        data_type: NUMBER
+        sample_values:
+          - '1.123456789'
+          - '2.987654321'
+          - '0.555555555'
+          - '5.111111111'
+          - '0.777777777'
+      - name: CREDITS_USED_CLOUD_SERVICES
+        synonyms:
+          - '  '
+        description: Number of credits used for cloud services by the warehouse.
+        expr: CREDITS_USED_CLOUD_SERVICES
+        data_type: NUMBER
+        sample_values:
+          - '0.100000000'
+          - '0.100000000'
+          - '0.100000000'
+          - '0.100000000'
+          - '0.100000000'
+      - name: CREDITS_USED_COMPUTE
+        synonyms:
+          - '  '
+        description: Number of credits used for compute by the warehouse.
+        expr: CREDITS_USED_COMPUTE
+        data_type: NUMBER
+        sample_values:
+          - '1.023456789'
+          - '2.887654321'
+          - '0.455555555'
+          - '5.011111111'
+          - '0.677777777'
+    primary_key:
+      columns:
+        - WAREHOUSE_NAME
+relationships:
+  - name: QUERY_HISTORY__ACCESS_HISTORY
+    left_table: QUERY_HISTORY
+    relationship_columns:
+      - left_column: QUERY_ID
+        right_column: QUERY_ID
+    right_table: ACCESS_HISTORY_FLATTENED
+  - name: QUERY_HISTORY__QUERY_ATTRIBUTION_HISTORY
+    left_table: QUERY_HISTORY
+    relationship_columns:
+      - left_column: QUERY_ID
+        right_column: QUERY_ID
+    right_table: QUERY_ATTRIBUTION_HISTORY
+  - name: QUERY_HISTORY__WAREHOUSE_METERING_HISTORY
+    left_table: QUERY_HISTORY
+    relationship_columns:
+      - left_column: WAREHOUSE_NAME
+        right_column: WAREHOUSE_NAME
+    right_table: WAREHOUSE_METERING_HISTORY
+verified_queries:
+  - name: Top 30 Long Run Queries For The Week
+    question: What are the Top 30 Long Running Queries For The Week?
+    verified_at: 20250415
+    verified_by: Hyunchae Kim
+    use_as_onboarding_question: true
+    sql: select query_id, database_name, schema_name, user_name, warehouse_name, start_time, end_time, total_elapsed_time/1000 elapsed_sec, execution_status, error_code, error_message,substr(query_text,1,100) as query_text from snowflake.account_usage.query_history WHERE start_time > dateadd(day, -7 , current_date()) and user_name <> 'SYSTEM' order by total_elapsed_time desc;
+  - name: Top 30 Heaviest Users The Week
+    question: What are the top 30 Heaviest Users This Week?
+    verified_at: 20250416
+    verified_by: Hyunchae Kim
+    use_as_onboarding_question: true
+    sql: select user_name, sum(total_elapsed_time)/1000/3600 elapsed_hour, count(*) querycnt from snowflake.account_usage.query_history WHERE start_time > dateadd(day, -7 , current_date()) and warehouse_name is not null and user_name <> 'SYSTEM' group by user_name order by elapsed_hour desc;
+  - name: Object Access Analysis
+    question: Show me the object names and domains accessed in recent queries
+    verified_at: 20250115
+    verified_by: Hyunchae Kim
+    use_as_onboarding_question: true
+    sql: |
+      SELECT 
+        ah.QUERY_ID,
+        ah.USER_NAME,
+        ah.QUERY_START_TIME,
+        ah.DIRECT_OBJECT_DOMAIN,
+        ah.DIRECT_OBJECT_NAME,
+        ah.DIRECT_COLUMN_NAME,
+        ah.BASE_OBJECT_DOMAIN,
+        ah.BASE_OBJECT_NAME,
+        ah.BASE_COLUMN_NAME,
+        ah.MODIFIED_OBJECT_NAME,
+        ah.MODIFIED_COLUMN_NAME,
+        ah.POLICY_NAME,
+        ah.POLICY_TYPE,
+        ah.DDL_OPERATION,
+        -- Classify access patterns using the new flag columns
+        CASE 
+          WHEN ah.HAS_DDL_OBJECT = TRUE THEN 'DDL Operation'
+          WHEN ah.HAS_MODIFIED_OBJECT = TRUE THEN 'Data Modification'
+          WHEN ah.HAS_POLICY_REFERENCE = TRUE THEN 'Policy-Protected Access'
+          WHEN ah.HAS_BASE_OBJECT = TRUE AND ah.BASE_OBJECT_NAME != ah.DIRECT_OBJECT_NAME THEN 'View/Complex Access'
+          WHEN ah.HAS_DIRECT_OBJECT = TRUE THEN 'Direct Object Access'
+          ELSE 'Other Access'
+        END AS ACCESS_PATTERN
+      FROM SNOWFLAKE_INTELLIGENCE.AGENT_RESOURCES.ACCESS_HISTORY_FLATTENED ah
+      WHERE ah.QUERY_START_TIME > DATEADD(day, -7, CURRENT_DATE()) 
+        AND ah.USER_NAME != 'SYSTEM'
+        AND (ah.DIRECT_OBJECT_NAME IS NOT NULL OR ah.BASE_OBJECT_NAME IS NOT NULL OR ah.MODIFIED_OBJECT_NAME IS NOT NULL)
+      ORDER BY ah.QUERY_START_TIME DESC 
+      LIMIT 25;
+module_custom_instructions:
+  question_categorization: '- If users ask about "PII" or "personal data", reject the question and ask them to contact the data governance team.'
+  sql_generation: |-
+    - If no date filter is provided, apply a filter for the last 7 days using START_TIME or QUERY_START_TIME columns
+    - Always exclude system queries by filtering WHERE USER_NAME != 'SYSTEM'
+    - When users ask about 'slow queries', filter for queries with TOTAL_ELAPSED_TIME > 30000 milliseconds (30 seconds)
+    - When users ask about 'expensive queries', focus on queries with CREDITS_ATTRIBUTED_COMPUTE > 1.0
+    - Convert elapsed time from milliseconds to seconds and round to 2 decimal places
+    - Round credit usage to 4 decimal places
+    - Always limit results to top 25 unless user specifies otherwise
+    - For warehouse analysis, include warehouse information when available
+    - Exclude queries with NULL elapsed time or credits when doing performance analysis

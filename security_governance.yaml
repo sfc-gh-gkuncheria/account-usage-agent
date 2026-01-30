@@ -1,0 +1,655 @@
+name: AU_SECURITY_GOVERNANCE
+tables:
+  - name: LOGIN_HISTORY
+    description: This view can be used to query login attempts by Snowflake users within the last 365 days (1 year).
+    base_table:
+      database: SNOWFLAKE
+      schema: ACCOUNT_USAGE
+      table: LOGIN_HISTORY
+    dimensions:
+      - name: CLIENT_IP
+        synonyms:
+          - '  '
+        description: IP address where the request originated from. IP Addresses of clients accessing the system.
+        expr: CLIENT_IP
+        data_type: VARCHAR
+        sample_values:
+          - 172.999.601.001
+          - 172.250.999.001
+          - 176.999.391.001
+          - 111.545.999.001
+          - 172.999.129.001
+      - name: ERROR_MESSAGE
+        synonyms:
+          - '  '
+        description: Error message returned to the user, if the request was not successful.
+        expr: ERROR_MESSAGE
+        data_type: VARCHAR
+        sample_values:
+          - INCORRECT_USERNAME_PASSWORD
+          - EXT_AUTHN_INVALID
+          - USER_LOCKED_TEMP
+          - OAUTH_ACCESS_TOKEN_EXPIRED
+          - OVERFLOW_FAILURE_EVENTS_ELIDED
+      - name: EVENT_ID
+        synonyms:
+          - '  '
+        description: Internal/system-generated identifier for the login attempt.
+        expr: EVENT_ID
+        data_type: NUMBER
+        sample_values:
+          - '73843392519490'
+          - '73843391928022'
+          - '73843391936342'
+          - '73843391917098'
+          - '73843391645002'
+      - name: EVENT_TYPE
+        synonyms:
+          - '  '
+        description: Type of event that occurred in the login history. Event type, such as LOGIN for authentication events.
+        expr: EVENT_TYPE
+        data_type: VARCHAR
+        sample_values:
+          - LOGIN
+      - name: FIRST_AUTHENTICATION_FACTOR
+        synonyms:
+          - '  '
+        description: Method used to authenticate the user (the first factor, if using multi factor authentication).
+        expr: FIRST_AUTHENTICATION_FACTOR
+        data_type: VARCHAR
+        sample_values:
+          - RSA_KEYPAIR
+          - None
+          - OAUTH_ACCESS_TOKEN
+          - PASSWORD
+      - name: IS_SUCCESS
+        synonyms:
+          - '  '
+        description: Whether the user's request was successful or not.  Valid values are YES and NO.
+        expr: IS_SUCCESS
+        data_type: VARCHAR
+        sample_values:
+          - 'YES'
+          - 'NO'
+      - name: REPORTED_CLIENT_TYPE
+        synonyms:
+          - '  '
+        description: Reported type of the client software, such as JDBC_DRIVER, ODBC_DRIVER, etc. This information is not authenticated.
+        expr: REPORTED_CLIENT_TYPE
+        data_type: VARCHAR
+        sample_values:
+          - SQL_API
+          - SNOWSQL_CLI
+          - PYTHON_DRIVER
+          - JAVASCRIPT_DRIVER
+          - SNOWPIPE_STREAMING_CLIENT_SDK
+      - name: REPORTED_CLIENT_VERSION
+        synonyms:
+          - '  '
+        description: Reported version of the client software. This information is not authenticated.
+        expr: REPORTED_CLIENT_VERSION
+        data_type: VARCHAR
+        sample_values:
+          - '20240724090712'
+          - '20241219170526'
+          - 3.13.2
+          - '20240625225931'
+          - '20241011082448'
+      - name: SECOND_AUTHENTICATION_FACTOR
+        synonyms:
+          - '  '
+        description: The second factor, if using multi factor authentication, or NULL otherwise.
+        expr: SECOND_AUTHENTICATION_FACTOR
+        data_type: VARCHAR
+        sample_values:
+          - MFA_TOKEN
+          - DUO_PASSCODE
+          - None
+      - name: USER_NAME
+        synonyms:
+          - '  '
+        description: User associated with this event.
+        expr: USER_NAME
+        data_type: VARCHAR
+        sample_values:
+          - SMANAN
+          - JSMITH
+          - JBAJA
+          - TBELL
+          - BMUCKYMUCK
+    time_dimensions:
+      - name: EVENT_TIMESTAMP
+        synonyms:
+          - '  '
+        description: Time (in the UTC time zone) of the login event occurrence.
+        expr: EVENT_TIMESTAMP
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-07-06 11:12:33.925000+00:00'
+          - '2025-01-10 03:18:09.178000+00:00'
+          - '2024-05-29 05:51:32.230000+00:00'
+          - '2024-04-23 15:11:48.138000+00:00'
+          - '2024-03-31 08:32:17.751000+00:00'
+    facts:
+      - name: ERROR_CODE
+        synonyms:
+          - '  '
+        description: Error code, if the request was not successful.
+        expr: ERROR_CODE
+        data_type: NUMBER
+        sample_values:
+          - '390318'
+          - '390106'
+          - '390102'
+          - '390132'
+          - '390101'
+    primary_key:
+      columns:
+        - EVENT_ID
+  - name: SESSIONS
+    description: This view provides information on the session, including information on the authentication method to Snowflake and the Snowflake login event. Snowflake returns one row for each session created over the last year.  When a user logs in, it creates a session in which they can then run SQL commands.
+    base_table:
+      database: SNOWFLAKE
+      schema: ACCOUNT_USAGE
+      table: SESSIONS
+    dimensions:
+      - name: AUTHENTICATION_METHOD
+        synonyms:
+          - '  '
+        description: The authentication method used to access Snowflake.  This is how the user verified they were valid, through user password, keypair, SSO, or MFA_Token.
+        expr: AUTHENTICATION_METHOD
+        data_type: VARCHAR
+        sample_values:
+          - None
+          - RSA key pair
+          - Password
+          - Password+MFAToken
+          - OAuth
+      - name: CLIENT_APPLICATION_ID
+        synonyms:
+          - '  '
+        description: The identifier for the Snowflake-provided client application used to create the remote session to Snowflake (e.g. JDBC 3.8.7)
+        expr: CLIENT_APPLICATION_ID
+        data_type: VARCHAR
+        sample_values:
+          - PythonConnector 3.12.3
+          - PythonConnector 2.8.0
+          - ODBC 2.25.11
+          - SnowServices Ingress
+          - JavaScript 1.9.0
+      - name: CLIENT_APPLICATION_VERSION
+        synonyms:
+          - '  '
+        description: The version number (e.g. 3.8.7) of the Snowflake-provided client application used to create the remote session to Snowflake.
+        expr: CLIENT_APPLICATION_VERSION
+        data_type: VARCHAR
+        sample_values:
+          - 1.2.28
+          - 1.12.1
+          - 1.10.0
+          - 3.7.0
+          - 3.11.0
+      - name: CLIENT_BUILD_ID
+        synonyms:
+          - '  '
+        description: The build number (e.g. 41897) of the third-party client application used to create a remote session to Snowflake, if available. For example, a third-party Java application that uses the JDBC driver to connect to Snowflake.
+        expr: CLIENT_BUILD_ID
+        data_type: VARCHAR
+        sample_values:
+          - ''
+          - None
+          - '0'
+      - name: CLIENT_ENVIRONMENT
+        synonyms:
+          - '  '
+        description: The environment variables (e.g. operating system, OCSP mode) of the client used to create a remote session to Snowflake.
+        expr: CLIENT_ENVIRONMENT
+        data_type: VARCHAR
+        sample_values:
+          - '{"APPLICATION":"PythonConnector","OS":"Darwin","OS_VERSION":"macOS-14.7.1-arm64-arm-64bit","PYTHON_VERSION":"3.12.7","PYTHON_RUNTIME":"CPython","PYTHON_COMPILER":"Clang 14.0.6 ","OCSP_MODE":"FAIL_OPEN","TRACING":30,"LOGIN_TIMEOUT":null,"NETWORK_TIMEOUT":null,"SOCKET_TIMEOUT":null}'
+          - '{"APPLICATION":"PythonConnector","OS":"Linux","OS_VERSION":"Linux-6.6.26-linuxkit-x86_64-with-glibc2.36","PYTHON_VERSION":"3.11.9","PYTHON_RUNTIME":"CPython","PYTHON_COMPILER":"GCC 12.2.0","OCSP_MODE":"FAIL_OPEN","TRACING":30,"LOGIN_TIMEOUT":null,"NETWORK_TIMEOUT":null,"SOCKET_TIMEOUT":null}'
+          - '{"APPLICATION":"streamlit","OS":"Darwin","OS_VERSION":"macOS-10.16-x86_64-i386-64bit","PYTHON_VERSION":"3.10.4","PYTHON_RUNTIME":"CPython","PYTHON_COMPILER":"Clang 12.0.0 ","OCSP_MODE":"FAIL_OPEN","TRACING":30,"LOGIN_TIMEOUT":null,"NETWORK_TIMEOUT":null,"SOCKET_TIMEOUT":null}'
+      - name: CLIENT_VERSION
+        synonyms:
+          - '  '
+        description: The version number (e.g. 47154) of the third-party client application that uses a Snowflake-provided client to create a remote session to Snowflake, if available.
+        expr: CLIENT_VERSION
+        data_type: VARCHAR
+        sample_values:
+          - '0'
+      - name: CLOSED_REASON
+        synonyms:
+          - '  '
+        description: The reason why a Snowflake session closes. One of the following(UNKNOWN, DROP_USER, LOGOUT, FORCED_LOGOUT, ABANDONED, OAUTH_CRITICAL_CHANGE_INTEGRATION, DROP_ACCOUNT, OAUTH_CONSENT_REVOKED, TASK_COMPLETED, SFC_FORCED_LOGOUT).
+        expr: CLOSED_REASON
+        data_type: VARCHAR
+        sample_values:
+          - LOGOUT
+          - DROP_USER
+          - UNKNOWN
+          - FORCED_LOGOUT
+          - ABANDONED
+      - name: LOGIN_EVENT_ID
+        synonyms:
+          - '  '
+        description: Unique identifier for the login event.
+        expr: LOGIN_EVENT_ID
+        data_type: NUMBER
+        sample_values:
+          - '73843391277014'
+          - '73843393019234'
+          - '73843391528542'
+          - '73843393017474'
+          - '73843392657014'
+      - name: USER_NAME
+        synonyms:
+          - '  '
+        description: The user name of the user.
+        expr: USER_NAME
+        data_type: VARCHAR
+        sample_values:
+          - AAABBBAAA
+          - BSMITH
+          - BFRANKENSTEIN
+          - JSCHMO
+          - GWASHINGTON
+    time_dimensions:
+      - name: CREATED_ON
+        synonyms:
+          - '  '
+        description: Date and time (in the UTC time zone) when the session was created.
+        expr: CREATED_ON
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2025-03-04 18:03:09.961000+00:00'
+          - '2024-05-13 18:57:12.755000+00:00'
+          - '2024-03-01 16:17:51.087000+00:00'
+          - '2024-12-31 18:53:45.496000+00:00'
+          - '2025-02-25 19:59:30.217000+00:00'
+    facts:
+      - name: SESSION_ID
+        synonyms:
+          - '  '
+        description: Unique The unique identifier for the current session.
+        expr: SESSION_ID
+        data_type: NUMBER
+        sample_values:
+          - '73844141906510'
+          - '73844305206366'
+          - '73844369761058'
+          - '73844181637406'
+          - '73844179581434'
+    primary_key:
+      columns:
+        - SESSION_ID
+  - name: USERS
+    description: This view displays information about all users in the account, including their properties, roles, and status.
+    base_table:
+      database: SNOWFLAKE
+      schema: ACCOUNT_USAGE
+      table: USERS
+    dimensions:
+      - name: DEFAULT_ROLE
+        synonyms:
+          - Primary Role
+        description: Default role for the user.
+        expr: DEFAULT_ROLE
+        data_type: VARCHAR
+        sample_values:
+          - ANALYST_ROLE
+          - ADMIN_ROLE
+          - DEVELOPER_ROLE
+      - name: DISABLED
+        synonyms:
+          - User Status
+          - Account Status
+        description: Whether the user account is disabled.
+        expr: DISABLED
+        data_type: BOOLEAN
+        sample_values:
+          - false
+          - true
+      - name: LOGIN_NAME
+        synonyms:
+          - Login
+        description: Login name for the user.
+        expr: LOGIN_NAME
+        data_type: VARCHAR
+        sample_values:
+          - analyst@company.com
+          - admin@company.com
+          - dev@company.com
+      - name: MUST_CHANGE_PASSWORD
+        synonyms:
+          - Password Reset Required
+        description: Whether the user must change password on next login.
+        expr: MUST_CHANGE_PASSWORD
+        data_type: BOOLEAN
+        sample_values:
+          - false
+          - true
+      - name: NAME
+        synonyms:
+          - User Name
+          - Username
+        description: Name of the user.
+        expr: NAME
+        data_type: VARCHAR
+        sample_values:
+          - ANALYST_USER
+          - ADMIN_USER
+          - DEVELOPER_USER
+    time_dimensions:
+      - name: CREATED_ON
+        synonyms:
+          - User Created Date
+        description: Date and time when the user was created.
+        expr: CREATED_ON
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-01-15 10:30:00.000000+00:00'
+      - name: LAST_SUCCESS_LOGIN
+        synonyms:
+          - Last Login
+        description: Date and time of last successful login.
+        expr: LAST_SUCCESS_LOGIN
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-12-15 09:45:00.000000+00:00'
+    primary_key:
+      columns:
+        - NAME
+  - name: GRANTS_TO_ROLES
+    description: This view displays all privileges that have been granted to roles.
+    base_table:
+      database: SNOWFLAKE
+      schema: ACCOUNT_USAGE
+      table: GRANTS_TO_ROLES
+    dimensions:
+      - name: GRANTED_BY
+        synonyms:
+          - Granted By User
+        description: Name of the user who granted the privilege.
+        expr: GRANTED_BY
+        data_type: VARCHAR
+        sample_values:
+          - ADMIN_USER
+          - SECURITY_ADMIN
+      - name: GRANTED_ON
+        synonyms:
+          - Object Type
+        description: Type of object the privilege was granted on.
+        expr: GRANTED_ON
+        data_type: VARCHAR
+        sample_values:
+          - TABLE
+          - VIEW
+          - SCHEMA
+          - DATABASE
+          - WAREHOUSE
+      - name: GRANTEE_NAME
+        synonyms:
+          - Role Name
+          - Recipient Role
+        description: Name of the role that was granted the privilege.
+        expr: GRANTEE_NAME
+        data_type: VARCHAR
+        sample_values:
+          - ANALYST_ROLE
+          - ADMIN_ROLE
+          - DEVELOPER_ROLE
+      - name: NAME
+        synonyms:
+          - Object Name
+        description: Name of the object the privilege was granted on.
+        expr: NAME
+        data_type: VARCHAR
+        sample_values:
+          - CUSTOMERS
+          - ORDERS
+          - SALES_DB
+      - name: PRIVILEGE
+        synonyms:
+          - Permission
+          - Access Right
+        description: Privilege that was granted.
+        expr: PRIVILEGE
+        data_type: VARCHAR
+        sample_values:
+          - SELECT
+          - INSERT
+          - UPDATE
+          - DELETE
+          - USAGE
+    time_dimensions:
+      - name: CREATED_ON
+        synonyms:
+          - Grant Date
+        description: Date and time when the privilege was granted.
+        expr: CREATED_ON
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-01-15 10:30:00.000000+00:00'
+    primary_key:
+      columns:
+        - GRANTEE_NAME
+        - NAME
+        - PRIVILEGE
+  - name: GRANTS_TO_USERS
+    description: This view displays all privileges and roles that have been granted to users.
+    base_table:
+      database: SNOWFLAKE
+      schema: ACCOUNT_USAGE
+      table: GRANTS_TO_USERS
+    dimensions:
+      - name: GRANTED_ON
+        synonyms:
+          - Object Type
+        description: Type of object the privilege was granted on.
+        expr: GRANTED_ON
+        data_type: VARCHAR
+        sample_values:
+          - TABLE
+          - ROLE
+          - WAREHOUSE
+      - name: GRANTEE_NAME
+        synonyms:
+          - User Name
+        description: Name of the user who was granted the privilege.
+        expr: GRANTEE_NAME
+        data_type: VARCHAR
+        sample_values:
+          - ANALYST_USER
+          - DEVELOPER_USER
+      - name: NAME
+        synonyms:
+          - Object Name
+        description: Name of the object or role granted.
+        expr: NAME
+        data_type: VARCHAR
+        sample_values:
+          - ANALYST_ROLE
+          - CUSTOMERS_TABLE
+          - COMPUTE_WH
+      - name: PRIVILEGE
+        synonyms:
+          - Permission
+        description: Privilege that was granted to the user.
+        expr: PRIVILEGE
+        data_type: VARCHAR
+        sample_values:
+          - SELECT
+          - USAGE
+          - ROLE
+    time_dimensions:
+      - name: CREATED_ON
+        synonyms:
+          - Grant Date
+        description: Date and time when the privilege was granted.
+        expr: CREATED_ON
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-01-15 10:30:00.000000+00:00'
+    primary_key:
+      columns:
+        - GRANTEE_NAME
+        - NAME
+        - PRIVILEGE
+  - name: POLICY_REFERENCES
+    description: This view displays the associations between masking and row access policies and the objects they protect.
+    base_table:
+      database: SNOWFLAKE
+      schema: ACCOUNT_USAGE
+      table: POLICY_REFERENCES
+    dimensions:
+      - name: POLICY_KIND
+        synonyms:
+          - Policy Type
+        description: Type of policy (MASKING_POLICY or ROW_ACCESS_POLICY).
+        expr: POLICY_KIND
+        data_type: VARCHAR
+        sample_values:
+          - MASKING_POLICY
+          - ROW_ACCESS_POLICY
+      - name: POLICY_NAME
+        synonyms:
+          - Policy
+        description: Name of the policy.
+        expr: POLICY_NAME
+        data_type: VARCHAR
+        sample_values:
+          - SSN_MASK_POLICY
+          - EMAIL_MASK_POLICY
+          - CUSTOMER_ROW_POLICY
+      - name: REF_COLUMN_NAME
+        synonyms:
+          - Column Name
+        description: Name of the column protected by the policy (for masking policies).
+        expr: REF_COLUMN_NAME
+        data_type: VARCHAR
+        sample_values:
+          - SSN
+          - EMAIL
+          - PHONE_NUMBER
+      - name: REF_ENTITY_DOMAIN
+        synonyms:
+          - Object Type
+        description: Type of object protected by the policy.
+        expr: REF_ENTITY_DOMAIN
+        data_type: VARCHAR
+        sample_values:
+          - TABLE
+          - VIEW
+      - name: REF_ENTITY_NAME
+        synonyms:
+          - Protected Object
+          - Table Name
+        description: Name of the object protected by the policy.
+        expr: REF_ENTITY_NAME
+        data_type: VARCHAR
+        sample_values:
+          - CUSTOMERS
+          - ORDERS
+          - EMPLOYEE_DATA
+relationships:
+  - name: login_history_to_sessions
+    left_table: LOGIN_HISTORY
+    right_table: SESSIONS
+    relationship_columns:
+      - left_column: EVENT_ID
+        right_column: LOGIN_EVENT_ID
+    join_type: left_outer
+    relationship_type: one_to_one
+  - name: sessions_user_analysis
+    left_table: LOGIN_HISTORY
+    right_table: SESSIONS
+    relationship_columns:
+      - left_column: USER_NAME
+        right_column: USER_NAME
+    join_type: left_outer
+    relationship_type: many_to_one
+  - name: login_history_to_users
+    left_table: LOGIN_HISTORY
+    right_table: USERS
+    relationship_columns:
+      - left_column: USER_NAME
+        right_column: NAME
+    join_type: left_outer
+    relationship_type: many_to_one
+  - name: sessions_to_users
+    left_table: SESSIONS
+    right_table: USERS
+    relationship_columns:
+      - left_column: USER_NAME
+        right_column: NAME
+    join_type: left_outer
+    relationship_type: many_to_one
+  - name: grants_to_users_relationship
+    left_table: GRANTS_TO_USERS
+    right_table: USERS
+    relationship_columns:
+      - left_column: GRANTEE_NAME
+        right_column: NAME
+    join_type: left_outer
+    relationship_type: many_to_one
+  - name: grants_to_roles_to_users
+    left_table: GRANTS_TO_ROLES
+    right_table: USERS
+    relationship_columns:
+      - left_column: GRANTED_BY
+        right_column: NAME
+    join_type: left_outer
+    relationship_type: many_to_one
+verified_queries:
+  - name: Failed Login Attempts Last 7 Days
+    question: What are the failed login attempts in the last 7 days?
+    verified_at: 20250115
+    verified_by: Hyunchae Kim
+    use_as_onboarding_question: true
+    sql: SELECT EVENT_TIMESTAMP, USER_NAME, CLIENT_IP, ERROR_MESSAGE, ERROR_CODE, FIRST_AUTHENTICATION_FACTOR FROM SNOWFLAKE.ACCOUNT_USAGE.LOGIN_HISTORY WHERE IS_SUCCESS = 'NO' AND EVENT_TIMESTAMP > DATEADD(day, -7, CURRENT_DATE()) ORDER BY EVENT_TIMESTAMP DESC LIMIT 50;
+  - name: Top 20 Users by Login Count Last 30 Days
+    question: Who are the top 20 users by login count in the last 30 days?
+    verified_at: 20250115
+    verified_by: Hyunchae Kim
+    use_as_onboarding_question: true
+    sql: SELECT USER_NAME, COUNT(*) as LOGIN_COUNT, COUNT(CASE WHEN IS_SUCCESS = 'YES' THEN 1 END) as SUCCESSFUL_LOGINS, COUNT(CASE WHEN IS_SUCCESS = 'NO' THEN 1 END) as FAILED_LOGINS FROM SNOWFLAKE.ACCOUNT_USAGE.LOGIN_HISTORY WHERE EVENT_TIMESTAMP > DATEADD(day, -30, CURRENT_DATE()) GROUP BY USER_NAME ORDER BY LOGIN_COUNT DESC LIMIT 20;
+  - name: Active Sessions by Authentication Method
+    question: What are the current active sessions grouped by authentication method?
+    verified_at: 20250115
+    verified_by: Hyunchae Kim
+    use_as_onboarding_question: true
+    sql: SELECT AUTHENTICATION_METHOD, COUNT(*) as SESSION_COUNT, COUNT(DISTINCT USER_NAME) as UNIQUE_USERS FROM SNOWFLAKE.ACCOUNT_USAGE.SESSIONS WHERE CREATED_ON > DATEADD(day, -1, CURRENT_DATE()) GROUP BY AUTHENTICATION_METHOD ORDER BY SESSION_COUNT DESC;
+  - name: Suspicious Login Activity - Multiple IPs per User
+    question: Which users have logged in from multiple IP addresses in the last 7 days?
+    verified_at: 20250115
+    verified_by: Hyunchae Kim
+    use_as_onboarding_question: true
+    sql: SELECT USER_NAME, COUNT(DISTINCT CLIENT_IP) as UNIQUE_IPS, LISTAGG(DISTINCT CLIENT_IP, ', ') as IP_ADDRESSES FROM SNOWFLAKE.ACCOUNT_USAGE.LOGIN_HISTORY WHERE EVENT_TIMESTAMP > DATEADD(day, -7, CURRENT_DATE()) AND IS_SUCCESS = 'YES' GROUP BY USER_NAME HAVING COUNT(DISTINCT CLIENT_IP) > 1 ORDER BY UNIQUE_IPS DESC;
+  - name: Database Access Patterns Last 24 Hours
+    question: What are the database access patterns in the last 24 hours?
+    verified_at: 20250115
+    verified_by: Hyunchae Kim
+    use_as_onboarding_question: true
+    sql: SELECT USER_NAME, COUNT(*) as ACCESS_COUNT, COUNT(DISTINCT QUERY_ID) as UNIQUE_QUERIES FROM SNOWFLAKE.ACCOUNT_USAGE.ACCESS_HISTORY WHERE QUERY_START_TIME > DATEADD(hour, -24, CURRENT_TIMESTAMP()) GROUP BY USER_NAME ORDER BY ACCESS_COUNT DESC LIMIT 25;
+module_custom_instructions:
+  question_categorization: |
+    - If users ask about "password reset" or "account lockout", direct them to contact the IT security team for assistance
+    - Reject requests for individual user password or authentication details for privacy protection
+  sql_generation: |
+    - If no date filter is provided, apply a filter for the last 7 days using EVENT_TIMESTAMP or CREATED_ON columns
+    - Always exclude system accounts by filtering WHERE USER_NAME NOT LIKE '%SYSTEM%' AND USER_NAME NOT LIKE '%SERVICE%'
+    - When users ask about 'failed logins', filter for IS_SUCCESS = 'NO' in LOGIN_HISTORY
+    - When users ask about 'suspicious activity', focus on multiple IP addresses, failed attempts, or unusual authentication methods
+    - When users ask about 'active sessions', filter for sessions without CLOSED_REASON or recent CREATED_ON timestamps
+    - When users ask about 'active users', filter for DISABLED = FALSE in USERS table
+    - When users ask about 'user permissions', join GRANTS_TO_USERS with USERS to show comprehensive access rights
+    - When users ask about 'role privileges', use GRANTS_TO_ROLES to show what each role can access
+    - When users ask about 'data policies', use POLICY_REFERENCES to show which objects are protected
+    - When users ask about 'masking policies', filter POLICY_REFERENCES for POLICY_KIND = 'MASKING_POLICY'
+    - When users ask about 'row access policies', filter POLICY_REFERENCES for POLICY_KIND = 'ROW_ACCESS_POLICY'
+    - Convert timestamps to user-friendly format and show timezone information when relevant
+    - Always limit results to top 50 for security queries unless user specifies otherwise
+    - For failed login analysis, include ERROR_CODE and ERROR_MESSAGE for context
+    - For geographic analysis, group similar IP ranges and exclude internal/known safe IPs
+    - When analyzing authentication methods, prioritize security-relevant factors (MFA usage, key pairs vs passwords)
+    - For privilege analysis, distinguish between direct user grants and role-based grants

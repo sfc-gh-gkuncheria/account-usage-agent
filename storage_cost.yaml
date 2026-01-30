@@ -1,0 +1,534 @@
+name: AU_STORAGE_COST
+tables:
+  - name: STAGE_STORAGE_USAGE_HISTORY
+    description: 'This Account Usage view can be used to query the average daily data storage usage, in bytes, within the last 365 days (1 year) for all the Snowflake internal stages in the account, including:'
+    base_table:
+      database: SNOWFLAKE
+      schema: ACCOUNT_USAGE
+      table: STAGE_STORAGE_USAGE_HISTORY
+    time_dimensions:
+      - name: USAGE_DATE
+        synonyms:
+          - Date
+          - Storage Date
+          - Usage Date
+        description: Date of this storage usage record.
+        expr: USAGE_DATE
+        data_type: DATE
+        sample_values:
+          - '2024-09-08'
+          - '2024-10-29'
+          - '2024-11-05'
+          - '2024-12-02'
+          - '2025-01-06'
+    facts:
+      - name: AVERAGE_STAGE_BYTES
+        synonyms:
+          - Average Stage Storage Bytes
+          - Stage Bytes
+          - Stage Storage
+        description: Number of bytes of stage storage used.
+        expr: AVERAGE_STAGE_BYTES
+        data_type: NUMBER
+        sample_values:
+          - '11466690652463.000000'
+          - '11448658388802.000000'
+          - '12034022004409.000000'
+          - '12046815184797.000000'
+          - '12048549852370.000000'
+    primary_key:
+      columns:
+        - USAGE_DATE
+  - name: STORAGE_USAGE
+    description: 'This Account Usage view displays the average daily data storage usage, in bytes, within the last 365 days (1 year) across the entire account, including data in:'
+    base_table:
+      database: SNOWFLAKE
+      schema: ACCOUNT_USAGE
+      table: STORAGE_USAGE
+    time_dimensions:
+      - name: USAGE_DATE
+        synonyms:
+          - '  '
+        description: Date of this storage usage record. The date is based on the local time zone. It is recommended that you change the query session to use the UTC time zone instead (e.g. ALTER SESSION SET TIMEZONE='UTC').
+        expr: USAGE_DATE
+        data_type: DATE
+        sample_values:
+          - '2024-09-08'
+          - '2024-10-29'
+          - '2024-11-05'
+          - '2024-12-02'
+          - '2025-01-06'
+    facts:
+      - name: FAILSAFE_BYTES
+        synonyms:
+          - '  '
+        description: Number of bytes of Fail-safe storage used.
+        expr: FAILSAFE_BYTES
+        data_type: NUMBER
+        sample_values:
+          - '23634922154.000000'
+          - '16404678244.000000'
+          - '5990427983189.000000'
+          - '100213694573.000000'
+          - '9040254765.000000'
+      - name: HYBRID_TABLE_STORAGE_BYTES
+        synonyms:
+          - '  '
+        description: Number of bytes of hybrid storage used.
+        expr: HYBRID_TABLE_STORAGE_BYTES
+        data_type: NUMBER
+        sample_values:
+          - '2776728344.000000'
+          - '2776932511.000000'
+          - '2776932344.000000'
+          - '2776728345.000000'
+          - '4941663896.000000'
+      - name: STAGE_BYTES
+        synonyms:
+          - '  '
+        description: Number of bytes of stage storage used by files in all internal stages (named, table, and user).
+        expr: STAGE_BYTES
+        data_type: NUMBER
+        sample_values:
+          - '11466690652463.000000'
+          - '11448658388802.000000'
+          - '12034022004409.000000'
+          - '12046815184797.000000'
+          - '12048549852370.000000'
+      - name: STORAGE_BYTES
+        synonyms:
+          - '  '
+        description: Number of bytes of table storage used, including bytes for data currently in Time Travel.
+        expr: STORAGE_BYTES
+        data_type: NUMBER
+        sample_values:
+          - '196602645051580.000000'
+          - '197255795810126.000000'
+          - '183594266128911.000000'
+          - '198214773673875.000000'
+          - '213276188100641.000000'
+    primary_key:
+      columns:
+        - USAGE_DATE
+  - name: TABLE_STORAGE_METRICS
+    description: This view displays table-level storage utilization information, which is used to calculate the storage billing for each table in the account, including tables that have been dropped, but are still incurring storage costs.
+    base_table:
+      database: SNOWFLAKE
+      schema: ACCOUNT_USAGE
+      table: TABLE_STORAGE_METRICS
+    dimensions:
+      - name: COMMENT
+        synonyms:
+          - '  '
+        description: Comment for the table.
+        expr: COMMENT
+        data_type: VARCHAR
+        sample_values:
+          - The time of day dimension.
+          - Summary by LOB for each row of data
+          - |-
+            {owner: "jschmo",
+                      env: "DEV",
+                      zone: "RAW"}
+          - Boot Camp Attendance Table
+          - Source Table for the big demo
+      - name: DELETED
+        synonyms:
+          - '  '
+        description: TRUE if table has been purged from storage.
+        expr: DELETED
+        data_type: BOOLEAN
+        sample_values:
+          - 'True'
+          - 'False'
+      - name: IS_TRANSIENT
+        synonyms:
+          - '  '
+        description: Indicates if the Table is type transient or not. 'YES' if table is transient or temporary, otherwise 'NO'. Transient and temporary tables have no Fail-safe period.
+        expr: IS_TRANSIENT
+        data_type: VARCHAR
+        sample_values:
+          - true
+          - false
+      - name: TABLE_CATALOG
+        synonyms:
+          - Database
+        description: Database that the table belongs to.
+        expr: TABLE_CATALOG
+        data_type: VARCHAR
+        sample_values:
+          - PROD_REPORTING_DB
+          - LANDING_DB
+          - PERSONS_TEST_DATABASE
+          - PERSONS_SCRATCH
+          - POC_QUICKSTART_DB
+      - name: TABLE_NAME
+        synonyms:
+          - '  '
+        description: Name of the table.
+        expr: TABLE_NAME
+        data_type: VARCHAR
+        sample_values:
+          - SNOWPARK_TABLE
+          - PEOPLE_DIM
+          - LOADED_RAW
+          - BIG_FACT_TBL
+          - ORDER_HEADER_TBL
+      - name: TABLE_SCHEMA
+        synonyms:
+          - '  '
+        description: Schema that the table belongs to.
+        expr: TABLE_SCHEMA
+        data_type: VARCHAR
+        sample_values:
+          - POC_SCHEMA
+          - GOLD_LAYER
+          - PUBLIC
+          - BITSNBYTES_TESTING
+          - SANDBOX
+    time_dimensions:
+      - name: CATALOG_CREATED
+        synonyms:
+          - Database Created
+          - Database Created Timestamp
+        description: Timestamp of when the Database was created.
+        expr: CATALOG_CREATED
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2022-02-07 14:05:23.009000+00:00'
+          - '2022-06-22 19:20:16.075000+00:00'
+          - '2020-03-20 22:06:24.501000+00:00'
+          - '2024-07-10 15:50:37.103000+00:00'
+          - '2024-09-24 20:36:27.971000+00:00'
+      - name: CATALOG_DROPPED
+        synonyms:
+          - Database Dropped
+          - Database Dropped Timestamp
+        description: Timestamp of when the Database was dropped.
+        expr: CATALOG_DROPPED
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2022-04-29 01:17:18.332000+00:00'
+          - '2020-04-14 11:57:04.802000+00:00'
+          - '2022-12-21 03:30:14.110000+00:00'
+          - '2023-11-08 17:47:12.576000+00:00'
+          - '2020-09-17 00:43:34.720000+00:00'
+      - name: SCHEMA_CREATED
+        synonyms:
+          - '  '
+        description: Timestamp of when the schema was created.
+        expr: SCHEMA_CREATED
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2022-03-18 04:13:06.724000+00:00'
+          - '2020-04-28 07:32:14.759000+00:00'
+          - '2019-07-15 14:02:35.731000+00:00'
+          - '2020-01-10 21:21:45.332000+00:00'
+          - '2022-03-18 17:20:14.740000+00:00'
+      - name: SCHEMA_DROPPED
+        synonyms:
+          - '  '
+        description: Timestamps of when the schema was dropped.
+        expr: SCHEMA_DROPPED
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2019-01-28 00:03:45.077000+00:00'
+          - '2022-03-21 17:32:56.687000+00:00'
+          - '2021-03-23 16:14:34.687000+00:00'
+          - '2022-03-18 00:04:07.255000+00:00'
+          - '2022-03-18 03:32:16.742000+00:00'
+      - name: TABLE_CREATED
+        synonyms:
+          - '  '
+        description: Timestamp of when the table was created.
+        expr: TABLE_CREATED
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2020-09-03 14:39:19.236000+00:00'
+          - '2020-08-19 19:38:25.043000+00:00'
+          - '2020-08-31 22:26:47.558000+00:00'
+          - '2020-08-27 05:47:01.237000+00:00'
+          - '2020-08-14 06:47:04.087000+00:00'
+      - name: TABLE_DROPPED
+        synonyms:
+          - '  '
+        description: Timestamp of when the table was dropped. NULL if table has not been dropped.
+        expr: TABLE_DROPPED
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2020-08-30 17:56:47.645000+00:00'
+          - '2020-08-27 15:43:26.224000+00:00'
+          - '2021-08-26 08:23:35.546000+00:00'
+          - '2020-08-31 22:38:23.700000+00:00'
+          - '2020-08-31 22:35:59.620000+00:00'
+      - name: TABLE_ENTERED_FAILSAFE
+        synonyms:
+          - '  '
+        description: Timestamp of when the table, if dropped, entered the Fail-safe state, or NULL. In this state, the table cannot be restored using UNDROP.
+        expr: TABLE_ENTERED_FAILSAFE
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2020-08-15 20:51:56.298000+00:00'
+          - '2020-08-31 18:02:24.172000+00:00'
+          - '2022-02-23 21:40:07.005000+00:00'
+          - '2020-08-31 18:02:22.152000+00:00'
+          - '2020-09-01 22:44:39.471000+00:00'
+    facts:
+      - name: ACTIVE_BYTES
+        synonyms:
+          - '  '
+        description: Bytes owned by (and billed to) this table that are in the active state for the table. For Iceberg table storage, active bytes aren't billed to Iceberg tables. For more information, see Iceberg table billing.
+        expr: ACTIVE_BYTES
+        data_type: NUMBER
+        sample_values:
+          - '127488'
+          - '7168'
+          - '102040576'
+          - '2560'
+          - '2908160'
+      - name: CLONE_GROUP_ID
+        synonyms:
+          - '  '
+        description: Unique identifier for the oldest clone ancestor of this table. Same as ID if the table is not a clone.
+        expr: CLONE_GROUP_ID
+        data_type: NUMBER
+        sample_values:
+          - '12033849'
+          - '18643529'
+          - '4284686'
+          - '12918334'
+          - '1803034'
+      - name: FAILSAFE_BYTES
+        synonyms:
+          - '  '
+        description: Bytes owned by (and billed to) this table that are in the Fail-safe state for the table.
+        expr: FAILSAFE_BYTES
+        data_type: NUMBER
+        sample_values:
+          - '9323008'
+          - '1531904'
+          - '26624'
+          - '8932864'
+          - '7802368'
+      - name: ID
+        synonyms:
+          - Table ID
+        description: Unique Internal/system-generated identifier for the table.
+        expr: ID
+        data_type: NUMBER
+        sample_values:
+          - '3426594'
+          - '8471825'
+          - '2581971'
+          - '2854731'
+          - '2112438'
+      - name: INSTANCE_ID
+        synonyms:
+          - '  '
+        description: Unique Internal/system-generated identifier for the instance which the object belongs to.
+        expr: INSTANCE_ID
+        data_type: NUMBER
+        sample_values:
+          - '743'
+          - '364'
+          - '377'
+          - '350'
+          - '1455'
+      - name: RETAINED_FOR_CLONE_BYTES
+        synonyms:
+          - '  '
+        description: Bytes owned by (and billed to) this table that are retained after deletion because they are referenced by one or more clones of this table.
+        expr: RETAINED_FOR_CLONE_BYTES
+        data_type: NUMBER
+        sample_values:
+          - '6188032'
+          - '13657600'
+          - '33792'
+          - '8192'
+          - '42998907904'
+      - name: TABLE_CATALOG_ID
+        synonyms:
+          - Database ID
+        description: Unique identifier for the tables Database.
+        expr: TABLE_CATALOG_ID
+        data_type: NUMBER
+        sample_values:
+          - '12825'
+          - '7722'
+          - '1950'
+          - '1732'
+          - '13795'
+      - name: TABLE_SCHEMA_ID
+        synonyms:
+          - Schema ID
+        description: Unique Internal/system-generated identifier for the Tables Schema.
+        expr: TABLE_SCHEMA_ID
+        data_type: NUMBER
+        sample_values:
+          - '148293'
+          - '173698'
+          - '167233'
+          - '170990'
+          - '154461'
+      - name: TIME_TRAVEL_BYTES
+        synonyms:
+          - '  '
+        description: Bytes owned by (and billed to) this table that are in the Time Travel state for the table.
+        expr: TIME_TRAVEL_BYTES
+        data_type: NUMBER
+        sample_values:
+          - '725796672'
+          - '725799744'
+          - '228005'
+          - '374'
+          - '426348544'
+    primary_key:
+      columns:
+        - ID
+  - name: WAREHOUSE_METERING_HISTORY
+    description: This view can be used to return the hourly credit usage for a single warehouse (or all the warehouses in your account) within the last 365 days (1 year).
+    base_table:
+      database: SNOWFLAKE
+      schema: ACCOUNT_USAGE
+      table: WAREHOUSE_METERING_HISTORY
+    dimensions:
+      - name: WAREHOUSE_ID
+        synonyms:
+          - Warehouse ID
+        description: Internal/system-generated identifier for the warehouse.
+        expr: WAREHOUSE_ID
+        data_type: NUMBER
+        sample_values:
+          - '6490'
+          - '1455'
+          - '8279'
+          - '1837'
+          - '6417'
+      - name: WAREHOUSE_NAME
+        synonyms:
+          - Warehouse
+          - Warehouse Name
+        description: Name of the warehouse.
+        expr: WAREHOUSE_NAME
+        data_type: VARCHAR
+        sample_values:
+          - DEMO_XS_WH
+          - APPS_XS_CL_WH
+          - DATA_LOADING_2XL_WH
+          - SANDBOX_XS_WH
+          - DATA_SCI_WORK_2XL_WH
+    time_dimensions:
+      - name: END_TIME
+        synonyms:
+          - '  '
+        description: The date and end of the hour (in the local time zone) in which the warehouse usage took place.
+        expr: END_TIME
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-08-21 23:00:00+00:00'
+          - '2024-08-19 21:00:00+00:00'
+          - '2024-07-24 04:00:00+00:00'
+          - '2024-09-01 12:00:00+00:00'
+          - '2024-08-18 19:00:00+00:00'
+      - name: START_TIME
+        synonyms:
+          - '  '
+        description: The date and beginning of the hour (in the local time zone) in which the warehouse usage took place.
+        expr: START_TIME
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2025-03-03 13:00:00+00:00'
+          - '2024-12-13 10:00:00+00:00'
+          - '2024-04-29 21:00:00+00:00'
+          - '2024-12-09 22:00:00+00:00'
+          - '2024-05-03 06:00:00+00:00'
+    facts:
+      - name: CREDITS_USED
+        synonyms:
+          - '  '
+        description: Total number of credits used for the warehouse in the hour. This is a sum of CREDITS_USED_COMPUTE and CREDITS_USED_CLOUD_SERVICES. This value does not take into account the adjustment for cloud services, and may therefore be greater than the credits that are billed. To determine how many credits were actually billed, run queries against the METERING_DAILY_HISTORY view.
+        expr: CREDITS_USED
+        data_type: NUMBER
+        sample_values:
+          - '0.030404722'
+          - '0.047511111'
+          - '0.030315556'
+          - '0.163333333'
+          - '0.018136667'
+      - name: CREDITS_USED_CLOUD_SERVICES
+        synonyms:
+          - '  '
+        description: Number of credits used for cloud services in the hour.
+        expr: CREDITS_USED_CLOUD_SERVICES
+        data_type: NUMBER
+        sample_values:
+          - '0.000145278'
+          - '0.000437222'
+          - '0.000113611'
+          - '0.000353056'
+          - '0.000590556'
+      - name: CREDITS_USED_COMPUTE
+        synonyms:
+          - '  '
+        description: Number of credits used for the warehouse in the hour.
+        expr: CREDITS_USED_COMPUTE
+        data_type: NUMBER
+        sample_values:
+          - '1.333333333'
+          - '0.102222222'
+          - '0.148888889'
+          - '0.031388889'
+          - '0.036944444'
+    primary_key:
+      columns:
+        - WAREHOUSE_NAME
+        - START_TIME
+relationships:
+  - name: STAGE_STORAGE_USAGE_HISTORY__STORAGE_USAGE
+    left_table: STAGE_STORAGE_USAGE_HISTORY
+    relationship_columns:
+      - left_column: USAGE_DATE
+        right_column: USAGE_DATE
+    right_table: STORAGE_USAGE
+verified_queries:
+  - name: Top 10 Tables by Storage Cost Last 30 Days
+    question: What are the top 10 tables consuming the most storage in the last 30 days?
+    verified_at: 20250115
+    verified_by: Hyunchae Kim
+    use_as_onboarding_question: true
+    sql: SELECT TABLE_CATALOG, TABLE_SCHEMA, TABLE_NAME, ACTIVE_BYTES, TIME_TRAVEL_BYTES, FAILSAFE_BYTES, (ACTIVE_BYTES + TIME_TRAVEL_BYTES + FAILSAFE_BYTES) as TOTAL_BYTES FROM SNOWFLAKE.ACCOUNT_USAGE.TABLE_STORAGE_METRICS WHERE TABLE_CREATED > DATEADD(day, -30, CURRENT_DATE()) ORDER BY TOTAL_BYTES DESC LIMIT 10;
+  - name: Daily Storage Usage Trend Last 7 Days
+    question: What is the daily storage usage trend for the last 7 days?
+    verified_at: 20250115
+    verified_by: Hyunchae Kim
+    use_as_onboarding_question: true
+    sql: SELECT USAGE_DATE, STORAGE_BYTES, STAGE_BYTES, FAILSAFE_BYTES, HYBRID_TABLE_STORAGE_BYTES, (STORAGE_BYTES + STAGE_BYTES + FAILSAFE_BYTES + HYBRID_TABLE_STORAGE_BYTES) as TOTAL_STORAGE_BYTES FROM SNOWFLAKE.ACCOUNT_USAGE.STORAGE_USAGE WHERE USAGE_DATE > DATEADD(day, -7, CURRENT_DATE()) ORDER BY USAGE_DATE DESC;
+  - name: Top 10 Warehouses by Credit Usage Last 24 Hours
+    question: Which warehouses consumed the most credits in the last 24 hours?
+    verified_at: 20250115
+    verified_by: Hyunchae Kim
+    use_as_onboarding_question: true
+    sql: SELECT WAREHOUSE_NAME, SUM(CREDITS_USED) as TOTAL_CREDITS, SUM(CREDITS_USED_COMPUTE) as COMPUTE_CREDITS, SUM(CREDITS_USED_CLOUD_SERVICES) as CLOUD_SERVICE_CREDITS FROM SNOWFLAKE.ACCOUNT_USAGE.WAREHOUSE_METERING_HISTORY WHERE START_TIME > DATEADD(hour, -24, CURRENT_TIMESTAMP()) GROUP BY WAREHOUSE_NAME ORDER BY TOTAL_CREDITS DESC LIMIT 10;
+  - name: Storage Cost Analysis by Database
+    question: What is the storage cost breakdown by database?
+    verified_at: 20250115
+    verified_by: Hyunchae Kim
+    use_as_onboarding_question: true
+    sql: SELECT TABLE_CATALOG as DATABASE_NAME, COUNT(*) as TABLE_COUNT, SUM(ACTIVE_BYTES) as TOTAL_ACTIVE_BYTES, SUM(TIME_TRAVEL_BYTES) as TOTAL_TIME_TRAVEL_BYTES, SUM(FAILSAFE_BYTES) as TOTAL_FAILSAFE_BYTES, SUM(ACTIVE_BYTES + TIME_TRAVEL_BYTES + FAILSAFE_BYTES) as TOTAL_STORAGE_BYTES FROM SNOWFLAKE.ACCOUNT_USAGE.TABLE_STORAGE_METRICS GROUP BY TABLE_CATALOG ORDER BY TOTAL_STORAGE_BYTES DESC LIMIT 20;
+  - name: Stage Storage Usage Trend Last 14 Days
+    question: What is the stage storage usage trend for the last 14 days?
+    verified_at: 20250115
+    verified_by: Hyunchae Kim
+    use_as_onboarding_question: true
+    sql: SELECT USAGE_DATE, AVERAGE_STAGE_BYTES FROM SNOWFLAKE.ACCOUNT_USAGE.STAGE_STORAGE_USAGE_HISTORY WHERE USAGE_DATE > DATEADD(day, -14, CURRENT_DATE()) ORDER BY USAGE_DATE DESC;
+module_custom_instructions:
+  question_categorization: |-
+    - If users ask about "cost optimization" or "cost reduction", focus on storage and compute efficiency analysis
+    - When users mention "expensive tables" or "high storage costs", direct them to table-level storage metrics
+  sql_generation: |-
+    - If no date filter is provided, apply a filter for the last 30 days using USAGE_DATE or START_TIME columns
+    - When analyzing storage costs, always include both active and Time Travel bytes in calculations  
+    - For warehouse cost analysis, focus on CREDITS_USED rather than individual credit components
+    - Convert bytes to GB or TB for readability: divide by 1073741824 for GB, 1099511627776 for TB
+    - When showing top storage consumers, limit results to top 20 unless user specifies otherwise
+    - For storage trend analysis, order by date descending to show most recent data first

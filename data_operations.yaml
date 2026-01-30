@@ -1,0 +1,4544 @@
+name: AU_DATA_OPERATIONS
+tables:
+  - name: DATABASES
+    description: This Account Usage view displays information about databases in the account.
+    base_table:
+      database: SNOWFLAKE
+      schema: ACCOUNT_USAGE
+      table: DATABASES
+    primary_key:
+      columns:
+        - DATABASE_ID
+    dimensions:
+      - name: DATABASE_NAME
+        synonyms:
+          - Database
+          - Database Name
+          - DB Name
+        description: Name of the database.
+        expr: DATABASE_NAME
+        data_type: VARCHAR
+        sample_values:
+          - PROD_DB
+          - TEST_DB
+          - DEV_DB
+          - ANALYTICS_DB
+          - STAGING_DB
+      - name: DATABASE_OWNER
+        synonyms:
+          - Owner
+          - Database Owner
+        description: Owner of the database.
+        expr: DATABASE_OWNER
+        data_type: VARCHAR
+        sample_values:
+          - SYSADMIN
+          - ACCOUNTADMIN
+          - DB_ADMIN
+          - DATA_ENGINEER
+          - ANALYST_ROLE
+      - name: IS_TRANSIENT
+        synonyms:
+          - Is Transient
+          - Transient Database
+        description: Whether the database is transient.
+        expr: IS_TRANSIENT
+        data_type: VARCHAR
+        sample_values:
+          - NO
+          - YES
+      - name: COMMENT
+        synonyms:
+          - Description
+          - Database Comment
+        description: Comment or description of the database.
+        expr: COMMENT
+        data_type: VARCHAR
+        sample_values:
+          - "Production database"
+          - "Testing environment"
+          - "Development workspace"
+          - "Analytics data warehouse"
+          - "Staging area for ETL"
+      - name: RESOURCE_GROUP
+        synonyms:
+          - Resource Group
+          - Resource Pool
+        description: Resource group associated with the database.
+        expr: RESOURCE_GROUP
+        data_type: VARCHAR
+        sample_values:
+          - "N/A"
+          - "DEFAULT"
+          - "ANALYTICS_GROUP"
+          - "ETL_GROUP"
+          - "PROD_GROUP"
+      - name: TYPE
+        synonyms:
+          - Database Type
+          - Type
+        description: Type of database.
+        expr: TYPE
+        data_type: VARCHAR
+        sample_values:
+          - "STANDARD"
+          - "SHARED"
+          - "IMPORTED"
+          - "REPLICATED"
+          - "APPLICATION"
+      - name: OWNER_ROLE_TYPE
+        synonyms:
+          - Owner Role Type
+          - Owner Type
+        description: Type of role that owns the database.
+        expr: OWNER_ROLE_TYPE
+        data_type: VARCHAR
+        sample_values:
+          - "ROLE"
+          - "APPLICATION_ROLE"
+          - "DATABASE_ROLE"
+          - "ROLE"
+          - "ROLE"
+      - name: OBJECT_VISIBILITY
+        synonyms:
+          - Object Visibility
+          - Visibility
+        description: Visibility settings of the database object.
+        expr: OBJECT_VISIBILITY
+        data_type: OBJECT
+        sample_values:
+          - "{}"
+          - "{}"
+          - "{}"
+          - "{}"
+          - "{}"
+      - name: REPLICABLE_WITH_FAILOVER_GROUPS
+        synonyms:
+          - Replicable With Failover
+          - Failover Groups
+        description: Whether database is replicable with failover groups.
+        expr: REPLICABLE_WITH_FAILOVER_GROUPS
+        data_type: VARCHAR
+        sample_values:
+          - "N/A"
+          - "YES"
+          - "NO"
+          - "N/A"
+          - "YES"
+      - name: RETENTION_TIME
+        synonyms:
+          - Retention Time
+          - Time Travel Days
+        description: Default retention time for Time Travel in days.
+        expr: RETENTION_TIME
+        data_type: NUMBER
+        sample_values:
+          - '1'
+          - '7'
+          - '0'
+          - '1'
+          - '3'
+      - name: DATABASE_ID
+        synonyms:
+          - Database ID
+          - DB ID
+        description: Internal identifier for the database.
+        expr: DATABASE_ID
+        data_type: NUMBER
+        sample_values:
+          - '1234'
+          - '9876'
+          - '5555'
+          - '1111'
+          - '7777'
+    time_dimensions:
+      - name: CREATED
+        synonyms:
+          - Created Time
+          - Database Created
+        description: When the database was created.
+        expr: CREATED
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-01-01 00:00:00.000000+00:00'
+          - '2024-02-01 00:00:00.000000+00:00'
+          - '2024-03-01 00:00:00.000000+00:00'
+          - '2024-04-01 00:00:00.000000+00:00'
+          - '2024-05-01 00:00:00.000000+00:00'
+      - name: LAST_ALTERED
+        synonyms:
+          - Modified Time
+          - Last Modified
+        description: When the database was last modified.
+        expr: LAST_ALTERED
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-08-31 06:24:10.392000+00:00'
+          - '2024-10-10 05:54:26.670000+00:00'
+          - '2024-11-13 07:42:17.887000+00:00'
+          - '2024-09-07 18:05:16.642000+00:00'
+          - '2024-09-07 13:34:14.314000+00:00'
+      - name: DELETED
+        synonyms:
+          - Deleted Time
+          - Database Deleted
+        description: When the database was deleted (if applicable).
+        expr: DELETED
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - "N/A"
+          - "N/A"
+          - '2024-12-01 00:00:00.000000+00:00'
+          - "N/A"
+          - "N/A"
+  - name: SCHEMATA
+    description: This Account Usage view displays information about schemas in the account.
+    base_table:
+      database: SNOWFLAKE
+      schema: ACCOUNT_USAGE
+      table: SCHEMATA
+    primary_key:
+      columns:
+        - SCHEMA_ID
+    dimensions:
+      - name: CATALOG_NAME
+        synonyms:
+          - Database
+          - Database Name
+          - Catalog
+        description: Name of the database containing the schema.
+        expr: CATALOG_NAME
+        data_type: VARCHAR
+        sample_values:
+          - PROD_DB
+          - TEST_DB
+          - DEV_DB
+          - ANALYTICS_DB
+          - STAGING_DB
+      - name: SCHEMA_NAME
+        synonyms:
+          - Schema
+          - Schema Name
+        description: Name of the schema.
+        expr: SCHEMA_NAME
+        data_type: VARCHAR
+        sample_values:
+          - PUBLIC
+          - RAW
+          - STAGING
+          - MART
+          - BRONZE
+      - name: SCHEMA_OWNER
+        synonyms:
+          - Owner
+          - Schema Owner
+        description: Owner of the schema.
+        expr: SCHEMA_OWNER
+        data_type: VARCHAR
+        sample_values:
+          - SYSADMIN
+          - ACCOUNTADMIN
+          - SCHEMA_ADMIN
+          - DATA_ENGINEER
+          - ANALYST_ROLE
+      - name: IS_TRANSIENT
+        synonyms:
+          - Is Transient
+          - Transient Schema
+        description: Whether the schema is transient.
+        expr: IS_TRANSIENT
+        data_type: VARCHAR
+        sample_values:
+          - NO
+          - YES
+      - name: IS_MANAGED_ACCESS
+        synonyms:
+          - Managed Access
+          - Is Managed
+        description: Whether the schema uses managed access.
+        expr: IS_MANAGED_ACCESS
+        data_type: VARCHAR
+        sample_values:
+          - NO
+          - YES
+      - name: COMMENT
+        synonyms:
+          - Description
+          - Schema Comment
+        description: Comment or description of the schema.
+        expr: COMMENT
+        data_type: VARCHAR
+        sample_values:
+          - "Public schema for general access"
+          - "Raw data landing zone"
+          - "Staging area for transformations"
+          - "Data mart for analytics"
+          - "Bronze layer for data lake"
+      - name: RETENTION_TIME
+        synonyms:
+          - Retention Time
+          - Time Travel Days
+        description: Default retention time for Time Travel in days.
+        expr: RETENTION_TIME
+        data_type: NUMBER
+        sample_values:
+          - '1'
+          - '7'
+          - '0'
+          - '1'
+          - '3'
+      - name: CATALOG_ID
+        synonyms:
+          - Database ID
+          - Catalog ID
+        description: Internal identifier for the database.
+        expr: CATALOG_ID
+        data_type: NUMBER
+        sample_values:
+          - '1234'
+          - '9876'
+          - '5555'
+          - '1111'
+          - '7777'
+      - name: SCHEMA_ID
+        synonyms:
+          - Schema ID
+        description: Internal identifier for the schema.
+        expr: SCHEMA_ID
+        data_type: NUMBER
+        sample_values:
+          - '12345'
+          - '98765'
+          - '55555'
+          - '11111'
+          - '77777'
+      - name: DEFAULT_CHARACTER_SET_CATALOG
+        synonyms:
+          - Default Character Set Catalog
+          - Character Set Catalog
+        description: Default character set catalog for the schema.
+        expr: DEFAULT_CHARACTER_SET_CATALOG
+        data_type: VARCHAR
+        sample_values:
+          - "N/A"
+          - "N/A"
+          - "N/A"
+          - "N/A"
+          - "N/A"
+      - name: DEFAULT_CHARACTER_SET_SCHEMA
+        synonyms:
+          - Default Character Set Schema
+          - Character Set Schema
+        description: Default character set schema for the schema.
+        expr: DEFAULT_CHARACTER_SET_SCHEMA
+        data_type: VARCHAR
+        sample_values:
+          - "N/A"
+          - "N/A"
+          - "N/A"
+          - "N/A"
+          - "N/A"
+      - name: DEFAULT_CHARACTER_SET_NAME
+        synonyms:
+          - Default Character Set Name
+          - Character Set Name
+        description: Default character set name for the schema.
+        expr: DEFAULT_CHARACTER_SET_NAME
+        data_type: VARCHAR
+        sample_values:
+          - "N/A"
+          - "N/A"
+          - "N/A"
+          - "N/A"
+          - "N/A"
+      - name: SQL_PATH
+        synonyms:
+          - SQL Path
+          - Path
+        description: SQL path for the schema.
+        expr: SQL_PATH
+        data_type: VARCHAR
+        sample_values:
+          - "N/A"
+          - "N/A"
+          - "N/A"
+          - "N/A"
+          - "N/A"
+      - name: OWNER_ROLE_TYPE
+        synonyms:
+          - Owner Role Type
+          - Owner Type
+        description: Type of role that owns the schema.
+        expr: OWNER_ROLE_TYPE
+        data_type: VARCHAR
+        sample_values:
+          - "ROLE"
+          - "APPLICATION_ROLE"
+          - "DATABASE_ROLE"
+          - "ROLE"
+          - "ROLE"
+      - name: SCHEMA_TYPE
+        synonyms:
+          - Schema Type
+          - Type
+        description: Type of schema.
+        expr: SCHEMA_TYPE
+        data_type: VARCHAR
+        sample_values:
+          - "STANDARD"
+          - "MANAGED"
+          - "SHARED"
+          - "STANDARD"
+          - "STANDARD"
+      - name: VERSION_NAME
+        synonyms:
+          - Version Name
+          - Version
+        description: Version name of the schema.
+        expr: VERSION_NAME
+        data_type: VARCHAR
+        sample_values:
+          - "N/A"
+          - "V1.0"
+          - "N/A"
+          - "V2.1"
+          - "N/A"
+      - name: VERSIONED_SCHEMA_ID
+        synonyms:
+          - Versioned Schema ID
+          - Version ID
+        description: Identifier for the versioned schema.
+        expr: VERSIONED_SCHEMA_ID
+        data_type: NUMBER
+        sample_values:
+          - "N/A"
+          - '54321'
+          - "N/A"
+          - '87654'
+          - "N/A"
+      - name: OBJECT_VISIBILITY
+        synonyms:
+          - Object Visibility
+          - Visibility
+        description: Visibility settings of the schema object.
+        expr: OBJECT_VISIBILITY
+        data_type: OBJECT
+        sample_values:
+          - "{}"
+          - "{}"
+          - "{}"
+          - "{}"
+          - "{}"
+      - name: REPLICABLE_WITH_FAILOVER_GROUPS
+        synonyms:
+          - Replicable With Failover
+          - Failover Groups
+        description: Whether schema is replicable with failover groups.
+        expr: REPLICABLE_WITH_FAILOVER_GROUPS
+        data_type: VARCHAR
+        sample_values:
+          - "N/A"
+          - "YES"
+          - "NO"
+          - "N/A"
+          - "YES"
+    time_dimensions:
+      - name: CREATED
+        synonyms:
+          - Created Time
+          - Schema Created
+        description: When the schema was created.
+        expr: CREATED
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-01-01 01:00:00.000000+00:00'
+          - '2024-02-01 01:00:00.000000+00:00'
+          - '2024-03-01 01:00:00.000000+00:00'
+          - '2024-04-01 01:00:00.000000+00:00'
+          - '2024-05-01 01:00:00.000000+00:00'
+      - name: LAST_ALTERED
+        synonyms:
+          - Modified Time
+          - Last Modified
+        description: When the schema was last modified.
+        expr: LAST_ALTERED
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-08-31 06:24:10.392000+00:00'
+          - '2024-10-10 05:54:26.670000+00:00'
+          - '2024-11-13 07:42:17.887000+00:00'
+          - '2024-09-07 18:05:16.642000+00:00'
+          - '2024-09-07 13:34:14.314000+00:00'
+      - name: DELETED
+        synonyms:
+          - Deleted Time
+          - Schema Deleted
+        description: When the schema was deleted (if applicable).
+        expr: DELETED
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - "N/A"
+          - "N/A"
+          - '2024-12-01 01:00:00.000000+00:00'
+          - "N/A"
+          - "N/A"
+  - name: TABLES
+    description: This Account Usage view displays information about tables and views in the account.
+    base_table:
+      database: SNOWFLAKE
+      schema: ACCOUNT_USAGE
+      table: TABLES
+    primary_key:
+      columns:
+        - TABLE_ID
+    dimensions:
+      - name: TABLE_NAME
+        synonyms:
+          - Table
+          - Table Name
+        description: Name of the table or view.
+        expr: TABLE_NAME
+        data_type: VARCHAR
+        sample_values:
+          - CUSTOMERS
+          - ORDERS
+          - PRODUCTS
+          - SALES
+          - INVENTORY
+      - name: TABLE_SCHEMA
+        synonyms:
+          - Schema
+          - Schema Name
+        description: Schema that the table belongs to.
+        expr: TABLE_SCHEMA
+        data_type: VARCHAR
+        sample_values:
+          - PUBLIC
+          - RAW
+          - STAGING
+          - MART
+          - BRONZE
+      - name: TABLE_CATALOG
+        synonyms:
+          - Database
+          - Catalog
+        description: Database that the table belongs to.
+        expr: TABLE_CATALOG
+        data_type: VARCHAR
+        sample_values:
+          - PROD_DB
+          - TEST_DB
+          - DEV_DB
+          - ANALYTICS_DB
+          - STAGING_DB
+      - name: TABLE_OWNER
+        synonyms:
+          - Owner
+          - Table Owner
+        description: Owner of the table.
+        expr: TABLE_OWNER
+        data_type: VARCHAR
+        sample_values:
+          - SYSADMIN
+          - ACCOUNTADMIN
+          - DATA_ENGINEER
+          - ANALYST_ROLE
+          - ETL_ROLE
+      - name: TABLE_TYPE
+        synonyms:
+          - Type
+          - Table Type
+        description: Type of table (BASE TABLE, VIEW, MATERIALIZED VIEW, etc.).
+        expr: TABLE_TYPE
+        data_type: VARCHAR
+        sample_values:
+          - BASE TABLE
+          - VIEW
+          - MATERIALIZED VIEW
+          - TEMPORARY TABLE
+          - EXTERNAL TABLE
+      - name: IS_TRANSIENT
+        synonyms:
+          - Is Transient
+          - Transient Table
+        description: Whether the table is transient.
+        expr: IS_TRANSIENT
+        data_type: VARCHAR
+        sample_values:
+          - NO
+          - YES
+      - name: CLUSTERING_KEY
+        synonyms:
+          - Clustering Key
+          - Cluster Key
+        description: Clustering key(s) defined for the table.
+        expr: CLUSTERING_KEY
+        data_type: VARCHAR
+        sample_values:
+          - "N/A"
+          - "ORDER_DATE, CUSTOMER_ID"
+          - "REGION"
+          - "PRODUCT_CATEGORY, CREATED_DATE"
+          - "N/A"
+      - name: COMMENT
+        synonyms:
+          - Description
+          - Table Comment
+        description: Comment or description of the table.
+        expr: COMMENT
+        data_type: VARCHAR
+        sample_values:
+          - "Customer master data"
+          - "Order transaction records"
+          - "Product catalog information"
+          - "Sales fact table"
+          - "Inventory levels"
+      - name: AUTO_CLUSTERING_ON
+        synonyms:
+          - Auto Clustering
+          - Clustering Enabled
+        description: Whether automatic clustering is enabled for the table.
+        expr: AUTO_CLUSTERING_ON
+        data_type: VARCHAR
+        sample_values:
+          - NO
+          - YES
+          - NO
+          - YES
+          - NO
+      - name: IS_ICEBERG
+        synonyms:
+          - Is Iceberg
+          - Iceberg Table
+        description: Whether the table is an Iceberg table.
+        expr: IS_ICEBERG
+        data_type: VARCHAR
+        sample_values:
+          - NO
+          - YES
+          - NO
+          - NO
+          - NO
+      - name: IS_DYNAMIC
+        synonyms:
+          - Is Dynamic
+          - Dynamic Table
+        description: Whether the table is a dynamic table.
+        expr: IS_DYNAMIC
+        data_type: VARCHAR
+        sample_values:
+          - NO
+          - YES
+          - NO
+          - NO
+          - NO
+      - name: IS_HYBRID
+        synonyms:
+          - Is Hybrid
+          - Hybrid Table
+        description: Whether the table is a hybrid table.
+        expr: IS_HYBRID
+        data_type: VARCHAR
+        sample_values:
+          - NO
+          - YES
+          - NO
+          - NO
+          - NO
+      - name: TABLE_ID
+        synonyms:
+          - Table ID
+        description: Internal identifier for the table.
+        expr: TABLE_ID
+        data_type: NUMBER
+        sample_values:
+          - '123456'
+          - '987654'
+          - '555555'
+          - '111111'
+          - '777777'
+      - name: TABLE_SCHEMA_ID
+        synonyms:
+          - Schema ID
+        description: Internal identifier for the schema.
+        expr: TABLE_SCHEMA_ID
+        data_type: NUMBER
+        sample_values:
+          - '12345'
+          - '98765'
+          - '55555'
+          - '11111'
+          - '77777'
+      - name: TABLE_CATALOG_ID
+        synonyms:
+          - Database ID
+          - Catalog ID
+        description: Internal identifier for the database.
+        expr: TABLE_CATALOG_ID
+        data_type: NUMBER
+        sample_values:
+          - '1234'
+          - '9876'
+          - '5555'
+          - '1111'
+          - '7777'
+      - name: ROW_COUNT
+        synonyms:
+          - Row Count
+          - Record Count
+        description: Approximate number of rows in the table.
+        expr: ROW_COUNT
+        data_type: NUMBER
+        sample_values:
+          - '100000'
+          - '250000'
+          - '50000'
+          - '1000000'
+          - '75000'
+      - name: BYTES
+        synonyms:
+          - Table Size
+          - Storage Bytes
+        description: Approximate number of bytes in the table.
+        expr: BYTES
+        data_type: NUMBER
+        sample_values:
+          - '1073741824'
+          - '2147483648'
+          - '536870912'
+          - '10737418240'
+          - '805306368'
+      - name: RETENTION_TIME
+        synonyms:
+          - Retention Time
+          - Time Travel Days
+        description: Number of days that historical data is retained for Time Travel.
+        expr: RETENTION_TIME
+        data_type: NUMBER
+        sample_values:
+          - '1'
+          - '7'
+          - '0'
+          - '1'
+          - '3'
+      - name: SELF_REFERENCING_COLUMN_NAME
+        synonyms:
+          - Self Referencing Column
+          - Reference Column
+        description: Name of the self-referencing column if table is self-referencing.
+        expr: SELF_REFERENCING_COLUMN_NAME
+        data_type: VARCHAR
+        sample_values:
+          - "N/A"
+          - "PARENT_ID"
+          - "N/A"
+          - "MANAGER_ID"
+          - "N/A"
+      - name: REFERENCE_GENERATION
+        synonyms:
+          - Reference Generation
+          - Generation
+        description: Reference generation for the table.
+        expr: REFERENCE_GENERATION
+        data_type: VARCHAR
+        sample_values:
+          - "N/A"
+          - "SYSTEM"
+          - "N/A"
+          - "USER"
+          - "N/A"
+      - name: USER_DEFINED_TYPE_CATALOG
+        synonyms:
+          - UDT Catalog
+          - User Type Catalog
+        description: Catalog of user-defined type.
+        expr: USER_DEFINED_TYPE_CATALOG
+        data_type: VARCHAR
+        sample_values:
+          - "N/A"
+          - "N/A"
+          - "N/A"
+          - "N/A"
+          - "N/A"
+      - name: USER_DEFINED_TYPE_SCHEMA
+        synonyms:
+          - UDT Schema
+          - User Type Schema
+        description: Schema of user-defined type.
+        expr: USER_DEFINED_TYPE_SCHEMA
+        data_type: VARCHAR
+        sample_values:
+          - "N/A"
+          - "N/A"
+          - "N/A"
+          - "N/A"
+          - "N/A"
+      - name: USER_DEFINED_TYPE_NAME
+        synonyms:
+          - UDT Name
+          - User Type Name
+        description: Name of user-defined type.
+        expr: USER_DEFINED_TYPE_NAME
+        data_type: VARCHAR
+        sample_values:
+          - "N/A"
+          - "N/A"
+          - "N/A"
+          - "N/A"
+          - "N/A"
+      - name: IS_INSERTABLE_INTO
+        synonyms:
+          - Is Insertable
+          - Insertable Into
+        description: Whether the table supports INSERT operations.
+        expr: IS_INSERTABLE_INTO
+        data_type: VARCHAR
+        sample_values:
+          - YES
+          - NO
+          - YES
+          - YES
+          - NO
+      - name: IS_TYPED
+        synonyms:
+          - Is Typed
+          - Typed Table
+        description: Whether the table is a typed table.
+        expr: IS_TYPED
+        data_type: VARCHAR
+        sample_values:
+          - NO
+          - YES
+          - NO
+          - NO
+          - NO
+      - name: COMMIT_ACTION
+        synonyms:
+          - Commit Action
+          - Transaction Action
+        description: Action to take on transaction commit.
+        expr: COMMIT_ACTION
+        data_type: VARCHAR
+        sample_values:
+          - "N/A"
+          - "DELETE"
+          - "N/A"
+          - "PRESERVE"
+          - "N/A"
+      - name: LAST_DDL
+        synonyms:
+          - Last DDL
+          - Last DDL Time
+        description: Timestamp of the last DDL operation.
+        expr: LAST_DDL
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-08-31 06:24:10.392000+00:00'
+          - '2024-10-10 05:54:26.670000+00:00'
+          - '2024-11-13 07:42:17.887000+00:00'
+          - '2024-09-07 18:05:16.642000+00:00'
+          - '2024-09-07 13:34:14.314000+00:00'
+      - name: LAST_DDL_BY
+        synonyms:
+          - Last DDL By
+          - DDL User
+        description: User who performed the last DDL operation.
+        expr: LAST_DDL_BY
+        data_type: VARCHAR
+        sample_values:
+          - SYSADMIN
+          - DATA_ENGINEER
+          - ANALYST_ROLE
+          - DEVELOPER
+          - ETL_ROLE
+      - name: OWNER_ROLE_TYPE
+        synonyms:
+          - Owner Role Type
+          - Owner Type
+        description: Type of role that owns the table.
+        expr: OWNER_ROLE_TYPE
+        data_type: VARCHAR
+        sample_values:
+          - "ROLE"
+          - "APPLICATION_ROLE"
+          - "DATABASE_ROLE"
+          - "ROLE"
+          - "ROLE"
+      - name: INSTANCE_ID
+        synonyms:
+          - Instance ID
+          - Instance
+        description: Instance identifier for the table.
+        expr: INSTANCE_ID
+        data_type: NUMBER
+        sample_values:
+          - '1'
+          - '2'
+          - '3'
+          - '4'
+          - '5'
+    time_dimensions:
+      - name: CREATED
+        synonyms:
+          - Created Time
+          - Table Created
+        description: When the table was created.
+        expr: CREATED
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-01-01 02:00:00.000000+00:00'
+          - '2024-02-01 02:00:00.000000+00:00'
+          - '2024-03-01 02:00:00.000000+00:00'
+          - '2024-04-01 02:00:00.000000+00:00'
+          - '2024-05-01 02:00:00.000000+00:00'
+      - name: LAST_ALTERED
+        synonyms:
+          - Modified Time
+          - Last Modified
+        description: When the table was last modified.
+        expr: LAST_ALTERED
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-08-31 06:24:10.392000+00:00'
+          - '2024-10-10 05:54:26.670000+00:00'
+          - '2024-11-13 07:42:17.887000+00:00'
+          - '2024-09-07 18:05:16.642000+00:00'
+          - '2024-09-07 13:34:14.314000+00:00'
+      - name: DELETED
+        synonyms:
+          - Deleted Time
+          - Table Deleted
+        description: When the table was deleted (if applicable).
+        expr: DELETED
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - "N/A"
+          - "N/A"
+          - '2024-12-01 02:00:00.000000+00:00'
+          - "N/A"
+          - "N/A"
+  - name: VIEWS
+    description: This Account Usage view displays information about views in the account.
+    base_table:
+      database: SNOWFLAKE
+      schema: ACCOUNT_USAGE
+      table: VIEWS
+    primary_key:
+      columns:
+        - TABLE_ID
+    dimensions:
+      - name: TABLE_NAME
+        synonyms:
+          - View Name
+          - View
+        description: Name of the view.
+        expr: TABLE_NAME
+        data_type: VARCHAR
+        sample_values:
+          - CUSTOMER_360_VIEW
+          - SALES_SUMMARY_VIEW
+          - PRODUCT_CATALOG_VIEW
+          - ORDER_DETAILS_VIEW
+          - INVENTORY_STATUS_VIEW
+      - name: TABLE_SCHEMA
+        synonyms:
+          - Schema
+          - Schema Name
+        description: Schema that the view belongs to.
+        expr: TABLE_SCHEMA
+        data_type: VARCHAR
+        sample_values:
+          - PUBLIC
+          - VIEWS
+          - MARTS
+          - ANALYTICS
+          - REPORTING
+      - name: TABLE_CATALOG
+        synonyms:
+          - Database
+          - Catalog
+        description: Database that the view belongs to.
+        expr: TABLE_CATALOG
+        data_type: VARCHAR
+        sample_values:
+          - PROD_DB
+          - ANALYTICS_DB
+          - REPORTING_DB
+          - MART_DB
+          - VIEW_DB
+      - name: TABLE_OWNER
+        synonyms:
+          - Owner
+          - View Owner
+        description: Owner of the view.
+        expr: TABLE_OWNER
+        data_type: VARCHAR
+        sample_values:
+          - SYSADMIN
+          - ANALYST_ROLE
+          - VIEW_ADMIN
+          - DATA_ENGINEER
+          - REPORTING_ROLE
+      - name: VIEW_DEFINITION
+        synonyms:
+          - Definition
+          - View Definition
+          - SQL Definition
+        description: SQL definition of the view.
+        expr: VIEW_DEFINITION
+        data_type: VARCHAR
+        sample_values:
+          - "SELECT c.*, o.total_orders FROM customers c LEFT JOIN order_summary o ON c.id = o.customer_id"
+          - "SELECT product_id, SUM(quantity) as total_sold FROM sales GROUP BY product_id"
+          - "SELECT * FROM products WHERE status = 'ACTIVE'"
+          - "SELECT o.*, c.customer_name FROM orders o JOIN customers c ON o.customer_id = c.id"
+          - "SELECT warehouse_id, SUM(quantity) as total_inventory FROM inventory GROUP BY warehouse_id"
+      - name: CHECK_OPTION
+        synonyms:
+          - Check Option
+        description: Check option for the view (WITH CHECK OPTION).
+        expr: CHECK_OPTION
+        data_type: VARCHAR
+        sample_values:
+          - NONE
+          - CASCADED
+          - LOCAL
+          - NONE
+          - NONE
+      - name: IS_UPDATABLE
+        synonyms:
+          - Updatable
+          - Is Updatable
+        description: Whether the view is updatable.
+        expr: IS_UPDATABLE
+        data_type: VARCHAR
+        sample_values:
+          - NO
+          - YES
+          - NO
+          - NO
+          - YES
+      - name: IS_SECURE
+        synonyms:
+          - Secure
+          - Is Secure
+        description: Whether the view is a secure view.
+        expr: IS_SECURE
+        data_type: VARCHAR
+        sample_values:
+          - NO
+          - YES
+          - NO
+          - YES
+          - NO
+      - name: COMMENT
+        synonyms:
+          - Description
+          - View Comment
+        description: Comment or description of the view.
+        expr: COMMENT
+        data_type: VARCHAR
+        sample_values:
+          - "360-degree customer view with order history"
+          - "Aggregated sales metrics by product"
+          - "Active product catalog"
+          - "Detailed order information with customer data"
+          - "Current inventory levels by warehouse"
+      - name: TABLE_ID
+        synonyms:
+          - View ID
+          - Table ID
+        description: Internal identifier for the view.
+        expr: TABLE_ID
+        data_type: NUMBER
+        sample_values:
+          - '123456'
+          - '987654'
+          - '555555'
+          - '111111'
+          - '777777'
+      - name: TABLE_SCHEMA_ID
+        synonyms:
+          - Schema ID
+        description: Internal identifier for the schema.
+        expr: TABLE_SCHEMA_ID
+        data_type: NUMBER
+        sample_values:
+          - '12345'
+          - '98765'
+          - '55555'
+          - '11111'
+          - '77777'
+      - name: TABLE_CATALOG_ID
+        synonyms:
+          - Database ID
+          - Catalog ID
+        description: Internal identifier for the database.
+        expr: TABLE_CATALOG_ID
+        data_type: NUMBER
+        sample_values:
+          - '1234'
+          - '9876'
+          - '5555'
+          - '1111'
+          - '7777'
+      - name: INSERTABLE_INTO
+        synonyms:
+          - Insertable Into
+          - Is Insertable
+        description: Whether the view supports INSERT operations.
+        expr: INSERTABLE_INTO
+        data_type: VARCHAR
+        sample_values:
+          - NO
+          - YES
+          - NO
+          - NO
+          - YES
+      - name: LAST_DDL
+        synonyms:
+          - Last DDL
+          - Last DDL Time
+        description: Timestamp of the last DDL operation on the view.
+        expr: LAST_DDL
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-08-31 06:24:10.392000+00:00'
+          - '2024-10-10 05:54:26.670000+00:00'
+          - '2024-11-13 07:42:17.887000+00:00'
+          - '2024-09-07 18:05:16.642000+00:00'
+          - '2024-09-07 13:34:14.314000+00:00'
+      - name: LAST_DDL_BY
+        synonyms:
+          - Last DDL By
+          - DDL User
+        description: User who performed the last DDL operation on the view.
+        expr: LAST_DDL_BY
+        data_type: VARCHAR
+        sample_values:
+          - SYSADMIN
+          - DATA_ENGINEER
+          - ANALYST_ROLE
+          - DEVELOPER
+          - VIEW_ADMIN
+      - name: OWNER_ROLE_TYPE
+        synonyms:
+          - Owner Role Type
+          - Owner Type
+        description: Type of role that owns the view.
+        expr: OWNER_ROLE_TYPE
+        data_type: VARCHAR
+        sample_values:
+          - "ROLE"
+          - "APPLICATION_ROLE"
+          - "DATABASE_ROLE"
+          - "ROLE"
+          - "ROLE"
+      - name: INSTANCE_ID
+        synonyms:
+          - Instance ID
+          - Instance
+        description: Instance identifier for the view.
+        expr: INSTANCE_ID
+        data_type: NUMBER
+        sample_values:
+          - '1'
+          - '2'
+          - '3'
+          - '4'
+          - '5'
+    time_dimensions:
+      - name: CREATED
+        synonyms:
+          - Created Time
+          - View Created
+        description: When the view was created.
+        expr: CREATED
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-01-01 03:00:00.000000+00:00'
+          - '2024-02-01 03:00:00.000000+00:00'
+          - '2024-03-01 03:00:00.000000+00:00'
+          - '2024-04-01 03:00:00.000000+00:00'
+          - '2024-05-01 03:00:00.000000+00:00'
+      - name: LAST_ALTERED
+        synonyms:
+          - Modified Time
+          - Last Modified
+        description: When the view was last modified.
+        expr: LAST_ALTERED
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-08-31 06:24:10.392000+00:00'
+          - '2024-10-10 05:54:26.670000+00:00'
+          - '2024-11-13 07:42:17.887000+00:00'
+          - '2024-09-07 18:05:16.642000+00:00'
+          - '2024-09-07 13:34:14.314000+00:00'
+      - name: DELETED
+        synonyms:
+          - Deleted Time
+          - View Deleted
+        description: When the view was deleted (if applicable).
+        expr: DELETED
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - "N/A"
+          - "N/A"
+          - '2024-12-01 03:00:00.000000+00:00'
+          - "N/A"
+          - "N/A"
+  - name: COLUMNS
+    description: This Account Usage view displays information about columns in tables and views.
+    base_table:
+      database: SNOWFLAKE
+      schema: ACCOUNT_USAGE
+      table: COLUMNS
+    primary_key:
+      columns:
+        - COLUMN_ID
+    dimensions:
+      - name: COLUMN_NAME
+        synonyms:
+          - Column
+          - Field Name
+        description: Name of the column.
+        expr: COLUMN_NAME
+        data_type: VARCHAR
+        sample_values:
+          - CUSTOMER_ID
+          - ORDER_DATE
+          - PRODUCT_NAME
+          - PRICE
+          - QUANTITY
+      - name: TABLE_NAME
+        synonyms:
+          - Table
+          - Table Name
+        description: Name of the table or view containing the column.
+        expr: TABLE_NAME
+        data_type: VARCHAR
+        sample_values:
+          - CUSTOMERS
+          - ORDERS
+          - PRODUCTS
+          - SALES
+          - INVENTORY
+      - name: TABLE_SCHEMA
+        synonyms:
+          - Schema
+          - Schema Name
+        description: Schema containing the table.
+        expr: TABLE_SCHEMA
+        data_type: VARCHAR
+        sample_values:
+          - PUBLIC
+          - RAW
+          - STAGING
+          - MART
+          - BRONZE
+      - name: TABLE_CATALOG
+        synonyms:
+          - Database
+          - Catalog
+        description: Database containing the table.
+        expr: TABLE_CATALOG
+        data_type: VARCHAR
+        sample_values:
+          - PROD_DB
+          - TEST_DB
+          - DEV_DB
+          - ANALYTICS_DB
+          - STAGING_DB
+      - name: DATA_TYPE
+        synonyms:
+          - Type
+          - Data Type
+          - Column Type
+        description: Data type of the column.
+        expr: DATA_TYPE
+        data_type: VARCHAR
+        sample_values:
+          - VARCHAR
+          - NUMBER
+          - DATE
+          - TIMESTAMP_LTZ
+          - BOOLEAN
+      - name: IS_NULLABLE
+        synonyms:
+          - Nullable
+          - Allows Null
+        description: Whether the column allows NULL values.
+        expr: IS_NULLABLE
+        data_type: VARCHAR
+        sample_values:
+          - YES
+          - NO
+          - YES
+          - NO
+          - YES
+      - name: COLUMN_DEFAULT
+        synonyms:
+          - Default Value
+          - Default
+        description: Default value for the column.
+        expr: COLUMN_DEFAULT
+        data_type: VARCHAR
+        sample_values:
+          - "N/A"
+          - "CURRENT_TIMESTAMP()"
+          - "0"
+          - "N/A"
+          - "TRUE"
+      - name: IS_IDENTITY
+        synonyms:
+          - Identity
+          - Is Identity
+        description: Whether the column is an identity column.
+        expr: IS_IDENTITY
+        data_type: VARCHAR
+        sample_values:
+          - NO
+          - YES
+          - NO
+          - NO
+          - NO
+      - name: IDENTITY_GENERATION
+        synonyms:
+          - Identity Generation
+        description: Type of identity generation (ALWAYS, BY DEFAULT).
+        expr: IDENTITY_GENERATION
+        data_type: VARCHAR
+        sample_values:
+          - "N/A"
+          - "BY DEFAULT"
+          - "N/A"
+          - "N/A"
+          - "N/A"
+      - name: IDENTITY_START
+        synonyms:
+          - Identity Start
+          - Start Value
+        description: Starting value for identity column.
+        expr: IDENTITY_START
+        data_type: VARCHAR
+        sample_values:
+          - "N/A"
+          - "1"
+          - "N/A"
+          - "N/A"
+          - "N/A"
+      - name: IDENTITY_INCREMENT
+        synonyms:
+          - Identity Increment
+          - Increment Value
+        description: Increment value for identity column.
+        expr: IDENTITY_INCREMENT
+        data_type: VARCHAR
+        sample_values:
+          - "N/A"
+          - "1"
+          - "N/A"
+          - "N/A"
+          - "N/A"
+      - name: COMMENT
+        synonyms:
+          - Description
+          - Column Comment
+        description: Comment or description of the column.
+        expr: COMMENT
+        data_type: VARCHAR
+        sample_values:
+          - "Unique customer identifier"
+          - "Date when order was placed"
+          - "Name of the product"
+          - "Unit price in USD"
+          - "Quantity ordered"
+      - name: ORDINAL_POSITION
+        synonyms:
+          - Position
+          - Column Position
+        description: Ordinal position of the column in the table.
+        expr: ORDINAL_POSITION
+        data_type: NUMBER
+        sample_values:
+          - '1'
+          - '2'
+          - '3'
+          - '4'
+          - '5'
+      - name: CHARACTER_MAXIMUM_LENGTH
+        synonyms:
+          - Max Length
+          - Character Length
+        description: Maximum length for character columns.
+        expr: CHARACTER_MAXIMUM_LENGTH
+        data_type: NUMBER
+        sample_values:
+          - '100'
+          - "N/A"
+          - '255'
+          - "N/A"
+          - "N/A"
+      - name: CHARACTER_OCTET_LENGTH
+        synonyms:
+          - Octet Length
+          - Byte Length
+        description: Maximum byte length for character columns.
+        expr: CHARACTER_OCTET_LENGTH
+        data_type: NUMBER
+        sample_values:
+          - '400'
+          - "N/A"
+          - '1020'
+          - "N/A"
+          - "N/A"
+      - name: NUMERIC_PRECISION
+        synonyms:
+          - Precision
+          - Numeric Precision
+        description: Precision for numeric columns.
+        expr: NUMERIC_PRECISION
+        data_type: NUMBER
+        sample_values:
+          - "N/A"
+          - '38'
+          - "N/A"
+          - '10'
+          - "N/A"
+      - name: NUMERIC_PRECISION_RADIX
+        synonyms:
+          - Precision Radix
+          - Radix
+        description: Radix for numeric precision.
+        expr: NUMERIC_PRECISION_RADIX
+        data_type: NUMBER
+        sample_values:
+          - "N/A"
+          - '10'
+          - "N/A"
+          - '10'
+          - "N/A"
+      - name: NUMERIC_SCALE
+        synonyms:
+          - Scale
+          - Numeric Scale
+        description: Scale for numeric columns.
+        expr: NUMERIC_SCALE
+        data_type: NUMBER
+        sample_values:
+          - "N/A"
+          - '0'
+          - "N/A"
+          - '2'
+          - "N/A"
+      - name: COLUMN_ID
+        synonyms:
+          - Column ID
+        description: Internal identifier for the column.
+        expr: COLUMN_ID
+        data_type: NUMBER
+        sample_values:
+          - '1234567'
+          - '9876543'
+          - '5555555'
+          - '1111111'
+          - '7777777'
+      - name: TABLE_ID
+        synonyms:
+          - Table ID
+        description: Internal identifier for the table.
+        expr: TABLE_ID
+        data_type: NUMBER
+        sample_values:
+          - '123456'
+          - '987654'
+          - '555555'
+          - '111111'
+          - '777777'
+      - name: TABLE_SCHEMA_ID
+        synonyms:
+          - Schema ID
+        description: Internal identifier for the schema.
+        expr: TABLE_SCHEMA_ID
+        data_type: NUMBER
+        sample_values:
+          - '12345'
+          - '98765'
+          - '55555'
+          - '11111'
+          - '77777'
+      - name: TABLE_CATALOG_ID
+        synonyms:
+          - Database ID
+          - Catalog ID
+        description: Internal identifier for the database.
+        expr: TABLE_CATALOG_ID
+        data_type: NUMBER
+        sample_values:
+          - '1234'
+          - '9876'
+          - '5555'
+          - '1111'
+          - '7777'
+
+  - name: FUNCTIONS
+    description: This Account Usage view displays information about user-defined functions in the account.
+    base_table:
+      database: SNOWFLAKE
+      schema: ACCOUNT_USAGE
+      table: FUNCTIONS
+    primary_key:
+      columns:
+        - FUNCTION_ID
+    dimensions:
+      - name: FUNCTION_NAME
+        synonyms:
+          - Function
+          - Function Name
+        description: Name of the function.
+        expr: FUNCTION_NAME
+        data_type: VARCHAR
+        sample_values:
+          - CALCULATE_TAX
+          - FORMAT_PHONE
+          - VALIDATE_EMAIL
+          - CONVERT_CURRENCY
+          - PARSE_JSON_FIELD
+      - name: FUNCTION_SCHEMA
+        synonyms:
+          - Schema
+          - Function Schema
+        description: Schema containing the function.
+        expr: FUNCTION_SCHEMA
+        data_type: VARCHAR
+        sample_values:
+          - PUBLIC
+          - UTILS
+          - FUNCTIONS
+          - HELPERS
+          - TRANSFORMATIONS
+      - name: FUNCTION_CATALOG
+        synonyms:
+          - Database
+          - Function Database
+        description: Database containing the function.
+        expr: FUNCTION_CATALOG
+        data_type: VARCHAR
+        sample_values:
+          - PROD_DB
+          - UTILS_DB
+          - FUNCTIONS_DB
+          - SHARED_DB
+          - CUSTOM_DB
+      - name: FUNCTION_OWNER
+        synonyms:
+          - Owner
+          - Function Owner
+        description: Owner of the function.
+        expr: FUNCTION_OWNER
+        data_type: VARCHAR
+        sample_values:
+          - SYSADMIN
+          - FUNCTION_ADMIN
+          - DATA_ENGINEER
+          - DEVELOPER_ROLE
+          - ANALYST_ROLE
+      - name: FUNCTION_LANGUAGE
+        synonyms:
+          - Language
+          - Function Language
+        description: Programming language of the function.
+        expr: FUNCTION_LANGUAGE
+        data_type: VARCHAR
+        sample_values:
+          - SQL
+          - JAVASCRIPT
+          - PYTHON
+          - JAVA
+          - SCALA
+      - name: FUNCTION_DEFINITION
+        synonyms:
+          - Definition
+          - Function Definition
+          - Code
+        description: Definition/code of the function.
+        expr: FUNCTION_DEFINITION
+        data_type: VARCHAR
+        sample_values:
+          - "RETURNS NUMBER(10,2) AS $$ amount * 0.08 $$"
+          - "RETURNS STRING AS $$ return phone.replace(/[^0-9]/g, ''); $$"
+          - "RETURNS BOOLEAN AS $$ SELECT REGEXP_LIKE(email, '^[^@]+@[^@]+\\.[^@]+$') $$"
+          - "RETURNS NUMBER(10,2) AS $$ amount * exchange_rate $$"
+          - "RETURNS STRING AS $$ return JSON.parse(json_str)[field_name]; $$"
+      - name: DATA_TYPE
+        synonyms:
+          - Return Type
+          - Data Type
+        description: Return data type of the function.
+        expr: DATA_TYPE
+        data_type: VARCHAR
+        sample_values:
+          - NUMBER
+          - VARCHAR
+          - BOOLEAN
+          - DATE
+          - VARIANT
+      - name: ARGUMENT_SIGNATURE
+        synonyms:
+          - Arguments
+          - Function Signature
+          - Parameters
+        description: Argument signature of the function.
+        expr: ARGUMENT_SIGNATURE
+        data_type: VARCHAR
+        sample_values:
+          - "(AMOUNT NUMBER(10,2))"
+          - "(PHONE VARCHAR)"
+          - "(EMAIL VARCHAR)"
+          - "(AMOUNT NUMBER(10,2), EXCHANGE_RATE NUMBER(10,4))"
+          - "(JSON_STR VARCHAR, FIELD_NAME VARCHAR)"
+      - name: IS_BUILTIN
+        synonyms:
+          - Built-in
+          - Is Built-in
+        description: Whether the function is a built-in system function.
+        expr: IS_BUILTIN
+        data_type: VARCHAR
+        sample_values:
+          - NO
+          - YES
+          - NO
+          - NO
+          - NO
+      - name: IS_AGGREGATE
+        synonyms:
+          - Aggregate
+          - Is Aggregate
+        description: Whether the function is an aggregate function.
+        expr: IS_AGGREGATE
+        data_type: VARCHAR
+        sample_values:
+          - NO
+          - YES
+          - NO
+          - NO
+          - NO
+      - name: IS_ANSI
+        synonyms:
+          - ANSI
+          - Is ANSI
+        description: Whether the function follows ANSI standards.
+        expr: IS_ANSI
+        data_type: VARCHAR
+        sample_values:
+          - NO
+          - YES
+          - NO
+          - NO
+          - NO
+      - name: MIN_NUM_ARGUMENTS
+        synonyms:
+          - Min Arguments
+          - Minimum Args
+        description: Minimum number of arguments required.
+        expr: MIN_NUM_ARGUMENTS
+        data_type: NUMBER
+        sample_values:
+          - '1'
+          - '2'
+          - '1'
+          - '2'
+          - '2'
+      - name: MAX_NUM_ARGUMENTS
+        synonyms:
+          - Max Arguments
+          - Maximum Args
+        description: Maximum number of arguments allowed.
+        expr: MAX_NUM_ARGUMENTS
+        data_type: NUMBER
+        sample_values:
+          - '1'
+          - '2'
+          - '1'
+          - '2'
+          - '2'
+      - name: COMMENT
+        synonyms:
+          - Description
+          - Function Comment
+        description: Comment or description of the function.
+        expr: COMMENT
+        data_type: VARCHAR
+        sample_values:
+          - "Calculates sales tax for given amount"
+          - "Formats phone number by removing non-digits"
+          - "Validates email address format"
+          - "Converts currency using exchange rate"
+          - "Parses specific field from JSON string"
+      - name: FUNCTION_ID
+        synonyms:
+          - Function ID
+        description: Internal identifier for the function.
+        expr: FUNCTION_ID
+        data_type: NUMBER
+        sample_values:
+          - '12345678'
+          - '98765432'
+          - '55555555'
+          - '11111111'
+          - '77777777'
+      - name: FUNCTION_SCHEMA_ID
+        synonyms:
+          - Schema ID
+        description: Internal identifier for the schema.
+        expr: FUNCTION_SCHEMA_ID
+        data_type: NUMBER
+        sample_values:
+          - '12345'
+          - '98765'
+          - '55555'
+          - '11111'
+          - '77777'
+      - name: FUNCTION_CATALOG_ID
+        synonyms:
+          - Database ID
+          - Catalog ID
+        description: Internal identifier for the database.
+        expr: FUNCTION_CATALOG_ID
+        data_type: NUMBER
+        sample_values:
+          - '1234'
+          - '9876'
+          - '5555'
+          - '1111'
+          - '7777'
+    time_dimensions:
+      - name: CREATED
+        synonyms:
+          - Created Time
+          - Function Created
+        description: When the function was created.
+        expr: CREATED
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-01-01 04:00:00.000000+00:00'
+          - '2024-02-01 04:00:00.000000+00:00'
+          - '2024-03-01 04:00:00.000000+00:00'
+          - '2024-04-01 04:00:00.000000+00:00'
+          - '2024-05-01 04:00:00.000000+00:00'
+      - name: LAST_ALTERED
+        synonyms:
+          - Modified Time
+          - Last Modified
+        description: When the function was last modified.
+        expr: LAST_ALTERED
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-08-31 06:24:10.392000+00:00'
+          - '2024-10-10 05:54:26.670000+00:00'
+          - '2024-11-13 07:42:17.887000+00:00'
+          - '2024-09-07 18:05:16.642000+00:00'
+          - '2024-09-07 13:34:14.314000+00:00'
+      - name: DELETED
+        synonyms:
+          - Deleted Time
+          - Function Deleted
+        description: When the function was deleted (if applicable).
+        expr: DELETED
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - "N/A"
+          - "N/A"
+          - '2024-12-01 04:00:00.000000+00:00'
+          - "N/A"
+          - "N/A"
+  - name: PROCEDURES
+    description: This Account Usage view displays information about stored procedures in the account.
+    base_table:
+      database: SNOWFLAKE
+      schema: ACCOUNT_USAGE
+      table: PROCEDURES
+    primary_key:
+      columns:
+        - PROCEDURE_ID
+    dimensions:
+      - name: PROCEDURE_NAME
+        synonyms:
+          - Procedure
+          - Procedure Name
+          - Stored Procedure
+        description: Name of the stored procedure.
+        expr: PROCEDURE_NAME
+        data_type: VARCHAR
+        sample_values:
+          - PROCESS_DAILY_SALES
+          - UPDATE_INVENTORY
+          - GENERATE_REPORT
+          - CLEANUP_OLD_DATA
+          - SYNC_CUSTOMER_DATA
+      - name: PROCEDURE_SCHEMA
+        synonyms:
+          - Schema
+          - Procedure Schema
+        description: Schema containing the procedure.
+        expr: PROCEDURE_SCHEMA
+        data_type: VARCHAR
+        sample_values:
+          - PUBLIC
+          - PROCEDURES
+          - ETL
+          - AUTOMATION
+          - MAINTENANCE
+      - name: PROCEDURE_CATALOG
+        synonyms:
+          - Database
+          - Procedure Database
+        description: Database containing the procedure.
+        expr: PROCEDURE_CATALOG
+        data_type: VARCHAR
+        sample_values:
+          - PROD_DB
+          - ETL_DB
+          - AUTOMATION_DB
+          - PROCEDURES_DB
+          - UTILITIES_DB
+      - name: PROCEDURE_OWNER
+        synonyms:
+          - Owner
+          - Procedure Owner
+        description: Owner of the procedure.
+        expr: PROCEDURE_OWNER
+        data_type: VARCHAR
+        sample_values:
+          - SYSADMIN
+          - ETL_ADMIN
+          - PROCEDURE_ADMIN
+          - DATA_ENGINEER
+          - AUTOMATION_ROLE
+      - name: PROCEDURE_LANGUAGE
+        synonyms:
+          - Language
+          - Procedure Language
+        description: Programming language of the procedure.
+        expr: PROCEDURE_LANGUAGE
+        data_type: VARCHAR
+        sample_values:
+          - SQL
+          - JAVASCRIPT
+          - PYTHON
+          - JAVA
+          - SCALA
+      - name: PROCEDURE_DEFINITION
+        synonyms:
+          - Definition
+          - Procedure Definition
+          - Code
+        description: Definition/code of the procedure.
+        expr: PROCEDURE_DEFINITION
+        data_type: VARCHAR
+        sample_values:
+          - "BEGIN INSERT INTO sales_summary SELECT ... FROM daily_sales; COMMIT; END;"
+          - "BEGIN UPDATE inventory SET quantity = ... WHERE ...; COMMIT; END;"
+          - "BEGIN CALL generate_monthly_report(current_date()); END;"
+          - "BEGIN DELETE FROM temp_data WHERE created_date < ...; END;"
+          - "BEGIN MERGE INTO customers USING external_data ON ...; END;"
+      - name: ARGUMENT_SIGNATURE
+        synonyms:
+          - Arguments
+          - Procedure Signature
+          - Parameters
+        description: Argument signature of the procedure.
+        expr: ARGUMENT_SIGNATURE
+        data_type: VARCHAR
+        sample_values:
+          - "(PROCESS_DATE DATE)"
+          - "(PRODUCT_ID NUMBER)"
+          - "(REPORT_TYPE VARCHAR, START_DATE DATE)"
+          - "(DAYS_TO_KEEP NUMBER)"
+          - "(SOURCE_SYSTEM VARCHAR)"
+      - name: DATA_TYPE
+        synonyms:
+          - Return Type
+          - Data Type
+        description: Return data type of the procedure.
+        expr: DATA_TYPE
+        data_type: VARCHAR
+        sample_values:
+          - VARCHAR
+          - NUMBER
+          - BOOLEAN
+          - TABLE
+          - VARIANT
+      - name: NULL_HANDLING
+        synonyms:
+          - Null Handling
+        description: How the procedure handles NULL values.
+        expr: NULL_HANDLING
+        data_type: VARCHAR
+        sample_values:
+          - RETURNS_NULL_ON_NULL_INPUT
+          - CALLED_ON_NULL_INPUT
+          - RETURNS_NULL_ON_NULL_INPUT
+          - CALLED_ON_NULL_INPUT
+          - RETURNS_NULL_ON_NULL_INPUT
+      - name: COMMENT
+        synonyms:
+          - Description
+          - Procedure Comment
+        description: Comment or description of the procedure.
+        expr: COMMENT
+        data_type: VARCHAR
+        sample_values:
+          - "Processes daily sales data and updates summary tables"
+          - "Updates inventory quantities based on transactions"
+          - "Generates monthly business reports"
+          - "Cleans up old temporary data"
+          - "Synchronizes customer data from external system"
+      - name: PROCEDURE_ID
+        synonyms:
+          - Procedure ID
+        description: Internal identifier for the procedure.
+        expr: PROCEDURE_ID
+        data_type: NUMBER
+        sample_values:
+          - '12345678'
+          - '98765432'
+          - '55555555'
+          - '11111111'
+          - '77777777'
+      - name: PROCEDURE_SCHEMA_ID
+        synonyms:
+          - Schema ID
+        description: Internal identifier for the schema.
+        expr: PROCEDURE_SCHEMA_ID
+        data_type: NUMBER
+        sample_values:
+          - '12345'
+          - '98765'
+          - '55555'
+          - '11111'
+          - '77777'
+      - name: PROCEDURE_CATALOG_ID
+        synonyms:
+          - Database ID
+          - Catalog ID
+        description: Internal identifier for the database.
+        expr: PROCEDURE_CATALOG_ID
+        data_type: NUMBER
+        sample_values:
+          - '1234'
+          - '9876'
+          - '5555'
+          - '1111'
+          - '7777'
+    time_dimensions:
+      - name: CREATED
+        synonyms:
+          - Created Time
+          - Procedure Created
+        description: When the procedure was created.
+        expr: CREATED
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-01-01 05:00:00.000000+00:00'
+          - '2024-02-01 05:00:00.000000+00:00'
+          - '2024-03-01 05:00:00.000000+00:00'
+          - '2024-04-01 05:00:00.000000+00:00'
+          - '2024-05-01 05:00:00.000000+00:00'
+      - name: LAST_ALTERED
+        synonyms:
+          - Modified Time
+          - Last Modified
+        description: When the procedure was last modified.
+        expr: LAST_ALTERED
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-08-31 06:24:10.392000+00:00'
+          - '2024-10-10 05:54:26.670000+00:00'
+          - '2024-11-13 07:42:17.887000+00:00'
+          - '2024-09-07 18:05:16.642000+00:00'
+          - '2024-09-07 13:34:14.314000+00:00'
+      - name: DELETED
+        synonyms:
+          - Deleted Time
+          - Procedure Deleted
+        description: When the procedure was deleted (if applicable).
+        expr: DELETED
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - "N/A"
+          - "N/A"
+          - '2024-12-01 05:00:00.000000+00:00'
+          - "N/A"
+          - "N/A"
+  - name: STAGES
+    description: This Account Usage view displays information about stages in the account.
+    base_table:
+      database: SNOWFLAKE
+      schema: ACCOUNT_USAGE
+      table: STAGES
+    primary_key:
+      columns:
+        - STAGE_ID
+    dimensions:
+      - name: STAGE_NAME
+        synonyms:
+          - Stage
+          - Stage Name
+        description: Name of the stage.
+        expr: STAGE_NAME
+        data_type: VARCHAR
+        sample_values:
+          - MY_S3_STAGE
+          - AZURE_BLOB_STAGE
+          - GCS_BUCKET_STAGE
+          - INTERNAL_STAGE
+          - ETL_LANDING_STAGE
+      - name: STAGE_SCHEMA
+        synonyms:
+          - Schema
+          - Stage Schema
+        description: Schema containing the stage.
+        expr: STAGE_SCHEMA
+        data_type: VARCHAR
+        sample_values:
+          - PUBLIC
+          - STAGES
+          - LANDING
+          - ETL
+          - DATA_INGESTION
+      - name: STAGE_CATALOG
+        synonyms:
+          - Database
+          - Stage Database
+        description: Database containing the stage.
+        expr: STAGE_CATALOG
+        data_type: VARCHAR
+        sample_values:
+          - PROD_DB
+          - ETL_DB
+          - STAGING_DB
+          - DATA_LAKE_DB
+          - INGESTION_DB
+      - name: STAGE_OWNER
+        synonyms:
+          - Owner
+          - Stage Owner
+        description: Owner of the stage.
+        expr: STAGE_OWNER
+        data_type: VARCHAR
+        sample_values:
+          - SYSADMIN
+          - ETL_ADMIN
+          - STAGE_ADMIN
+          - DATA_ENGINEER
+          - INGESTION_ROLE
+      - name: STAGE_TYPE
+        synonyms:
+          - Type
+          - Stage Type
+        description: Type of stage (INTERNAL, EXTERNAL).
+        expr: STAGE_TYPE
+        data_type: VARCHAR
+        sample_values:
+          - EXTERNAL
+          - EXTERNAL
+          - EXTERNAL
+          - INTERNAL
+          - EXTERNAL
+      - name: STAGE_REGION
+        synonyms:
+          - Region
+          - Cloud Region
+        description: Cloud region where the stage is located.
+        expr: STAGE_REGION
+        data_type: VARCHAR
+        sample_values:
+          - us-east-1
+          - eastus
+          - us-central1
+          - "N/A"
+          - us-west-2
+      - name: STAGE_URL
+        synonyms:
+          - URL
+          - Stage URL
+          - Location
+        description: URL or location of the stage.
+        expr: STAGE_URL
+        data_type: VARCHAR
+        sample_values:
+          - "s3://my-bucket/data/"
+          - "azure://myaccount.blob.core.windows.net/container/"
+          - "gcs://my-gcs-bucket/data/"
+          - "N/A"
+          - "s3://etl-landing/files/"
+      - name: HAS_CREDENTIALS
+        synonyms:
+          - Has Credentials
+          - Credentials Configured
+        description: Whether the stage has credentials configured.
+        expr: HAS_CREDENTIALS
+        data_type: VARCHAR
+        sample_values:
+          - YES
+          - YES
+          - YES
+          - NO
+          - YES
+      - name: HAS_ENCRYPTION_KEY
+        synonyms:
+          - Has Encryption
+          - Encryption Configured
+        description: Whether the stage has encryption key configured.
+        expr: HAS_ENCRYPTION_KEY
+        data_type: VARCHAR
+        sample_values:
+          - YES
+          - NO
+          - YES
+          - NO
+          - NO
+      - name: COMMENT
+        synonyms:
+          - Description
+          - Stage Comment
+        description: Comment or description of the stage.
+        expr: COMMENT
+        data_type: VARCHAR
+        sample_values:
+          - "S3 stage for customer data files"
+          - "Azure blob storage for order data"
+          - "GCS bucket for product catalog"
+          - "Internal stage for temporary files"
+          - "ETL landing zone for batch loads"
+      - name: STAGE_ID
+        synonyms:
+          - Stage ID
+        description: Internal identifier for the stage.
+        expr: STAGE_ID
+        data_type: NUMBER
+        sample_values:
+          - '12345678'
+          - '98765432'
+          - '55555555'
+          - '11111111'
+          - '77777777'
+      - name: STAGE_SCHEMA_ID
+        synonyms:
+          - Schema ID
+        description: Internal identifier for the schema.
+        expr: STAGE_SCHEMA_ID
+        data_type: NUMBER
+        sample_values:
+          - '12345'
+          - '98765'
+          - '55555'
+          - '11111'
+          - '77777'
+      - name: STAGE_CATALOG_ID
+        synonyms:
+          - Database ID
+          - Catalog ID
+        description: Internal identifier for the database.
+        expr: STAGE_CATALOG_ID
+        data_type: NUMBER
+        sample_values:
+          - '1234'
+          - '9876'
+          - '5555'
+          - '1111'
+          - '7777'
+    time_dimensions:
+      - name: CREATED
+        synonyms:
+          - Created Time
+          - Stage Created
+        description: When the stage was created.
+        expr: CREATED
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-01-01 06:00:00.000000+00:00'
+          - '2024-02-01 06:00:00.000000+00:00'
+          - '2024-03-01 06:00:00.000000+00:00'
+          - '2024-04-01 06:00:00.000000+00:00'
+          - '2024-05-01 06:00:00.000000+00:00'
+      - name: LAST_ALTERED
+        synonyms:
+          - Modified Time
+          - Last Modified
+        description: When the stage was last modified.
+        expr: LAST_ALTERED
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-08-31 06:24:10.392000+00:00'
+          - '2024-10-10 05:54:26.670000+00:00'
+          - '2024-11-13 07:42:17.887000+00:00'
+          - '2024-09-07 18:05:16.642000+00:00'
+          - '2024-09-07 13:34:14.314000+00:00'
+      - name: DELETED
+        synonyms:
+          - Deleted Time
+          - Stage Deleted
+        description: When the stage was deleted (if applicable).
+        expr: DELETED
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - "N/A"
+          - "N/A"
+          - '2024-12-01 06:00:00.000000+00:00'
+          - "N/A"
+          - "N/A"
+  - name: FILE_FORMATS
+    description: This Account Usage view displays information about file formats in the account.
+    base_table:
+      database: SNOWFLAKE
+      schema: ACCOUNT_USAGE
+      table: FILE_FORMATS
+    primary_key:
+      columns:
+        - FILE_FORMAT_ID
+    dimensions:
+      - name: FILE_FORMAT_NAME
+        synonyms:
+          - File Format
+          - Format Name
+        description: Name of the file format.
+        expr: FILE_FORMAT_NAME
+        data_type: VARCHAR
+        sample_values:
+          - CSV_FORMAT
+          - JSON_FORMAT
+          - PARQUET_FORMAT
+          - AVRO_FORMAT
+          - PIPE_DELIMITED_FORMAT
+      - name: FILE_FORMAT_SCHEMA
+        synonyms:
+          - Schema
+          - Format Schema
+        description: Schema containing the file format.
+        expr: FILE_FORMAT_SCHEMA
+        data_type: VARCHAR
+        sample_values:
+          - PUBLIC
+          - FILE_FORMATS
+          - ETL
+          - INGESTION
+          - DATA_FORMATS
+      - name: FILE_FORMAT_CATALOG
+        synonyms:
+          - Database
+          - Format Database
+        description: Database containing the file format.
+        expr: FILE_FORMAT_CATALOG
+        data_type: VARCHAR
+        sample_values:
+          - PROD_DB
+          - ETL_DB
+          - FORMATS_DB
+          - INGESTION_DB
+          - SHARED_DB
+      - name: FILE_FORMAT_OWNER
+        synonyms:
+          - Owner
+          - Format Owner
+        description: Owner of the file format.
+        expr: FILE_FORMAT_OWNER
+        data_type: VARCHAR
+        sample_values:
+          - SYSADMIN
+          - ETL_ADMIN
+          - FORMAT_ADMIN
+          - DATA_ENGINEER
+          - INGESTION_ROLE
+      - name: FILE_FORMAT_TYPE
+        synonyms:
+          - Type
+          - Format Type
+        description: Type of file format (CSV, JSON, PARQUET, etc.).
+        expr: FILE_FORMAT_TYPE
+        data_type: VARCHAR
+        sample_values:
+          - CSV
+          - JSON
+          - PARQUET
+          - AVRO
+          - CSV
+      - name: RECORD_DELIMITER
+        synonyms:
+          - Record Delimiter
+          - Row Delimiter
+        description: Character used to separate records/rows.
+        expr: RECORD_DELIMITER
+        data_type: VARCHAR
+        sample_values:
+          - "\\n"
+          - "\\n"
+          - "N/A"
+          - "N/A"
+          - "\\n"
+      - name: FIELD_DELIMITER
+        synonyms:
+          - Field Delimiter
+          - Column Delimiter
+        description: Character used to separate fields/columns.
+        expr: FIELD_DELIMITER
+        data_type: VARCHAR
+        sample_values:
+          - ","
+          - "N/A"
+          - "N/A"
+          - "N/A"
+          - "|"
+      - name: SKIP_HEADER
+        synonyms:
+          - Skip Header
+          - Header Rows
+        description: Number of header rows to skip.
+        expr: SKIP_HEADER
+        data_type: NUMBER
+        sample_values:
+          - '1'
+          - '0'
+          - '0'
+          - '0'
+          - '1'
+      - name: DATE_FORMAT
+        synonyms:
+          - Date Format
+        description: Format string for date values.
+        expr: DATE_FORMAT
+        data_type: VARCHAR
+        sample_values:
+          - "YYYY-MM-DD"
+          - "AUTO"
+          - "N/A"
+          - "N/A"
+          - "MM/DD/YYYY"
+      - name: TIME_FORMAT
+        synonyms:
+          - Time Format
+        description: Format string for time values.
+        expr: TIME_FORMAT
+        data_type: VARCHAR
+        sample_values:
+          - "HH24:MI:SS"
+          - "AUTO"
+          - "N/A"
+          - "N/A"
+          - "HH:MI:SS AM"
+      - name: TIMESTAMP_FORMAT
+        synonyms:
+          - Timestamp Format
+        description: Format string for timestamp values.
+        expr: TIMESTAMP_FORMAT
+        data_type: VARCHAR
+        sample_values:
+          - "YYYY-MM-DD HH24:MI:SS"
+          - "AUTO"
+          - "N/A"
+          - "N/A"
+          - "MM/DD/YYYY HH:MI:SS AM"
+      - name: BINARY_FORMAT
+        synonyms:
+          - Binary Format
+        description: Format for binary data encoding.
+        expr: BINARY_FORMAT
+        data_type: VARCHAR
+        sample_values:
+          - HEX
+          - BASE64
+          - UTF8
+          - HEX
+          - BASE64
+      - name: ESCAPE_CHARACTER
+        synonyms:
+          - Escape Character
+        description: Character used for escaping.
+        expr: ESCAPE_CHARACTER
+        data_type: VARCHAR
+        sample_values:
+          - "\\"
+          - "N/A"
+          - "N/A"
+          - "N/A"
+          - "\\"
+      - name: QUOTE_CHARACTER
+        synonyms:
+          - Quote Character
+        description: Character used for quoting strings.
+        expr: QUOTE_CHARACTER
+        data_type: VARCHAR
+        sample_values:
+          - "\""
+          - "N/A"
+          - "N/A"
+          - "N/A"
+          - "\""
+      - name: NULL_IF
+        synonyms:
+          - Null If
+          - Null Values
+        description: Strings that should be interpreted as NULL.
+        expr: NULL_IF
+        data_type: ARRAY
+        sample_values:
+          - "['NULL', 'null', '']"
+          - "['NULL']"
+          - "[]"
+          - "[]"
+          - "['NULL', 'N/A', '']"
+      - name: COMMENT
+        synonyms:
+          - Description
+          - Format Comment
+        description: Comment or description of the file format.
+        expr: COMMENT
+        data_type: VARCHAR
+        sample_values:
+          - "Standard CSV format for customer data"
+          - "JSON format for API responses"
+          - "Compressed Parquet format for analytics"
+          - "Avro format for streaming data"
+          - "Pipe-delimited format for legacy systems"
+      - name: FILE_FORMAT_ID
+        synonyms:
+          - Format ID
+        description: Internal identifier for the file format.
+        expr: FILE_FORMAT_ID
+        data_type: NUMBER
+        sample_values:
+          - '12345678'
+          - '98765432'
+          - '55555555'
+          - '11111111'
+          - '77777777'
+      - name: FILE_FORMAT_SCHEMA_ID
+        synonyms:
+          - Schema ID
+        description: Internal identifier for the schema.
+        expr: FILE_FORMAT_SCHEMA_ID
+        data_type: NUMBER
+        sample_values:
+          - '12345'
+          - '98765'
+          - '55555'
+          - '11111'
+          - '77777'
+      - name: FILE_FORMAT_CATALOG_ID
+        synonyms:
+          - Database ID
+          - Catalog ID
+        description: Internal identifier for the database.
+        expr: FILE_FORMAT_CATALOG_ID
+        data_type: NUMBER
+        sample_values:
+          - '1234'
+          - '9876'
+          - '5555'
+          - '1111'
+          - '7777'
+    time_dimensions:
+      - name: CREATED
+        synonyms:
+          - Created Time
+          - Format Created
+        description: When the file format was created.
+        expr: CREATED
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-01-01 07:00:00.000000+00:00'
+          - '2024-02-01 07:00:00.000000+00:00'
+          - '2024-03-01 07:00:00.000000+00:00'
+          - '2024-04-01 07:00:00.000000+00:00'
+          - '2024-05-01 07:00:00.000000+00:00'
+      - name: LAST_ALTERED
+        synonyms:
+          - Modified Time
+          - Last Modified
+        description: When the file format was last modified.
+        expr: LAST_ALTERED
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-08-31 06:24:10.392000+00:00'
+          - '2024-10-10 05:54:26.670000+00:00'
+          - '2024-11-13 07:42:17.887000+00:00'
+          - '2024-09-07 18:05:16.642000+00:00'
+          - '2024-09-07 13:34:14.314000+00:00'
+      - name: DELETED
+        synonyms:
+          - Deleted Time
+          - Format Deleted
+        description: When the file format was deleted (if applicable).
+        expr: DELETED
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - "N/A"
+          - "N/A"
+          - '2024-12-01 07:00:00.000000+00:00'
+          - "N/A"
+          - "N/A"
+  - name: SEQUENCES
+    description: This Account Usage view displays information about sequences in the account.
+    base_table:
+      database: SNOWFLAKE
+      schema: ACCOUNT_USAGE
+      table: SEQUENCES
+    primary_key:
+      columns:
+        - SEQUENCE_ID
+    dimensions:
+      - name: SEQUENCE_NAME
+        synonyms:
+          - Sequence
+          - Sequence Name
+        description: Name of the sequence.
+        expr: SEQUENCE_NAME
+        data_type: VARCHAR
+        sample_values:
+          - CUSTOMER_ID_SEQ
+          - ORDER_NUMBER_SEQ
+          - TRANSACTION_ID_SEQ
+          - INVOICE_NUMBER_SEQ
+          - BATCH_ID_SEQ
+      - name: SEQUENCE_SCHEMA
+        synonyms:
+          - Schema
+          - Sequence Schema
+        description: Schema containing the sequence.
+        expr: SEQUENCE_SCHEMA
+        data_type: VARCHAR
+        sample_values:
+          - PUBLIC
+          - SEQUENCES
+          - UTILS
+          - IDENTIFIERS
+          - GENERATORS
+      - name: SEQUENCE_CATALOG
+        synonyms:
+          - Database
+          - Sequence Database
+        description: Database containing the sequence.
+        expr: SEQUENCE_CATALOG
+        data_type: VARCHAR
+        sample_values:
+          - PROD_DB
+          - UTILS_DB
+          - SEQUENCE_DB
+          - SHARED_DB
+          - IDENTIFIERS_DB
+      - name: SEQUENCE_OWNER
+        synonyms:
+          - Owner
+          - Sequence Owner
+        description: Owner of the sequence.
+        expr: SEQUENCE_OWNER
+        data_type: VARCHAR
+        sample_values:
+          - SYSADMIN
+          - SEQUENCE_ADMIN
+          - DATA_ENGINEER
+          - DEVELOPER_ROLE
+          - UTILITIES_ROLE
+      - name: DATA_TYPE
+        synonyms:
+          - Type
+          - Data Type
+        description: Data type of the sequence values.
+        expr: DATA_TYPE
+        data_type: VARCHAR
+        sample_values:
+          - NUMBER
+          - NUMBER
+          - NUMBER
+          - NUMBER
+          - NUMBER
+      - name: START_VALUE
+        synonyms:
+          - Start Value
+          - Initial Value
+        description: Starting value of the sequence.
+        expr: START_VALUE
+        data_type: VARCHAR
+        sample_values:
+          - "1"
+          - "1000"
+          - "1"
+          - "10000"
+          - "1"
+      - name: MINIMUM_VALUE
+        synonyms:
+          - Min Value
+          - Minimum
+        description: Minimum value of the sequence.
+        expr: MINIMUM_VALUE
+        data_type: VARCHAR
+        sample_values:
+          - "1"
+          - "1000"
+          - "1"
+          - "10000"
+          - "1"
+      - name: MAXIMUM_VALUE
+        synonyms:
+          - Max Value
+          - Maximum
+        description: Maximum value of the sequence.
+        expr: MAXIMUM_VALUE
+        data_type: VARCHAR
+        sample_values:
+          - "9999999999999999999999999999"
+          - "9999999999999999999999999999"
+          - "9999999999999999999999999999"
+          - "9999999999999999999999999999"
+          - "9999999999999999999999999999"
+      - name: SEQUENCE_INCREMENT
+        synonyms:
+          - Increment
+          - Step Value
+        description: Increment value of the sequence.
+        expr: TO_VARCHAR(INCREMENT)
+        data_type: VARCHAR
+        sample_values:
+          - "1"
+          - "1"
+          - "1"
+          - "1"
+          - "1"
+      - name: CYCLE_OPTION
+        synonyms:
+          - Cycle Option
+          - Cycles
+        description: Whether the sequence cycles when it reaches the maximum value.
+        expr: CYCLE_OPTION
+        data_type: VARCHAR
+        sample_values:
+          - NO
+          - NO
+          - NO
+          - NO
+          - NO
+      - name: ORDER_OPTION
+        synonyms:
+          - Order Option
+          - Ordered
+        description: Whether the sequence values are generated in order.
+        expr: ORDER_OPTION
+        data_type: VARCHAR
+        sample_values:
+          - NO
+          - YES
+          - NO
+          - YES
+          - NO
+      - name: COMMENT
+        synonyms:
+          - Description
+          - Sequence Comment
+        description: Comment or description of the sequence.
+        expr: COMMENT
+        data_type: VARCHAR
+        sample_values:
+          - "Auto-incrementing customer ID sequence"
+          - "Order number generator starting at 1000"
+          - "Transaction ID sequence for audit trail"
+          - "Invoice number generator starting at 10000"
+          - "Batch processing ID sequence"
+      - name: SEQUENCE_ID
+        synonyms:
+          - Sequence ID
+        description: Internal identifier for the sequence.
+        expr: SEQUENCE_ID
+        data_type: NUMBER
+        sample_values:
+          - '12345678'
+          - '98765432'
+          - '55555555'
+          - '11111111'
+          - '77777777'
+      - name: SEQUENCE_SCHEMA_ID
+        synonyms:
+          - Schema ID
+        description: Internal identifier for the schema.
+        expr: SEQUENCE_SCHEMA_ID
+        data_type: NUMBER
+        sample_values:
+          - '12345'
+          - '98765'
+          - '55555'
+          - '11111'
+          - '77777'
+      - name: SEQUENCE_CATALOG_ID
+        synonyms:
+          - Database ID
+          - Catalog ID
+        description: Internal identifier for the database.
+        expr: SEQUENCE_CATALOG_ID
+        data_type: NUMBER
+        sample_values:
+          - '1234'
+          - '9876'
+          - '5555'
+          - '1111'
+          - '7777'
+    time_dimensions:
+      - name: CREATED
+        synonyms:
+          - Created Time
+          - Sequence Created
+        description: When the sequence was created.
+        expr: CREATED
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-01-01 08:00:00.000000+00:00'
+          - '2024-02-01 08:00:00.000000+00:00'
+          - '2024-03-01 08:00:00.000000+00:00'
+          - '2024-04-01 08:00:00.000000+00:00'
+          - '2024-05-01 08:00:00.000000+00:00'
+      - name: LAST_ALTERED
+        synonyms:
+          - Modified Time
+          - Last Modified
+        description: When the sequence was last modified.
+        expr: LAST_ALTERED
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-08-31 06:24:10.392000+00:00'
+          - '2024-10-10 05:54:26.670000+00:00'
+          - '2024-11-13 07:42:17.887000+00:00'
+          - '2024-09-07 18:05:16.642000+00:00'
+          - '2024-09-07 13:34:14.314000+00:00'
+      - name: DELETED
+        synonyms:
+          - Deleted Time
+          - Sequence Deleted
+        description: When the sequence was deleted (if applicable).
+        expr: DELETED
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - "N/A"
+          - "N/A"
+          - '2024-12-01 08:00:00.000000+00:00'
+          - "N/A"
+          - "N/A"
+  - name: TAGS
+    description: This Account Usage view displays information about tags in the account.
+    base_table:
+      database: SNOWFLAKE
+      schema: ACCOUNT_USAGE
+      table: TAGS
+    primary_key:
+      columns:
+        - TAG_ID
+    dimensions:
+      - name: TAG_NAME
+        synonyms:
+          - Tag
+          - Tag Name
+        description: Name of the tag.
+        expr: TAG_NAME
+        data_type: VARCHAR
+        sample_values:
+          - ENVIRONMENT
+          - DEPARTMENT
+          - DATA_CLASSIFICATION
+          - COST_CENTER
+          - PROJECT
+      - name: TAG_SCHEMA
+        synonyms:
+          - Schema
+          - Tag Schema
+        description: Schema containing the tag.
+        expr: TAG_SCHEMA
+        data_type: VARCHAR
+        sample_values:
+          - PUBLIC
+          - TAGS
+          - GOVERNANCE
+          - METADATA
+          - CLASSIFICATION
+      - name: TAG_CATALOG
+        synonyms:
+          - Database
+          - Tag Database
+        description: Database containing the tag.
+        expr: TAG_CATALOG
+        data_type: VARCHAR
+        sample_values:
+          - PROD_DB
+          - GOVERNANCE_DB
+          - METADATA_DB
+          - TAGS_DB
+          - CLASSIFICATION_DB
+      - name: TAG_OWNER
+        synonyms:
+          - Owner
+          - Tag Owner
+        description: Owner of the tag.
+        expr: TAG_OWNER
+        data_type: VARCHAR
+        sample_values:
+          - SYSADMIN
+          - GOVERNANCE_ADMIN
+          - TAG_ADMIN
+          - METADATA_ADMIN
+          - CLASSIFICATION_ADMIN
+      - name: ALLOWED_VALUES
+        synonyms:
+          - Allowed Values
+          - Valid Values
+        description: List of allowed values for the tag.
+        expr: ALLOWED_VALUES
+        data_type: ARRAY
+        sample_values:
+          - "['PROD', 'TEST', 'DEV']"
+          - "['SALES', 'MARKETING', 'FINANCE', 'IT']"
+          - "['CONFIDENTIAL', 'INTERNAL', 'PUBLIC']"
+          - "['CC001', 'CC002', 'CC003']"
+          - "['PROJECT_A', 'PROJECT_B', 'PROJECT_C']"
+      - name: COMMENT
+        synonyms:
+          - Description
+          - Tag Comment
+        description: Comment or description of the tag.
+        expr: COMMENT
+        data_type: VARCHAR
+        sample_values:
+          - "Environment classification tag"
+          - "Department ownership tag"
+          - "Data sensitivity classification"
+          - "Cost center allocation"
+          - "Project assignment tag"
+      - name: TAG_ID
+        synonyms:
+          - Tag ID
+        description: Internal identifier for the tag.
+        expr: TAG_ID
+        data_type: NUMBER
+        sample_values:
+          - '12345678'
+          - '98765432'
+          - '55555555'
+          - '11111111'
+          - '77777777'
+      - name: TAG_SCHEMA_ID
+        synonyms:
+          - Schema ID
+        description: Internal identifier for the schema.
+        expr: TAG_SCHEMA_ID
+        data_type: NUMBER
+        sample_values:
+          - '12345'
+          - '98765'
+          - '55555'
+          - '11111'
+          - '77777'
+      - name: TAG_CATALOG_ID
+        synonyms:
+          - Database ID
+          - Catalog ID
+        description: Internal identifier for the database.
+        expr: TAG_CATALOG_ID
+        data_type: NUMBER
+        sample_values:
+          - '1234'
+          - '9876'
+          - '5555'
+          - '1111'
+          - '7777'
+    time_dimensions:
+      - name: CREATED
+        synonyms:
+          - Created Time
+          - Tag Created
+        description: When the tag was created.
+        expr: CREATED
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-01-01 09:00:00.000000+00:00'
+          - '2024-02-01 09:00:00.000000+00:00'
+          - '2024-03-01 09:00:00.000000+00:00'
+          - '2024-04-01 09:00:00.000000+00:00'
+          - '2024-05-01 09:00:00.000000+00:00'
+      - name: LAST_ALTERED
+        synonyms:
+          - Modified Time
+          - Last Modified
+        description: When the tag was last modified.
+        expr: LAST_ALTERED
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-08-31 06:24:10.392000+00:00'
+          - '2024-10-10 05:54:26.670000+00:00'
+          - '2024-11-13 07:42:17.887000+00:00'
+          - '2024-09-07 18:05:16.642000+00:00'
+          - '2024-09-07 13:34:14.314000+00:00'
+      - name: DELETED
+        synonyms:
+          - Deleted Time
+          - Tag Deleted
+        description: When the tag was deleted (if applicable).
+        expr: DELETED
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - "N/A"
+          - "N/A"
+          - '2024-12-01 09:00:00.000000+00:00'
+          - "N/A"
+          - "N/A"
+  - name: TAG_REFERENCES
+    description: This Account Usage view displays information about tag assignments to objects in the account.
+    base_table:
+      database: SNOWFLAKE
+      schema: ACCOUNT_USAGE
+      table: TAG_REFERENCES
+    primary_key:
+      columns:
+        - TAG_ID
+        - OBJECT_ID
+    dimensions:
+      - name: TAG_NAME
+        synonyms:
+          - Tag
+          - Tag Name
+        description: Name of the tag that is assigned.
+        expr: TAG_NAME
+        data_type: VARCHAR
+        sample_values:
+          - ENVIRONMENT
+          - DEPARTMENT
+          - DATA_CLASSIFICATION
+          - COST_CENTER
+          - PROJECT
+      - name: TAG_SCHEMA
+        synonyms:
+          - Tag Schema
+        description: Schema containing the tag.
+        expr: TAG_SCHEMA
+        data_type: VARCHAR
+        sample_values:
+          - PUBLIC
+          - TAGS
+          - GOVERNANCE
+          - METADATA
+          - CLASSIFICATION
+      - name: TAG_DATABASE
+        synonyms:
+          - Tag Database
+        description: Database containing the tag.
+        expr: TAG_DATABASE
+        data_type: VARCHAR
+        sample_values:
+          - PROD_DB
+          - GOVERNANCE_DB
+          - METADATA_DB
+          - TAGS_DB
+          - CLASSIFICATION_DB
+      - name: TAG_VALUE
+        synonyms:
+          - Tag Value
+          - Value
+        description: Value assigned to the tag.
+        expr: TAG_VALUE
+        data_type: VARCHAR
+        sample_values:
+          - PROD
+          - SALES
+          - CONFIDENTIAL
+          - CC001
+          - PROJECT_A
+      - name: OBJECT_NAME
+        synonyms:
+          - Object
+          - Object Name
+        description: Name of the object that has the tag assigned.
+        expr: OBJECT_NAME
+        data_type: VARCHAR
+        sample_values:
+          - CUSTOMERS
+          - ORDERS
+          - SALES_VIEW
+          - ETL_WAREHOUSE
+          - PROD_DB
+      - name: OBJECT_DATABASE
+        synonyms:
+          - Object Database
+          - Target Database
+        description: Database containing the tagged object.
+        expr: OBJECT_DATABASE
+        data_type: VARCHAR
+        sample_values:
+          - PROD_DB
+          - STAGING_DB
+          - ANALYTICS_DB
+          - "N/A"
+          - "N/A"
+      - name: OBJECT_SCHEMA
+        synonyms:
+          - Object Schema
+        description: Schema containing the tagged object.
+        expr: OBJECT_SCHEMA
+        data_type: VARCHAR
+        sample_values:
+          - PUBLIC
+          - RAW
+          - VIEWS
+          - "N/A"
+          - "N/A"
+      - name: OBJECT_DATABASE
+        synonyms:
+          - Object Database
+        description: Database containing the tagged object.
+        expr: OBJECT_DATABASE
+        data_type: VARCHAR
+        sample_values:
+          - PROD_DB
+          - STAGING_DB
+          - ANALYTICS_DB
+          - "N/A"
+          - "N/A"
+      - name: DOMAIN
+        synonyms:
+          - Object Type
+          - Domain
+        description: Domain/type of the tagged object (TABLE, VIEW, DATABASE, etc.).
+        expr: DOMAIN
+        data_type: VARCHAR
+        sample_values:
+          - TABLE
+          - TABLE
+          - VIEW
+          - WAREHOUSE
+          - DATABASE
+      - name: COLUMN_NAME
+        synonyms:
+          - Column
+          - Column Name
+        description: Name of the column if the tag is assigned to a column.
+        expr: COLUMN_NAME
+        data_type: VARCHAR
+        sample_values:
+          - "N/A"
+          - CUSTOMER_EMAIL
+          - "N/A"
+          - "N/A"
+          - "N/A"
+      - name: TAG_ID
+        synonyms:
+          - Tag ID
+        description: Internal identifier for the tag.
+        expr: TAG_ID
+        data_type: NUMBER
+        sample_values:
+          - '12345678'
+          - '98765432'
+          - '55555555'
+          - '11111111'
+          - '77777777'
+      - name: OBJECT_ID
+        synonyms:
+          - Object ID
+        description: Internal identifier for the tagged object.
+        expr: OBJECT_ID
+        data_type: NUMBER
+        sample_values:
+          - '123456'
+          - '987654'
+          - '555555'
+          - '111111'
+          - '777777'
+      - name: COLUMN_ID
+        synonyms:
+          - Column ID
+        description: Internal identifier for the tagged column.
+        expr: COLUMN_ID
+        data_type: NUMBER
+        sample_values:
+          - "N/A"
+          - '1234567'
+          - "N/A"
+          - "N/A"
+          - "N/A"
+      - name: APPLY_METHOD
+        synonyms:
+          - Apply Method
+          - Assignment Method
+        description: Method used to apply the tag to the object.
+        expr: APPLY_METHOD
+        data_type: VARCHAR
+        sample_values:
+          - "COLUMN"
+          - "TAG"
+          - "OBJECT"
+          - "COLUMN"
+          - "TAG"
+    time_dimensions:
+      - name: OBJECT_DELETED
+        synonyms:
+          - Object Deleted Time
+          - Deletion Time
+        description: When the tagged object was deleted (if applicable).
+        expr: OBJECT_DELETED
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - "N/A"
+          - "N/A"
+          - '2024-12-01 10:00:00.000000+00:00'
+          - "N/A"
+          - "N/A"
+  - name: LOAD_HISTORY
+    description: This Account Usage view can be used to query the load history of tables within the last 365 days (1 year), including all tables that have been loaded.
+    base_table:
+      database: SNOWFLAKE
+      schema: ACCOUNT_USAGE
+      table: LOAD_HISTORY
+    primary_key:
+      columns:
+        - TABLE_ID
+        - LAST_LOAD_TIME
+    dimensions:
+      - name: CATALOG_NAME
+        synonyms:
+          - Database
+          - Database Name
+          - Catalog
+        description: Database name for the target table of the load operation.
+        expr: CATALOG_NAME
+        data_type: VARCHAR
+        sample_values:
+          - PROD_DB
+          - STAGING_DB
+          - RAW_DB
+          - ANALYTICS_DB
+          - ETL_DB
+      - name: FILE_NAME
+        synonyms:
+          - File
+          - Source File
+          - Data File
+        description: Name of the source file for the load operation.
+        expr: FILE_NAME
+        data_type: VARCHAR
+        sample_values:
+          - customer_data_20241201.csv
+          - sales_202412.json
+          - product_catalog.parquet
+          - orders_batch_001.txt
+          - inventory_update.xml
+      - name: FIRST_ERROR_COL_NAME
+        synonyms:
+          - Error Column
+          - Failed Column
+        description: Name of the column where the first error occurred during loading.
+        expr: FIRST_ERROR_COL_NAME
+        data_type: VARCHAR
+        sample_values:
+          - CUSTOMER_ID
+          - ORDER_DATE
+          - PRODUCT_PRICE
+          - EMAIL_ADDRESS
+          - PHONE_NUMBER
+      - name: FIRST_ERROR_MESSAGE
+        synonyms:
+          - Error Message
+          - Load Error
+        description: Error message for the first error encountered during loading.
+        expr: FIRST_ERROR_MESSAGE
+        data_type: VARCHAR
+        sample_values:
+          - "Invalid date format"
+          - "NULL value in NOT NULL column"
+          - "Data type mismatch"
+          - "Invalid email format"
+          - "Value too long for column"
+      - name: SCHEMA_NAME
+        synonyms:
+          - Schema
+          - Schema Name
+        description: Schema name for the target table of the load operation.
+        expr: SCHEMA_NAME
+        data_type: VARCHAR
+        sample_values:
+          - PUBLIC
+          - RAW
+          - STAGING
+          - MART
+          - BRONZE
+      - name: STATUS
+        synonyms:
+          - Load Status
+          - Status
+        description: Status of the load operation (e.g., LOADED, PARTIALLY_LOADED, LOAD_FAILED).
+        expr: STATUS
+        data_type: VARCHAR
+        sample_values:
+          - LOADED
+          - PARTIALLY_LOADED
+          - LOAD_FAILED
+          - LOAD_IN_PROGRESS
+          - SKIPPED
+      - name: TABLE_NAME
+        synonyms:
+          - Table
+          - Target Table
+        description: Name of the target table for the load operation.
+        expr: TABLE_NAME
+        data_type: VARCHAR
+        sample_values:
+          - CUSTOMERS
+          - ORDERS
+          - PRODUCTS
+          - SALES
+          - INVENTORY
+    facts:
+      - name: ROW_COUNT
+        synonyms:
+          - Rows Loaded
+          - Row Count
+          - Records Loaded
+        description: Number of rows loaded into the table.
+        expr: ROW_COUNT
+        data_type: NUMBER
+        sample_values:
+          - '10000'
+          - '25000'
+          - '5000'
+          - '100000'
+          - '75000'
+      - name: ROW_PARSED
+        synonyms:
+          - Rows Parsed
+          - Parsed Records
+        description: Number of rows parsed from the source file.
+        expr: ROW_PARSED
+        data_type: NUMBER
+        sample_values:
+          - '10000'
+          - '25500'
+          - '5000'
+          - '101000'
+          - '75200'
+      - name: FIRST_ERROR_LINE_NUMBER
+        synonyms:
+          - Error Line
+          - Failed Line Number
+        description: Line number where the first error occurred in the source file.
+        expr: FIRST_ERROR_LINE_NUMBER
+        data_type: NUMBER
+        sample_values:
+          - '1001'
+          - '2550'
+          - '500'
+          - '10100'
+          - '7520'
+      - name: FIRST_ERROR_CHARACTER_POSITION
+        synonyms:
+          - Error Position
+          - Character Position
+        description: Character position where the first error occurred in the line.
+        expr: FIRST_ERROR_CHARACTER_POSITION
+        data_type: NUMBER
+        sample_values:
+          - '25'
+          - '45'
+          - '12'
+          - '67'
+          - '33'
+      - name: ERROR_COUNT
+        synonyms:
+          - Error Count
+          - Number of Errors
+        description: Total number of errors encountered during the load operation.
+        expr: ERROR_COUNT
+        data_type: NUMBER
+        sample_values:
+          - '0'
+          - '5'
+          - '0'
+          - '15'
+          - '3'
+      - name: ERROR_LIMIT
+        synonyms:
+          - Error Limit
+          - Max Errors
+        description: Maximum number of errors allowed before the load operation fails.
+        expr: ERROR_LIMIT
+        data_type: NUMBER
+        sample_values:
+          - '10'
+          - '100'
+          - '50'
+          - '1000'
+          - '25'
+      - name: TABLE_ID
+        synonyms:
+          - Table ID
+        description: Internal identifier for the target table.
+        expr: TABLE_ID
+        data_type: NUMBER
+        sample_values:
+          - '123456'
+          - '987654'
+          - '555555'
+          - '111111'
+          - '777777'
+      - name: SCHEMA_ID
+        synonyms:
+          - Schema ID
+        description: Internal identifier for the target schema.
+        expr: SCHEMA_ID
+        data_type: NUMBER
+        sample_values:
+          - '12345'
+          - '98765'
+          - '55555'
+          - '11111'
+          - '77777'
+      - name: CATALOG_ID
+        synonyms:
+          - Database ID
+          - Catalog ID
+        description: Internal identifier for the target database.
+        expr: CATALOG_ID
+        data_type: NUMBER
+        sample_values:
+          - '1234'
+          - '9876'
+          - '5555'
+          - '1111'
+          - '7777'
+    time_dimensions:
+      - name: LAST_LOAD_TIME
+        synonyms:
+          - Load Time
+          - Last Loaded
+        description: Timestamp of when the load operation completed.
+        expr: LAST_LOAD_TIME
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-08-31 06:24:10.392000+00:00'
+          - '2024-10-10 05:54:26.670000+00:00'
+          - '2024-11-13 07:42:17.887000+00:00'
+          - '2024-09-07 18:05:16.642000+00:00'
+          - '2024-09-07 13:34:14.314000+00:00'
+
+  - name: LOCK_WAIT_HISTORY
+    description: This Account Usage view can be used to query the lock wait history within the last 14 days, helping analyze blocking and concurrency issues.
+    base_table:
+      database: SNOWFLAKE
+      schema: ACCOUNT_USAGE
+      table: LOCK_WAIT_HISTORY
+    primary_key:
+      columns:
+        - QUERY_ID
+        - REQUESTED_AT
+    dimensions:
+      - name: DATABASE_NAME
+        synonyms:
+          - Database
+          - Database Name
+        description: Name of the database containing the object that was locked.
+        expr: DATABASE_NAME
+        data_type: VARCHAR
+        sample_values:
+          - PROD_DB
+          - STAGING_DB
+          - RAW_DB
+          - ANALYTICS_DB
+          - ETL_DB
+      - name: LOCK_TYPE
+        synonyms:
+          - Lock Type
+          - Lock Kind
+        description: Type of lock that was waited for.
+        expr: LOCK_TYPE
+        data_type: VARCHAR
+        sample_values:
+          - TABLE_LOCK
+          - SCHEMA_LOCK
+          - DATABASE_LOCK
+          - ROW_LOCK
+          - METADATA_LOCK
+      - name: OBJECT_NAME
+        synonyms:
+          - Object
+          - Object Name
+          - Locked Object
+        description: Name of the object that was locked.
+        expr: OBJECT_NAME
+        data_type: VARCHAR
+        sample_values:
+          - CUSTOMERS
+          - ORDERS
+          - PRODUCTS
+          - SALES
+          - INVENTORY
+      - name: QUERY_ID
+        synonyms:
+          - QID
+          - Query Identifier
+        description: Unique identifier for the query that was waiting for the lock.
+        expr: QUERY_ID
+        data_type: VARCHAR
+        sample_values:
+          - 01b85651-0a0e-11f0-0000-43297fed023e
+          - 01b856d1-0a0e-11f0-0000-43297fee37d2
+          - 01b9d914-080e-ac42-0000-43298453ac0e
+          - 01b9d94e-080e-b3d6-0000-43298454529e
+          - 01b9d925-080e-b3d6-0000-43298453f9a6
+      - name: SCHEMA_NAME
+        synonyms:
+          - Schema
+          - Schema Name
+        description: Name of the schema containing the object that was locked.
+        expr: SCHEMA_NAME
+        data_type: VARCHAR
+        sample_values:
+          - PUBLIC
+          - RAW
+          - STAGING
+          - MART
+          - BRONZE
+      - name: OBJECT_ID
+        synonyms:
+          - Object ID
+        description: Internal identifier for the object that was locked.
+        expr: OBJECT_ID
+        data_type: NUMBER
+        sample_values:
+          - '123456'
+          - '987654'
+          - '555555'
+          - '111111'
+          - '777777'
+      - name: SCHEMA_ID
+        synonyms:
+          - Schema ID
+        description: Internal identifier for the schema containing the locked object.
+        expr: SCHEMA_ID
+        data_type: NUMBER
+        sample_values:
+          - '12345'
+          - '98765'
+          - '55555'
+          - '11111'
+          - '77777'
+      - name: DATABASE_ID
+        synonyms:
+          - Database ID
+        description: Internal identifier for the database containing the locked object.
+        expr: DATABASE_ID
+        data_type: NUMBER
+        sample_values:
+          - '1234'
+          - '9876'
+          - '5555'
+          - '1111'
+          - '7777'
+      - name: TRANSACTION_ID
+        synonyms:
+          - Transaction ID
+          - TXN ID
+        description: Identifier for the transaction that was waiting for the lock.
+        expr: TRANSACTION_ID
+        data_type: NUMBER
+        sample_values:
+          - '1234567890'
+          - '9876543210'
+          - '5555555555'
+          - '1111111111'
+          - '7777777777'
+    time_dimensions:
+      - name: ACQUIRED_AT
+        synonyms:
+          - Acquired Time
+          - Lock Acquired
+        description: Timestamp when the lock was acquired.
+        expr: ACQUIRED_AT
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-08-31 06:24:15.392000+00:00'
+          - '2024-10-10 05:54:30.670000+00:00'
+          - '2024-11-13 07:42:25.887000+00:00'
+          - '2024-09-07 18:05:20.642000+00:00'
+          - '2024-09-07 13:34:18.314000+00:00'
+      - name: REQUESTED_AT
+        synonyms:
+          - Requested Time
+          - Lock Requested
+        description: Timestamp when the lock was first requested.
+        expr: REQUESTED_AT
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-08-31 06:24:10.392000+00:00'
+          - '2024-10-10 05:54:26.670000+00:00'
+          - '2024-11-13 07:42:17.887000+00:00'
+          - '2024-09-07 18:05:16.642000+00:00'
+          - '2024-09-07 13:34:14.314000+00:00'
+
+  - name: TASK_HISTORY
+    description: This Account Usage view can be used to query the task execution history within the last 7 days for user-defined tasks.
+    base_table:
+      database: SNOWFLAKE
+      schema: ACCOUNT_USAGE
+      table: TASK_HISTORY
+    primary_key:
+      columns:
+        - RUN_ID
+    dimensions:
+      - name: CONDITION_TEXT
+        synonyms:
+          - Condition
+          - Task Condition
+        description: Condition text for conditional task execution.
+        expr: CONDITION_TEXT
+        data_type: VARCHAR
+        sample_values:
+          - "SYSTEM$STREAM_HAS_DATA('my_stream')"
+          - "TRUE"
+          - "SELECT COUNT(*) > 0 FROM new_data"
+          - "CURRENT_TIME() > '09:00:00'"
+          - "DAYOFWEEK(CURRENT_DATE()) = 1"
+      - name: CONFIG
+        synonyms:
+          - Configuration
+          - Task Config
+        description: Configuration settings for the task.
+        expr: CONFIG
+        data_type: VARIANT
+        sample_values:
+          - '{"warehouse": "ETL_WH", "schedule": "60 MINUTE"}'
+          - '{"warehouse": "ANALYTICS_WH", "schedule": "USING CRON 0 9 * * MON"}'
+          - '{"warehouse": "COMPUTE_WH", "user_task_timeout_ms": 3600000}'
+          - '{"warehouse": "SMALL_WH", "suspend_task_after_num_failures": 3}'
+          - '{"warehouse": "LARGE_WH", "error_integration": "email_int"}'
+      - name: DATABASE_NAME
+        synonyms:
+          - Database
+          - Database Name
+        description: Name of the database containing the task.
+        expr: DATABASE_NAME
+        data_type: VARCHAR
+        sample_values:
+          - PROD_DB
+          - ETL_DB
+          - ANALYTICS_DB
+          - PROCESSING_DB
+          - AUTOMATION_DB
+      - name: ERROR_CODE
+        synonyms:
+          - Error Code
+        description: Error code if the task execution failed.
+        expr: ERROR_CODE
+        data_type: VARCHAR
+        sample_values:
+          - "001001"
+          - "002003"
+          - "090232"
+          - "000904"
+          - "001003"
+      - name: ERROR_MESSAGE
+        synonyms:
+          - Error Message
+          - Task Error
+        description: Error message if the task execution failed.
+        expr: ERROR_MESSAGE
+        data_type: VARCHAR
+        sample_values:
+          - "Task completed successfully"
+          - "SQL compilation error: Object does not exist"
+          - "Warehouse suspended"
+          - "Timeout exceeded"
+          - "Insufficient privileges"
+      - name: GRAPH_RUN_GROUP_ID
+        synonyms:
+          - Graph Run Group
+          - Task Group ID
+        description: Identifier for the task graph run group.
+        expr: GRAPH_RUN_GROUP_ID
+        data_type: VARCHAR
+        sample_values:
+          - "TGR_123456789"
+          - "TGR_987654321"
+          - "TGR_555555555"
+          - "TGR_111111111"
+          - "TGR_777777777"
+      - name: NAME
+        synonyms:
+          - Task Name
+          - Task
+        description: Name of the task.
+        expr: NAME
+        data_type: VARCHAR
+        sample_values:
+          - DAILY_ETL_TASK
+          - HOURLY_SYNC_TASK
+          - WEEKLY_CLEANUP_TASK
+          - MONTHLY_REPORT_TASK
+          - REAL_TIME_PROCESSING_TASK
+      - name: QUERY_HASH
+        synonyms:
+          - Query Hash
+          - Hash
+        description: Hash of the SQL statement executed by the task.
+        expr: QUERY_HASH
+        data_type: VARCHAR
+        sample_values:
+          - a1b2c3d4e5f6
+          - f6e5d4c3b2a1
+          - 1a2b3c4d5e6f
+          - 6f5e4d3c2b1a
+          - b1a2c3d4e5f6
+      - name: QUERY_ID
+        synonyms:
+          - QID
+          - Query Identifier
+        description: Unique identifier for the query executed by the task.
+        expr: QUERY_ID
+        data_type: VARCHAR
+        sample_values:
+          - 01b85651-0a0e-11f0-0000-43297fed023e
+          - 01b856d1-0a0e-11f0-0000-43297fee37d2
+          - 01b9d914-080e-ac42-0000-43298453ac0e
+          - 01b9d94e-080e-b3d6-0000-43298454529e
+          - 01b9d925-080e-b3d6-0000-43298453f9a6
+      - name: QUERY_PARAMETERIZED_HASH
+        synonyms:
+          - Parameterized Hash
+        description: Parameterized hash of the SQL statement executed by the task.
+        expr: QUERY_PARAMETERIZED_HASH
+        data_type: VARCHAR
+        sample_values:
+          - p1a2b3c4d5e6
+          - p6e5d4c3b2a1
+          - p1a2b3c4d5e6
+          - p6f5e4d3c2b1
+          - pb1a2c3d4e5f
+      - name: QUERY_TEXT
+        synonyms:
+          - SQL
+          - Query Text
+          - Task SQL
+        description: SQL statement executed by the task.
+        expr: QUERY_TEXT
+        data_type: VARCHAR
+        sample_values:
+          - "INSERT INTO prod_table SELECT * FROM staging_table"
+          - "CALL data_processing_procedure()"
+          - "MERGE INTO target USING source ON target.id = source.id"
+          - "DELETE FROM temp_table WHERE created_date < CURRENT_DATE - 7"
+          - "UPDATE status_table SET last_updated = CURRENT_TIMESTAMP()"
+      - name: RETURN_VALUE
+        synonyms:
+          - Return Value
+          - Task Result
+        description: Return value from the task execution.
+        expr: RETURN_VALUE
+        data_type: VARCHAR
+        sample_values:
+          - "SUCCESS"
+          - "FAILED"
+          - "1000 rows processed"
+          - "COMPLETED"
+          - "ERROR: Data validation failed"
+      - name: ROOT_TASK_ID
+        synonyms:
+          - Root Task ID
+          - Parent Task ID
+        description: Identifier for the root task in a task graph.
+        expr: ROOT_TASK_ID
+        data_type: VARCHAR
+        sample_values:
+          - "TASK_123456789"
+          - "TASK_987654321"
+          - "TASK_555555555"
+          - "TASK_111111111"
+          - "TASK_777777777"
+      - name: SCHEDULED_FROM
+        synonyms:
+          - Scheduled From
+          - Trigger Source
+        description: Source that triggered the task execution.
+        expr: SCHEDULED_FROM
+        data_type: VARCHAR
+        sample_values:
+          - SCHEDULE
+          - PREDECESSOR
+          - MANUAL
+          - STREAM
+          - EXTERNAL
+      - name: SCHEMA_NAME
+        synonyms:
+          - Schema
+          - Schema Name
+        description: Name of the schema containing the task.
+        expr: SCHEMA_NAME
+        data_type: VARCHAR
+        sample_values:
+          - PUBLIC
+          - TASKS
+          - ETL
+          - AUTOMATION
+          - PROCESSING
+      - name: STATE
+        synonyms:
+          - State
+          - Task State
+          - Execution State
+        description: State of the task execution.
+        expr: STATE
+        data_type: VARCHAR
+        sample_values:
+          - SUCCEEDED
+          - FAILED
+          - CANCELLED
+          - SKIPPED
+          - TIMEOUT
+      - name: TASK_SCHEMA_ID
+        synonyms:
+          - Task Schema ID
+        description: Internal identifier for the schema containing the task.
+        expr: TASK_SCHEMA_ID
+        data_type: NUMBER
+        sample_values:
+          - '12345'
+          - '98765'
+          - '55555'
+          - '11111'
+          - '77777'
+      - name: TASK_DATABASE_ID
+        synonyms:
+          - Task Database ID
+        description: Internal identifier for the database containing the task.
+        expr: TASK_DATABASE_ID
+        data_type: NUMBER
+        sample_values:
+          - '1234'
+          - '9876'
+          - '5555'
+          - '1111'
+          - '7777'
+      - name: GRAPH_VERSION
+        synonyms:
+          - Graph Version
+          - Task Graph Version
+        description: Version of the task graph.
+        expr: GRAPH_VERSION
+        data_type: NUMBER
+        sample_values:
+          - '1'
+          - '2'
+          - '3'
+          - '1'
+          - '5'
+      - name: RUN_ID
+        synonyms:
+          - Run ID
+          - Execution ID
+        description: Unique identifier for the task run.
+        expr: RUN_ID
+        data_type: NUMBER
+        sample_values:
+          - '1001'
+          - '2002'
+          - '3003'
+          - '4004'
+          - '5005'
+      - name: INSTANCE_ID
+        synonyms:
+          - Instance ID
+        description: Identifier for the instance where the task ran.
+        expr: INSTANCE_ID
+        data_type: NUMBER
+        sample_values:
+          - '1'
+          - '2'
+          - '3'
+          - '4'
+          - '5'
+      - name: ATTEMPT_NUMBER
+        synonyms:
+          - Attempt Number
+          - Retry Attempt
+        description: Number of the execution attempt for this task run.
+        expr: ATTEMPT_NUMBER
+        data_type: NUMBER
+        sample_values:
+          - '0'
+          - '1'
+          - '2'
+          - '0'
+          - '3'
+      - name: QUERY_HASH_VERSION
+        synonyms:
+          - Query Hash Version
+        description: Version of the query hash.
+        expr: QUERY_HASH_VERSION
+        data_type: NUMBER
+        sample_values:
+          - '1'
+          - '2'
+          - '1'
+          - '3'
+          - '2'
+      - name: QUERY_PARAMETERIZED_HASH_VERSION
+        synonyms:
+          - Parameterized Hash Version
+        description: Version of the parameterized query hash.
+        expr: QUERY_PARAMETERIZED_HASH_VERSION
+        data_type: NUMBER
+        sample_values:
+          - '1'
+          - '2'
+          - '1'
+          - '3'
+          - '2'
+    time_dimensions:
+      - name: COMPLETED_TIME
+        synonyms:
+          - Completed Time
+          - Task Completed
+        description: Timestamp when the task execution completed.
+        expr: COMPLETED_TIME
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-08-31 06:34:10.392000+00:00'
+          - '2024-10-10 05:59:26.670000+00:00'
+          - '2024-11-13 07:47:17.887000+00:00'
+          - '2024-09-07 18:15:16.642000+00:00'
+          - '2024-09-07 13:39:14.314000+00:00'
+      - name: QUERY_START_TIME
+        synonyms:
+          - Query Start Time
+          - SQL Start Time
+        description: Timestamp when the task's SQL execution started.
+        expr: QUERY_START_TIME
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-08-31 06:24:10.392000+00:00'
+          - '2024-10-10 05:54:26.670000+00:00'
+          - '2024-11-13 07:42:17.887000+00:00'
+          - '2024-09-07 18:05:16.642000+00:00'
+          - '2024-09-07 13:34:14.314000+00:00'
+      - name: SCHEDULED_TIME
+        synonyms:
+          - Scheduled Time
+          - Task Scheduled
+        description: Timestamp when the task was scheduled to run.
+        expr: SCHEDULED_TIME
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-08-31 06:00:00.000000+00:00'
+          - '2024-10-10 05:30:00.000000+00:00'
+          - '2024-11-13 07:30:00.000000+00:00'
+          - '2024-09-07 18:00:00.000000+00:00'
+          - '2024-09-07 13:30:00.000000+00:00'
+
+  - name: AUTOMATIC_CLUSTERING_HISTORY
+    description: This Account Usage view displays the history of automatic clustering operations on tables within the last 14 days.
+    base_table:
+      database: SNOWFLAKE
+      schema: ACCOUNT_USAGE
+      table: AUTOMATIC_CLUSTERING_HISTORY
+    primary_key:
+      columns:
+        - START_TIME
+        - DATABASE_NAME
+        - SCHEMA_NAME
+        - TABLE_NAME
+    dimensions:
+      - name: DATABASE_NAME
+        synonyms:
+          - Database
+          - Database Name
+        description: Name of the database containing the clustered table.
+        expr: DATABASE_NAME
+        data_type: VARCHAR
+        sample_values:
+          - PROD_DB
+          - ANALYTICS_DB
+          - DATA_WAREHOUSE_DB
+          - ETL_DB
+          - REPORTING_DB
+      - name: SCHEMA_NAME
+        synonyms:
+          - Schema
+          - Schema Name
+        description: Name of the schema containing the clustered table.
+        expr: SCHEMA_NAME
+        data_type: VARCHAR
+        sample_values:
+          - PUBLIC
+          - FACT_TABLES
+          - DIMENSION_TABLES
+          - STAGING
+          - MARTS
+      - name: TABLE_NAME
+        synonyms:
+          - Table
+          - Table Name
+          - Clustered Table
+        description: Name of the table that was automatically clustered.
+        expr: TABLE_NAME
+        data_type: VARCHAR
+        sample_values:
+          - LARGE_FACT_TABLE
+          - CUSTOMER_ORDERS
+          - SALES_HISTORY
+          - TRANSACTION_LOG
+          - EVENT_DATA
+      - name: CLUSTERING_KEYS
+        synonyms:
+          - Clustering Keys
+          - Cluster Keys
+        description: Clustering keys defined for the table.
+        expr: CLUSTERING_KEYS
+        data_type: VARCHAR
+        sample_values:
+          - "ORDER_DATE, CUSTOMER_ID"
+          - "REGION, PRODUCT_CATEGORY"
+          - "TRANSACTION_DATE"
+          - "EVENT_TYPE, EVENT_TIMESTAMP"
+          - "CUSTOMER_SEGMENT, ORDER_DATE"
+    facts:
+      - name: CREDITS_USED
+        synonyms:
+          - Credits Used
+          - Clustering Credits
+        description: Number of credits consumed by the automatic clustering operation.
+        expr: CREDITS_USED
+        data_type: NUMBER(38,9)
+        sample_values:
+          - 2.123456789
+          - 5.987654321
+          - 1.555555555
+          - 10.111111111
+          - 3.777777777
+      - name: NUM_BYTES_RECLUSTERED
+        synonyms:
+          - Bytes Reclustered
+          - Data Reclustered
+        description: Number of bytes that were reclustered.
+        expr: NUM_BYTES_RECLUSTERED
+        data_type: NUMBER
+        sample_values:
+          - '1073741824'
+          - '2147483648'
+          - '536870912'
+          - '4294967296'
+          - '858993459'
+      - name: NUM_ROWS_RECLUSTERED
+        synonyms:
+          - Rows Reclustered
+          - Records Reclustered
+        description: Number of rows that were reclustered.
+        expr: NUM_ROWS_RECLUSTERED
+        data_type: NUMBER
+        sample_values:
+          - '100000'
+          - '250000'
+          - '50000'
+          - '500000'
+          - '150000'
+    time_dimensions:
+      - name: START_TIME
+        synonyms:
+          - Start Time
+          - Clustering Start
+        description: Start time of the automatic clustering operation.
+        expr: START_TIME
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-08-31 02:00:00.000000+00:00'
+          - '2024-10-10 03:00:00.000000+00:00'
+          - '2024-11-13 01:00:00.000000+00:00'
+          - '2024-09-07 04:00:00.000000+00:00'
+          - '2024-09-07 02:30:00.000000+00:00'
+      - name: END_TIME
+        synonyms:
+          - End Time
+          - Clustering End
+        description: End time of the automatic clustering operation.
+        expr: END_TIME
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-08-31 02:15:00.000000+00:00'
+          - '2024-10-10 03:30:00.000000+00:00'
+          - '2024-11-13 01:10:00.000000+00:00'
+          - '2024-09-07 04:45:00.000000+00:00'
+          - '2024-09-07 02:45:00.000000+00:00'
+
+  - name: COPY_HISTORY
+    description: This Account Usage view displays the history of data loading operations performed using COPY INTO commands within the last 365 days.
+    base_table:
+      database: SNOWFLAKE
+      schema: ACCOUNT_USAGE
+      table: COPY_HISTORY
+    primary_key:
+      columns:
+        - FILE_NAME
+        - LAST_LOAD_TIME
+    dimensions:
+      - name: DATABASE_NAME
+        synonyms:
+          - Database
+          - Target Database
+        description: Name of the database containing the target table.
+        expr: DATABASE_NAME
+        data_type: VARCHAR
+        sample_values:
+          - PROD_DB
+          - STAGING_DB
+          - RAW_DB
+          - ETL_DB
+          - LANDING_DB
+      - name: SCHEMA_NAME
+        synonyms:
+          - Schema
+          - Target Schema
+        description: Name of the schema containing the target table.
+        expr: SCHEMA_NAME
+        data_type: VARCHAR
+        sample_values:
+          - PUBLIC
+          - RAW
+          - STAGING
+          - BRONZE
+          - LANDING
+      - name: TABLE_NAME
+        synonyms:
+          - Table
+          - Target Table
+        description: Name of the target table for the COPY operation.
+        expr: TABLE_NAME
+        data_type: VARCHAR
+        sample_values:
+          - CUSTOMER_DATA
+          - ORDER_RECORDS
+          - PRODUCT_INFO
+          - SALES_TRANSACTIONS
+          - EVENT_LOGS
+      - name: STAGE_LOCATION
+        synonyms:
+          - Stage
+          - Source Location
+          - Stage Location
+        description: Location of the stage containing the source files.
+        expr: STAGE_LOCATION
+        data_type: VARCHAR
+        sample_values:
+          - "@my_stage/data/"
+          - "@s3_stage/customer_files/"
+          - "@azure_stage/orders/"
+          - "@gcp_stage/products/"
+          - "@internal_stage/events/"
+      - name: FILE_NAME
+        synonyms:
+          - File
+          - Source File
+          - Data File
+        description: Name of the source file that was copied.
+        expr: FILE_NAME
+        data_type: VARCHAR
+        sample_values:
+          - customer_data_20241201.csv
+          - orders_batch_001.parquet
+          - products_202412.json
+          - sales_data.txt
+          - events_stream_001.avro
+      - name: FILE_SIZE
+        synonyms:
+          - File Size
+          - Size Bytes
+        description: Size of the source file in bytes.
+        expr: FILE_SIZE
+        data_type: NUMBER
+        sample_values:
+          - '1048576'
+          - '5242880'
+          - '2097152'
+          - '10485760'
+          - '3145728'
+      - name: STATUS
+        synonyms:
+          - Copy Status
+          - Load Status
+        description: Status of the COPY operation.
+        expr: STATUS
+        data_type: VARCHAR
+        sample_values:
+          - LOADED
+          - PARTIALLY_LOADED
+          - LOAD_FAILED
+          - SKIPPED
+          - IN_PROGRESS
+    facts:
+      - name: ROW_COUNT
+        synonyms:
+          - Rows Loaded
+          - Record Count
+        description: Number of rows loaded by the COPY operation.
+        expr: ROW_COUNT
+        data_type: NUMBER
+        sample_values:
+          - '10000'
+          - '50000'
+          - '25000'
+          - '100000'
+          - '75000'
+      - name: ROW_PARSED
+        synonyms:
+          - Rows Parsed
+          - Records Parsed
+        description: Number of rows parsed from the source file.
+        expr: ROW_PARSED
+        data_type: NUMBER
+        sample_values:
+          - '10000'
+          - '50500'
+          - '25000'
+          - '101000'
+          - '75200'
+      - name: FIRST_ERROR_LINE_NUMBER
+        synonyms:
+          - Error Line
+          - Failed Line
+        description: Line number of the first error in the source file.
+        expr: FIRST_ERROR_LINE_NUMBER
+        data_type: NUMBER
+        sample_values:
+          - '1000'
+          - '1001'
+          - '2000'
+          - '5500'
+          - '201'
+      - name: FIRST_ERROR_CHARACTER_POSITION
+        synonyms:
+          - Error Position
+          - Character Position
+        description: Character position of the first error in the line.
+        expr: FIRST_ERROR_CHARACTER_POSITION
+        data_type: NUMBER
+        sample_values:
+          - '10'
+          - '25'
+          - '30'
+          - '45'
+          - '12'
+      - name: FIRST_ERROR_COLUMN_NAME
+        synonyms:
+          - Error Column
+          - Failed Column
+        description: Name of the column where the first error occurred.
+        expr: FIRST_ERROR_COLUMN_NAME
+        data_type: VARCHAR
+        sample_values:
+          - ID
+          - CUSTOMER_ID
+          - NAME
+          - ORDER_DATE
+          - PRODUCT_PRICE
+      - name: ERROR_COUNT
+        synonyms:
+          - Error Count
+          - Number of Errors
+        description: Total number of errors during the COPY operation.
+        expr: ERROR_COUNT
+        data_type: NUMBER
+        sample_values:
+          - '0'
+          - '5'
+          - '0'
+          - '15'
+          - '3'
+      - name: ERROR_LIMIT
+        synonyms:
+          - Error Limit
+          - Max Errors
+        description: Maximum number of errors allowed before the operation fails.
+        expr: ERROR_LIMIT
+        data_type: NUMBER
+        sample_values:
+          - '10'
+          - '100'
+          - '50'
+          - '1000'
+          - '25'
+    time_dimensions:
+      - name: LAST_LOAD_TIME
+        synonyms:
+          - Load Time
+          - Copy Time
+        description: Timestamp when the COPY operation completed.
+        expr: LAST_LOAD_TIME
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-08-31 06:24:10.392000+00:00'
+          - '2024-10-10 05:54:26.670000+00:00'
+          - '2024-11-13 07:42:17.887000+00:00'
+          - '2024-09-07 18:05:16.642000+00:00'
+          - '2024-09-07 13:34:14.314000+00:00'
+      - name: FIRST_COMMIT_TIME
+        synonyms:
+          - First Commit
+          - Initial Commit Time
+        description: Timestamp of the first commit during the COPY operation.
+        expr: FIRST_COMMIT_TIME
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-08-31 06:24:05.392000+00:00'
+          - '2024-10-10 05:54:21.670000+00:00'
+          - '2024-11-13 07:42:12.887000+00:00'
+          - '2024-09-07 18:05:11.642000+00:00'
+          - '2024-09-07 13:34:09.314000+00:00'
+
+  - name: DYNAMIC_TABLE_REFRESH_HISTORY
+    description: This Account Usage view displays the refresh history of dynamic tables within the last 365 days.
+    base_table:
+      database: SNOWFLAKE
+      schema: ACCOUNT_USAGE
+      table: DYNAMIC_TABLE_REFRESH_HISTORY
+    primary_key:
+      columns:
+        - REFRESH_START_TIME
+        - DATABASE_NAME
+        - SCHEMA_NAME
+        - NAME
+    dimensions:
+      - name: DATABASE_NAME
+        synonyms:
+          - Database
+          - Database Name
+        description: Name of the database containing the dynamic table.
+        expr: DATABASE_NAME
+        data_type: VARCHAR
+        sample_values:
+          - PROD_DB
+          - ANALYTICS_DB
+          - STREAMING_DB
+          - REAL_TIME_DB
+          - DYNAMIC_DB
+      - name: SCHEMA_NAME
+        synonyms:
+          - Schema
+          - Schema Name
+        description: Name of the schema containing the dynamic table.
+        expr: SCHEMA_NAME
+        data_type: VARCHAR
+        sample_values:
+          - PUBLIC
+          - STREAMING
+          - REAL_TIME
+          - DYNAMIC_TABLES
+          - CONTINUOUS
+      - name: NAME
+        synonyms:
+          - Table Name
+          - Dynamic Table
+        description: Name of the dynamic table that was refreshed.
+        expr: NAME
+        data_type: VARCHAR
+        sample_values:
+          - REAL_TIME_SALES
+          - STREAMING_EVENTS
+          - LIVE_INVENTORY
+          - CONTINUOUS_METRICS
+          - DYNAMIC_AGGREGATES
+      - name: REFRESH_ACTION
+        synonyms:
+          - Refresh Action
+          - Action Type
+        description: Type of refresh action performed on the dynamic table.
+        expr: REFRESH_ACTION
+        data_type: VARCHAR
+        sample_values:
+          - INCREMENTAL
+          - FULL
+          - NO_DATA
+          - SUSPEND
+          - RESUME
+      - name: STATE
+        synonyms:
+          - State
+          - Refresh State
+        description: State of the dynamic table refresh operation.
+        expr: STATE
+        data_type: VARCHAR
+        sample_values:
+          - COMPLETED
+          - FAILED
+          - CANCELLED
+          - RUNNING
+          - SCHEDULED
+    facts:
+      - name: CREDITS_USED
+        synonyms:
+          - Credits Used
+          - Refresh Credits
+        description: Number of credits consumed by the dynamic table refresh.
+        expr: CREDITS_USED
+        data_type: NUMBER(38,9)
+        sample_values:
+          - 0.823456789
+          - 2.187654321
+          - 0.355555555
+          - 4.911111111
+          - 1.277777777
+      - name: BYTES_SCANNED
+        synonyms:
+          - Bytes Scanned
+          - Data Scanned
+        description: Number of bytes scanned during the dynamic table refresh.
+        expr: BYTES_SCANNED
+        data_type: NUMBER
+        sample_values:
+          - '268435456'
+          - '536870912'
+          - '134217728'
+          - '1073741824'
+          - '402653184'
+      - name: ROWS_INSERTED
+        synonyms:
+          - Rows Inserted
+          - Records Inserted
+        description: Number of rows inserted during the dynamic table refresh.
+        expr: ROWS_INSERTED
+        data_type: NUMBER
+        sample_values:
+          - '25000'
+          - '62500'
+          - '12500'
+          - '125000'
+          - '43750'
+      - name: ROWS_UPDATED
+        synonyms:
+          - Rows Updated
+          - Records Updated
+        description: Number of rows updated during the dynamic table refresh.
+        expr: ROWS_UPDATED
+        data_type: NUMBER
+        sample_values:
+          - '5000'
+          - '12500'
+          - '2500'
+          - '25000'
+          - '8750'
+      - name: ROWS_DELETED
+        synonyms:
+          - Rows Deleted
+          - Records Deleted
+        description: Number of rows deleted during the dynamic table refresh.
+        expr: ROWS_DELETED
+        data_type: NUMBER
+        sample_values:
+          - '500'
+          - '1250'
+          - '250'
+          - '2500'
+          - '875'
+    time_dimensions:
+      - name: REFRESH_START_TIME
+        synonyms:
+          - Refresh Start
+          - Start Time
+        description: Start time of the dynamic table refresh.
+        expr: REFRESH_START_TIME
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-08-31 06:00:00.000000+00:00'
+          - '2024-10-10 05:00:00.000000+00:00'
+          - '2024-11-13 07:00:00.000000+00:00'
+          - '2024-09-07 18:00:00.000000+00:00'
+          - '2024-09-07 13:00:00.000000+00:00'
+      - name: REFRESH_END_TIME
+        synonyms:
+          - Refresh End
+          - End Time
+        description: End time of the dynamic table refresh.
+        expr: REFRESH_END_TIME
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-08-31 06:05:00.000000+00:00'
+          - '2024-10-10 05:08:00.000000+00:00'
+          - '2024-11-13 07:03:00.000000+00:00'
+          - '2024-09-07 18:12:00.000000+00:00'
+          - '2024-09-07 13:06:00.000000+00:00'
+      - name: SCHEDULING_START_TIME
+        synonyms:
+          - Scheduling Start
+          - Schedule Time
+        description: Time when the dynamic table refresh was scheduled.
+        expr: SCHEDULING_START_TIME
+        data_type: TIMESTAMP_LTZ
+        sample_values:
+          - '2024-08-31 05:59:55.000000+00:00'
+          - '2024-10-10 04:59:55.000000+00:00'
+          - '2024-11-13 06:59:55.000000+00:00'
+          - '2024-09-07 17:59:55.000000+00:00'
+          - '2024-09-07 12:59:55.000000+00:00'
+
+relationships:
+  - name: DATABASES__SCHEMATA
+    left_table: DATABASES
+    relationship_columns:
+      - left_column: DATABASE_NAME
+        right_column: CATALOG_NAME
+    right_table: SCHEMATA
+  - name: SCHEMATA__TABLES
+    left_table: SCHEMATA
+    relationship_columns:
+      - left_column: CATALOG_NAME
+        right_column: TABLE_CATALOG
+      - left_column: SCHEMA_NAME
+        right_column: TABLE_SCHEMA
+    right_table: TABLES
+  - name: SCHEMATA__VIEWS
+    left_table: SCHEMATA
+    relationship_columns:
+      - left_column: CATALOG_NAME
+        right_column: TABLE_CATALOG
+      - left_column: SCHEMA_NAME
+        right_column: TABLE_SCHEMA
+    right_table: VIEWS
+  - name: TABLES__COLUMNS
+    left_table: TABLES
+    relationship_columns:
+      - left_column: TABLE_ID
+        right_column: TABLE_ID
+    right_table: COLUMNS
+  - name: VIEWS__COLUMNS
+    left_table: VIEWS
+    relationship_columns:
+      - left_column: TABLE_ID
+        right_column: TABLE_ID
+    right_table: COLUMNS
+  - name: SCHEMATA__FUNCTIONS
+    left_table: SCHEMATA
+    relationship_columns:
+      - left_column: CATALOG_NAME
+        right_column: FUNCTION_CATALOG
+      - left_column: SCHEMA_NAME
+        right_column: FUNCTION_SCHEMA
+    right_table: FUNCTIONS
+  - name: SCHEMATA__PROCEDURES
+    left_table: SCHEMATA
+    relationship_columns:
+      - left_column: CATALOG_NAME
+        right_column: PROCEDURE_CATALOG
+      - left_column: SCHEMA_NAME
+        right_column: PROCEDURE_SCHEMA
+    right_table: PROCEDURES
+  - name: SCHEMATA__STAGES
+    left_table: SCHEMATA
+    relationship_columns:
+      - left_column: CATALOG_NAME
+        right_column: STAGE_CATALOG
+      - left_column: SCHEMA_NAME
+        right_column: STAGE_SCHEMA
+    right_table: STAGES
+  - name: TAGS__TAG_REFERENCES
+    left_table: TAGS
+    relationship_columns:
+      - left_column: TAG_ID
+        right_column: TAG_ID
+    right_table: TAG_REFERENCES
+  - name: TABLES__LOAD_HISTORY
+    left_table: TABLES
+    relationship_columns:
+      - left_column: TABLE_ID
+        right_column: TABLE_ID
+    right_table: LOAD_HISTORY
+  - name: TABLES__COPY_HISTORY
+    left_table: TABLES
+    relationship_columns:
+      - left_column: TABLE_CATALOG
+        right_column: DATABASE_NAME
+      - left_column: TABLE_SCHEMA
+        right_column: SCHEMA_NAME
+      - left_column: TABLE_NAME
+        right_column: TABLE_NAME
+    right_table: COPY_HISTORY
+  - name: TABLES__AUTOMATIC_CLUSTERING_HISTORY
+    left_table: TABLES
+    relationship_columns:
+      - left_column: TABLE_CATALOG
+        right_column: DATABASE_NAME
+      - left_column: TABLE_SCHEMA
+        right_column: SCHEMA_NAME
+      - left_column: TABLE_NAME
+        right_column: TABLE_NAME
+    right_table: AUTOMATIC_CLUSTERING_HISTORY
+
+verified_queries:
+  - name: Database and Schema Inventory
+    question: What is the current inventory of databases and schemas in the account?
+    verified_at: 20250115
+    verified_by: Hyunchae Kim
+    use_as_onboarding_question: True
+    sql: "SELECT d.DATABASE_NAME, COUNT(s.SCHEMA_NAME) as SCHEMA_COUNT, d.IS_TRANSIENT, d.RETENTION_TIME, d.CREATED FROM SNOWFLAKE.ACCOUNT_USAGE.DATABASES d LEFT JOIN SNOWFLAKE.ACCOUNT_USAGE.SCHEMATA s ON d.DATABASE_NAME = s.CATALOG_NAME WHERE d.DELETED IS NULL GROUP BY d.DATABASE_NAME, d.IS_TRANSIENT, d.RETENTION_TIME, d.CREATED ORDER BY SCHEMA_COUNT DESC;"
+  - name: Table Size Analysis by Database
+    question: What is the table size distribution across databases?
+    verified_at: 20250115
+    verified_by: Hyunchae Kim
+    use_as_onboarding_question: True
+    sql: "SELECT TABLE_CATALOG, TABLE_TYPE, COUNT(*) as TABLE_COUNT, SUM(ROW_COUNT) as TOTAL_ROWS, SUM(BYTES)/1024/1024/1024 as TOTAL_GB FROM SNOWFLAKE.ACCOUNT_USAGE.TABLES WHERE DELETED IS NULL GROUP BY TABLE_CATALOG, TABLE_TYPE ORDER BY TOTAL_GB DESC LIMIT 20;"
+  - name: Column Data Type Distribution
+    question: What is the distribution of column data types across all tables?
+    verified_at: 20250115
+    verified_by: Hyunchae Kim
+    use_as_onboarding_question: True
+    sql: "SELECT DATA_TYPE, COUNT(*) as COLUMN_COUNT, COUNT(DISTINCT TABLE_CATALOG) as DATABASE_COUNT, COUNT(DISTINCT CONCAT(TABLE_CATALOG, '.', TABLE_SCHEMA, '.', TABLE_NAME)) as TABLE_COUNT FROM SNOWFLAKE.ACCOUNT_USAGE.COLUMNS GROUP BY DATA_TYPE ORDER BY COLUMN_COUNT DESC LIMIT 15;"
+  - name: Recently Created Objects Summary
+    question: What objects have been created in the last 30 days?
+    verified_at: 20250115
+    verified_by: Hyunchae Kim
+    use_as_onboarding_question: True
+    sql: "SELECT 'DATABASE' as OBJECT_TYPE, DATABASE_NAME as OBJECT_NAME, NULL as PARENT_OBJECT, CREATED FROM SNOWFLAKE.ACCOUNT_USAGE.DATABASES WHERE CREATED > DATEADD(day, -30, CURRENT_DATE()) UNION ALL SELECT 'TABLE' as OBJECT_TYPE, TABLE_NAME as OBJECT_NAME, CONCAT(TABLE_CATALOG, '.', TABLE_SCHEMA) as PARENT_OBJECT, CREATED FROM SNOWFLAKE.ACCOUNT_USAGE.TABLES WHERE CREATED > DATEADD(day, -30, CURRENT_DATE()) UNION ALL SELECT 'VIEW' as OBJECT_TYPE, TABLE_NAME as OBJECT_NAME, CONCAT(TABLE_CATALOG, '.', TABLE_SCHEMA) as PARENT_OBJECT, CREATED FROM SNOWFLAKE.ACCOUNT_USAGE.VIEWS WHERE CREATED > DATEADD(day, -30, CURRENT_DATE()) ORDER BY CREATED DESC LIMIT 25;"
+  - name: Tag Usage Analysis
+    question: How are tags being used across different object types?
+    verified_at: 20250115
+    verified_by: Hyunchae Kim
+    use_as_onboarding_question: True
+    sql: "SELECT tr.TAG_NAME, tr.DOMAIN as OBJECT_TYPE, COUNT(*) as ASSIGNMENTS, COUNT(DISTINCT tr.TAG_VALUE) as UNIQUE_VALUES, COUNT(DISTINCT tr.OBJECT_NAME) as UNIQUE_OBJECTS FROM SNOWFLAKE.ACCOUNT_USAGE.TAG_REFERENCES tr JOIN SNOWFLAKE.ACCOUNT_USAGE.TAGS t ON tr.TAG_NAME = t.TAG_NAME WHERE tr.OBJECT_DELETED IS NULL GROUP BY tr.TAG_NAME, tr.DOMAIN ORDER BY ASSIGNMENTS DESC LIMIT 20;"
+  - name: Data Loading Failures Last 7 Days
+    question: What are the data loading failures in the last 7 days?
+    verified_at: 20250115
+    verified_by: Hyunchae Kim
+    use_as_onboarding_question: True
+    sql: "SELECT LAST_LOAD_TIME, CATALOG_NAME, SCHEMA_NAME, TABLE_NAME, FILE_NAME, STATUS, ERROR_COUNT, FIRST_ERROR_MESSAGE FROM SNOWFLAKE.ACCOUNT_USAGE.LOAD_HISTORY WHERE LAST_LOAD_TIME > DATEADD(day, -7, CURRENT_DATE()) AND STATUS = 'LOAD_FAILED' ORDER BY LAST_LOAD_TIME DESC LIMIT 25;"
+  - name: Top 10 Long Running Tasks
+    question: What are the top 10 longest running tasks?
+    verified_at: 20250115
+    verified_by: Hyunchae Kim
+    use_as_onboarding_question: True
+    sql: "SELECT NAME, DATABASE_NAME, SCHEMA_NAME, STATE, SCHEDULED_TIME, QUERY_START_TIME, COMPLETED_TIME, DATEDIFF(second, QUERY_START_TIME, COMPLETED_TIME) as EXECUTION_SECONDS FROM SNOWFLAKE.ACCOUNT_USAGE.TASK_HISTORY WHERE QUERY_START_TIME > DATEADD(day, -7, CURRENT_DATE()) AND STATE = 'SUCCEEDED' ORDER BY EXECUTION_SECONDS DESC LIMIT 10;"
+  - name: Copy Command Success Rate Last 24 Hours
+    question: What is the success rate of COPY commands in the last 24 hours?
+    verified_at: 20250115
+    verified_by: Hyunchae Kim
+    use_as_onboarding_question: True
+    sql: "SELECT STATUS, COUNT(*) as OPERATION_COUNT, SUM(ROW_COUNT) as TOTAL_ROWS_LOADED, ROUND(COUNT(*) * 100.0 / SUM(COUNT(*)) OVER(), 2) as SUCCESS_RATE_PCT FROM SNOWFLAKE.ACCOUNT_USAGE.COPY_HISTORY WHERE LAST_LOAD_TIME > DATEADD(hour, -24, CURRENT_TIMESTAMP()) GROUP BY STATUS ORDER BY OPERATION_COUNT DESC;"
+  - name: Auto Clustering Credit Usage Last 14 Days
+    question: How much has automatic clustering cost in the last 14 days?
+    verified_at: 20250115
+    verified_by: Hyunchae Kim
+    use_as_onboarding_question: True
+    sql: "SELECT DATABASE_NAME, SCHEMA_NAME, TABLE_NAME, SUM(CREDITS_USED) as TOTAL_CREDITS, SUM(NUM_BYTES_RECLUSTERED) as TOTAL_BYTES_RECLUSTERED, COUNT(*) as CLUSTERING_OPERATIONS FROM SNOWFLAKE.ACCOUNT_USAGE.AUTOMATIC_CLUSTERING_HISTORY WHERE START_TIME > DATEADD(day, -14, CURRENT_DATE()) GROUP BY DATABASE_NAME, SCHEMA_NAME, TABLE_NAME ORDER BY TOTAL_CREDITS DESC LIMIT 20;"
+
+module_custom_instructions:
+  question_categorization: |
+    - For database structure questions, focus on object discovery and metadata analysis
+    - For data pipeline questions, focus on operational metrics and job performance
+    - When users ask about schema discovery, prioritize DATABASES, SCHEMATA, TABLES, and COLUMNS tables
+    - When users ask about data loading, prioritize LOAD_HISTORY, COPY_HISTORY, and TASK_HISTORY tables
+  sql_generation: |
+    - If no date filter is provided, apply a filter for the last 7 days using appropriate timestamp columns
+    - When users ask about object inventory, join DATABASES, SCHEMATA, and TABLES for comprehensive views
+    - When users ask about data loading performance, correlate LOAD_HISTORY with COPY_HISTORY for complete picture
+    - When users ask about task execution, use TASK_HISTORY and include error analysis when STATE is FAILED
+    - When users ask about table sizes, use TABLES.ROW_COUNT and TABLES.BYTES for storage analysis
+    - When users ask about object creation patterns, use CREATED timestamps across metadata tables
+    - When users ask about data pipeline failures, focus on ERROR_COUNT, ERROR_MESSAGE, and STATUS fields
+    - Always limit results to top 50 for discovery queries unless user specifies otherwise
+    - For metadata queries, prioritize active objects by filtering WHERE DELETED IS NULL
+    - For operational queries, include both successful and failed operations for complete analysis
